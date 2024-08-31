@@ -19,10 +19,10 @@ export function RatingBox({ rating }: { rating: number }) {
 
 export function PriceBox({
   price,
-  className = 'px-2.5 md:px-[0.9375rem] h-9 md:h-[2.625rem]',
+  className = 'px-2.5 md:px-[0.9375rem] h-9 md:h-[2.625rem] text-nowrap',
 }: {
   price: number;
-  className: string;
+  className?: string;
 }) {
   const krw = '￦ ' + price.toLocaleString('ko-KR');
 
