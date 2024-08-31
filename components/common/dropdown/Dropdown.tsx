@@ -3,12 +3,12 @@ import Image from 'next/image';
 import { useState, ReactNode, useRef, useEffect } from 'react';
 import styles from './Dropdown.module.css';
 
-interface Option {
+type Option = {
   label: string;
   value: string | number;
-}
+};
 
-interface DropdownProps {
+type DropdownProps = {
   /**
    * 드롭다운에 표시되는 옵션 목록
    * @example [{ label: 'Red', value: 'red' }, { label: 'White', value: 'white' }]
@@ -62,7 +62,7 @@ interface DropdownProps {
    * @example 'text-blue-700 hover:bg-blue-200'
    */
   optionClassName?: string;
-}
+};
 
 /**
  * ## 드롭다운 로직
