@@ -38,7 +38,7 @@ const config: Config = {
         },
         purple: {
           100: '#6A42DB',
-          '10%': '#F1EDFC',
+          10: '#F1EDFC',
         },
       },
     },
