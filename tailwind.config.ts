@@ -8,10 +8,24 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gradient-conic':
-          'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+      fontFamily: {
+        sans: ['Pretendard', 'sans-serif'],
+      },
+      fontSize: {
+        '3xl': ['32px', '42px'],
+        '2xl': ['24px', '32px'],
+        xl: ['20px', '32px'],
+        '2lg': ['18px', '26px'],
+        lg: ['16px', '26px'],
+        md: ['14px', '24px'],
+        sm: ['13px', '22px'],
+        xs: ['12px', '20px'],
+      },
+      fontWeight: {
+        bold: '700',
+        semibold: '600',
+        medium: '500',
+        regular: '400',
       },
       colors: {
         black: '#101318',
@@ -24,7 +38,7 @@ const config: Config = {
         },
         purple: {
           100: '#6A42DB',
-          '10%': '#F1EDFC',
+          10: '#F1EDFC',
         },
       },
     },
