@@ -14,6 +14,6 @@ module.exports = {
   plugins: ['prettier-plugin-tailwindcss'],
   tailwindConfig: './tailwind.config.ts', // 클래스 정렬이 프로젝트의 Tailwind 사용자 정의 사항을 고려
   tailwindFunctions: ['clsx'], // 속성 외에도 함수 호출에 제공된 문자열에서 클래스를 정렬
-  tailwindPreserveWhitespace: false, // tailwind 클래스 사이의 불필요한 공백을 자동으로 제거
+  tailwindPreserveWhitespace: true, // tailwind 클래스 사이의 불필요한 공백을 자동으로 제거
   tailwindPreserveDuplicates: false, // 클래스 목록에서 중복된 클래스를 자동으로 제거
 };
