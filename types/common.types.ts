@@ -1,1 +1,4 @@
-export type CommonTypes = {};
+export type CommonTypes = {
+  label: string;
+  errorMessage: string;
+};
