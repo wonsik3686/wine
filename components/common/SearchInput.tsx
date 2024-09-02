@@ -1,3 +1,4 @@
+'use client'
 import { CommonTypes } from '@/types/common.types';
 import Image from 'next/image';
 import { forwardRef, InputHTMLAttributes } from 'react';
