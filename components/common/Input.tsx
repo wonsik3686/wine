@@ -1,3 +1,4 @@
+'use client'
 import { CommonTypes } from '@/types/common.types';
 import { forwardRef, InputHTMLAttributes } from 'react';
 
