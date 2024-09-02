@@ -9,7 +9,8 @@ import ReactSlider from 'react-slider';
  * - values - 슬라이더의 **현재 값 배열** (두 개의 숫자로 구성)
  * - onChange - 슬라이더 값이 변경될 때 호출되는 **함수**
  * - width - 슬라이더의 너비 (기본값: '200px')
- *
+ * - min - 슬라이더의 최솟값
+ * - max - 슬라이더의 최댓값
  * 아래와 같이 사용합니다.
  * - const [sliderValues, setSliderValues] = useState<[number, number]>([20, 80]);
  * - const handleSliderChange = (values: [number, number]) => {
