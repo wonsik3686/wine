@@ -10,10 +10,10 @@ type ButtonProps = {
 } & ButtonHTMLAttributes<HTMLButtonElement>;
 
 const Button = ({
-  buttonStyle = 'box',
-  buttonWidth = 'fitToChildren',
-  buttonColor = 'purple',
-  textColor = 'white',
+  buttonStyle,
+  buttonWidth,
+  buttonColor,
+  textColor,
   ...props
 }: ButtonProps) => {
   return (
@@ -21,16 +21,16 @@ const Button = ({
       <button
         className={clsx({
           // buttonStyle
-          [`inline-flex px-5 py-4 justify-center items-center rounded-2xl gap-3 font-sans font-semibold text-lg`]:
+          [`inline-flex items-center justify-center gap-3 rounded-2xl px-5 py-4 font-sans text-lg font-semibold`]:
             buttonStyle === 'box',
-          [`inline-flex px-24 py-4 justify-center items-center rounded-full gap-3 font-sans font-semibold text-lg`]:
+          [`inline-flex items-center justify-center gap-3 rounded-full px-24 py-4 font-sans text-lg font-semibold`]:
             buttonStyle === 'floating',
           // buttonWidth
           [`flex w-full`]: buttonWidth === 'fitToParent',
           // buttonColor
           [`bg-purple-100 hover:bg-purple-800 active:bg-purple-900`]:
             buttonColor === 'purple',
-          [`bg-white border-solid border-[1px] border-gray-300 hover:bg-gray-50 active:bg-gray-100`]:
+          [`border-[1px] border-solid border-gray-300 bg-white hover:bg-gray-50 active:bg-gray-100`]:
             buttonColor === 'white',
           // textColor
           [`text-white`]: textColor === 'white',
