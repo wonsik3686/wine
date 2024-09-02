@@ -12,7 +12,7 @@ import ReactSlider from 'react-slider';
  * - width - 슬라이더의 너비 (기본값: '200px')
  */
 export default function Slider({
-  value,
+  value = 50,
   mode = 'interactive',
   onChange,
   width = '200px',
