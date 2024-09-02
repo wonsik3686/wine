@@ -3,6 +3,6 @@
 @tailwind utilities;
 
 body {
-  @apply font-sans bg-white text-[#2c2f34];
+  @apply bg-white font-sans text-[#2c2f34];
   font-family: 'Pretendard', sans-serif;
 }

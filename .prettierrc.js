@@ -12,3 +12,4 @@ module.exports = {
   bracketSpacing: true, // 객체 리터럴의 중괄호 안쪽에 공백 추가하여 가독성 향상
   jsxSingleQuote: false, // JSX에서는 더블 쿼트를 사용하여 HTML과 일관성 유지
 };
+
