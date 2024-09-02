@@ -5,7 +5,6 @@ type StarRatingProps = {
   rating?: number;
   interactive?: boolean;
   onRatingChange?: (rating: number) => void;
-  sizeVariant?: 'default' | 'mobile';
 };
 
 /**
@@ -18,7 +17,6 @@ type StarRatingProps = {
  * @param {number} [props.rating=0] - 초기 별점 값 (0-5 사이의 숫자).
  * @param {boolean} [props.interactive=false] - 사용자가 별점과 상호작용할 수 있는지 여부.
  * @param {(rating: number) => void} [props.onRatingChange] - 사용자가 별점을 변경할 때 호출되는 콜백 함수.
- * @param {'default' | 'mobile'} [props.sizeVariant] - 별 컴포넌트의 크기를 바꿈. 모바일 사이즈일 경우 'mobile' 전달
  * @returns {JSX.Element} 별점 컴포넌트.
  * @example 'use client';
 
@@ -36,7 +34,7 @@ function TestComponent() {
 
   return (
     <>
-      <StarRating rating={3.8} sizeVariant={'mobile'}/> //값을 받아서 별점을 정적 렌더링
+      <StarRating rating={3.8} /> //값을 받아서 별점을 정적 렌더링
       <StarRating interactive={true} onRatingChange={handleRatingChange} /> //사용자가 누르는 값을 보여주도록 렌더링
     </>
   );
@@ -46,20 +44,9 @@ const StarRating: React.FC<StarRatingProps> = ({
   rating = 0,
   interactive = false,
   onRatingChange,
-  sizeVariant = 'default',
 }) => {
   const [hoverRating, setHoverRating] = useState<number | null>(null);
   const [currentRating, setCurrentRating] = useState<number>(rating);
-
-  const getStarSize = () => {
-    switch (sizeVariant) {
-      case 'mobile':
-        return { width: '17px', height: '17px' }; // 모바일 사이즈 설정
-      case 'default':
-      default:
-        return { width: '22px', height: '22px' }; // 기본 사이즈
-    }
-  };
 
   /**
    * 사용자가 별점을 클릭했을 때 호출되는 함수.
@@ -102,7 +89,6 @@ const StarRating: React.FC<StarRatingProps> = ({
    */
   const renderStars = () => {
     const stars = [];
-    const starSize = getStarSize();
     const effectiveRating = hoverRating || currentRating;
 
     for (let i = 1; i <= 5; i++) {
@@ -111,11 +97,10 @@ const StarRating: React.FC<StarRatingProps> = ({
       stars.push(
         <div
           key={i}
-          className={`relative inline-block mr-[8px] ${interactive ? 'cursor-pointer' : 'cursor-default'}`}
+          className={`relative inline-block mr-[8px] w-[17px] h-[17px] sm:w-[22px] sm:h-[22px] ${interactive ? 'cursor-pointer' : 'cursor-default'}`}
           onMouseEnter={() => handleMouseEnter(i)}
           onMouseLeave={handleMouseLeave}
           onClick={() => handleStarClick(i)}
-          style={starSize}
         >
           <img
             src="/images/star_inactive.svg"
