@@ -10,6 +10,11 @@ import ReactSlider from 'react-slider';
  * - mode - 슬라이더 모드 (기본값: 'interactive') ('interactive'는 유저가 값을 조정 가능, 'readonly'는 조정 불가)
  * - onChange - 슬라이더 값이 변경될 때 호출되는 **함수**
  * - width - 슬라이더의 너비 (기본값: '200px')
+ *
+ * 아래와 같이 사용합니다.
+ * - const [sliderValue, setSliderValue] = useState<number>(50);
+ * - const handleSliderChange = (value: number) => {
+ * - setSliderValue(value); };
  */
 export default function Slider({
   value = 50,
