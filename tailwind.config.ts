@@ -41,6 +41,11 @@ const config: Config = {
           10: '#F1EDFC',
         },
       },
+      screens: {
+        mob: { max: '743px' },
+        tab: { max: '1199px' },
+        pc: { min: '1200px' },
+      },
     },
   },
   plugins: [],
