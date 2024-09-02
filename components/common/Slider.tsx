@@ -26,7 +26,11 @@ export default function Slider({
     <div style={{ width }}>
       <ReactSlider
         className="relative w-full h-[6px] bg-gray-200 rounded-full"
-        thumbClassName="absolute top-1/2 transform -translate-y-1/2 h-[16px] w-[16px] bg-purple-100 rounded-full cursor-pointer focus:outline-none focus:ring-2 focus:ring-purple-300 border-none"
+        thumbClassName={`absolute top-1/2 transform -translate-y-1/2 h-[20px] w-[20px] bg-white rounded-full cursor-pointer border-2 border-gray-300 ${
+          mode === 'interactive'
+            ? 'focus:outline-none focus:ring-2 focus:ring-purple-300'
+            : ''
+        }`}
         trackClassName="bg-gray-100 h-full border border-[#e7edf4] rounded-full"
         value={value}
         onChange={onChange}
