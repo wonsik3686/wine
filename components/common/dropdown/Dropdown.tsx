@@ -153,17 +153,20 @@ function Dropdown({
   };
 
   return (
-    <div className="relative inline-block text-left" ref={dropdownRef}>
+    <div
+      className="relative inline-block text-left"
+      ref={dropdownRef}
+      onClick={() => setIsOpen(!isOpen)}
+    >
       {type === 'action' ? (
-        <div onClick={() => setIsOpen(!isOpen)}>{trigger}</div>
+        <div>{trigger}</div>
       ) : (
         <div
-          onClick={() => setIsOpen(!isOpen)}
           className={`flex items-center cursor-pointer border rounded-[16px] px-4 py-2 ${dropdownClassName} text-gray-700 font-medium bg-white ring-1 ring-gray-300`}
           style={{ width: `${width}px` }}
         >
           <span className={`flex-1 ${isOpen ? 'text-gray-300' : ''}`}>
-            {selectedLabel || initialLabel || 'Select'}
+            {selectedLabel || 'Select'}
           </span>
           <span className="ml-2">
             {isOpen ? (
@@ -191,9 +194,9 @@ function Dropdown({
           style={{ width: `${width}px` }}
         >
           <div className="py-1">
-            {options.map((option, index) => (
+            {options.map((option) => (
               <button
-                key={index}
+                key={option.label}
                 onClick={() => handleSelect(option)}
                 className={`block rounded-[10px] mx-auto my-[4px] px-4 py-2 font-medium text-left text-lg text-gray-800 hover:bg-purple-10 hover:text-purple-100 ${optionClassName}`}
                 style={{ width: `calc(${width}px - 8px)` }}
