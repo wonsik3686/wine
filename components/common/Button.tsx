@@ -14,7 +14,7 @@ const Button = ({
   buttonWidth,
   buttonColor,
   textColor,
-  ...props
+  ...buttonAttributes
 }: ButtonProps) => {
   return (
     <>
@@ -37,7 +37,7 @@ const Button = ({
           [`text-gray-500`]: textColor === 'gray',
           [`text-gray-800`]: textColor === 'black',
         })}
-        {...props}
+        {...buttonAttributes}
       />
     </>
   );
