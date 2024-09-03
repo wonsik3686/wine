@@ -1,6 +1,8 @@
-import HeaderLogo from '@/public/svg/wineWhiteLogo-s.svg';
+'use client';
+import Image from 'next/image';
+import Link from 'next/link';
 
-export default function header() {
+export default function Header() {
   return (
     <div
       className="
@@ -16,14 +18,20 @@ export default function header() {
     
     bg-black
 
-    mob:mt-4 mob:mx-4 mob:rounded-[12px] mob:w-auto mob:py-4 mob:px-5
-    tab:mt-6 tab:mx-5 tab:rounded-[16px] tab:w-[744px]
-    pc:mt-6 pc:rounded-[16px] pc:w-[1200px]
+    mob:mt-4 mob:mx-4 mob:rounded-xl mob:w-auto mob:py-4 mob:px-5
+    tab:mt-6 tab:mx-5 tab:rounded-2xl tab:w-[46.5rem]
+    pc:mt-6 pc:rounded-2xl pc:w-[75rem]
     "
         style={{ padding: '11px 60px' }}
       >
-        {/* 렌딩페이지 href 추가필요 */}
-        <HeaderLogo aria-label="랜딩페이지 이동" />
+        <Link href={`/`}>
+          <Image
+            src={`/icons/wineWhiteLogo-s.svg`}
+            alt="로고 이미지"
+            width={52}
+            height={15}
+          />
+        </Link>
 
         {/* 로그인 페이지 생성 후 Link로 수정 */}
         <span className="text-white text-[16px] font-medium">로그인</span>
