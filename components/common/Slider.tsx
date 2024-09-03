@@ -1,5 +1,6 @@
 'use client';
 
+import React from 'react';
 import ReactSlider from 'react-slider';
 
 /**
@@ -29,7 +30,7 @@ export default function Slider({
   return (
     <div style={{ width }}>
       <ReactSlider
-        className="relative h-[6px] w-full rounded-full bg-gray-200"
+        className="relative w-full h-[6px] bg-gray-200 rounded-full"
         thumbClassName={`absolute top-1/2 transform -translate-y-1/2 h-[16px] w-[16px] bg-purple-100 rounded-full cursor-pointer focus:outline-none ${
           mode === 'interactive'
             ? 'focus:outline-none focus:ring-2 focus:ring-purple-300'
@@ -39,7 +40,7 @@ export default function Slider({
         value={value}
         onChange={onChange}
         disabled={mode === 'readonly'}
-        renderThumb={(props) => <div {...props} />}
+        renderThumb={(props) => <div {...props}></div>}
         min={0}
         max={100}
       />
