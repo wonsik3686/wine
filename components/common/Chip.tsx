@@ -20,7 +20,7 @@ type ChipProps = {
    * 칩이 클릭되었을 때 호출되는 함수.
    * 클릭 이벤트 핸들러로, 칩이 비활성화되지 않은 경우에만 호출.
    */
-  onClick?: MouseEventHandler<HTMLDivElement>;
+  onClick?: MouseEventHandler;
 
   /**
    * 칩이 비활성화된 상태인지 여부를 나타냅니다.
@@ -66,16 +66,17 @@ function Chip({
   isDisabled,
 }: ChipProps): JSX.Element {
   return (
-    <div
+    <button
       className={clsx('rounded-full bg-gray-200 px-4 py-2 text-sm', {
         'bg-red-500 text-white': selected,
         'cursor-pointer': !isDisabled,
         'cursor-default': isDisabled,
       })}
       onClick={!isDisabled ? onClick : undefined}
+      type="button"
     >
       {label}
-    </div>
+    </button>
   );
 }
 

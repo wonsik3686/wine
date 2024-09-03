@@ -1,10 +1,10 @@
 'use client';
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 type StarRatingProps = {
   rating?: number;
-  isinteractive?: boolean;
+  isInteractive?: boolean;
   onRatingChange?: (rating: number) => void;
 };
 
@@ -16,7 +16,7 @@ type StarRatingProps = {
  * @component
  * @param {StarRatingProps} props - 컴포넌트에 전달되는 props.
  * @param {number} [props.rating=0] - 초기 별점 값 (0-5 사이의 숫자).
- * @param {boolean} [props.isinteractive=false] - 사용자가 별점과 상호작용할 수 있는지 여부.
+ * @param {boolean} [props.isInteractive=false] - 사용자가 별점과 상호작용할 수 있는지 여부.
  * @param {(rating: number) => void} [props.onRatingChange] - 사용자가 별점을 변경할 때 호출되는 콜백 함수.
  * @returns {JSX.Element} 별점 컴포넌트.
  * @example 'use client';
@@ -36,16 +36,16 @@ function TestComponent() {
   return (
     <>
       <StarRating rating={3.8} /> //값을 받아서 별점을 정적 렌더링
-      <StarRating isinteractive={true} onRatingChange={handleRatingChange} /> //사용자가 누르는 값을 보여주도록 렌더링
+      <StarRating isInteractive={true} onRatingChange={handleRatingChange} /> //사용자가 누르는 값을 보여주도록 렌더링
     </>
   );
 }
  */
-const StarRating: React.FC<StarRatingProps> = ({
+function StarRating({
   rating = 0,
-  isinteractive = false,
+  isInteractive = false,
   onRatingChange,
-}) => {
+}: StarRatingProps) {
   const [hoverRating, setHoverRating] = useState<number | null>(null);
   const [currentRating, setCurrentRating] = useState<number>(rating);
 
@@ -55,7 +55,7 @@ const StarRating: React.FC<StarRatingProps> = ({
    * @param {number} newRating - 사용자가 선택한 새로운 별점 값.
    */
   const handleStarClick = (newRating: number) => {
-    if (isinteractive) {
+    if (isInteractive) {
       setCurrentRating(newRating);
       if (onRatingChange) {
         onRatingChange(newRating);
@@ -69,7 +69,7 @@ const StarRating: React.FC<StarRatingProps> = ({
    * @param {number} starIndex - 마우스가 호버 중인 별의 인덱스 (1-5).
    */
   const handleMouseEnter = (starIndex: number) => {
-    if (isinteractive) {
+    if (isInteractive) {
       setHoverRating(starIndex);
     }
   };
@@ -78,7 +78,7 @@ const StarRating: React.FC<StarRatingProps> = ({
    * 사용자가 별에서 마우스를 뗐을 때 호출되는 함수.
    */
   const handleMouseLeave = () => {
-    if (isinteractive) {
+    if (isInteractive) {
       setHoverRating(null);
     }
   };
@@ -88,37 +88,6 @@ const StarRating: React.FC<StarRatingProps> = ({
    *
    * @returns {JSX.Element[]} 렌더링된 별들의 배열.
    */
-  const renderStars = () => {
-    const stars = [];
-    const effectiveRating = hoverRating || currentRating;
-
-    for (let i = 1; i <= 5; i++) {
-      const fillPercentage = getStarFillPercentage(i, effectiveRating);
-
-      stars.push(
-        <div
-          key={i}
-          className={`relative mr-[8px] inline-block h-[17px] w-[17px] sm:h-[22px] sm:w-[22px] ${isinteractive ? 'cursor-pointer' : 'cursor-default'}`}
-          onMouseEnter={() => handleMouseEnter(i)}
-          onMouseLeave={handleMouseLeave}
-          onClick={() => handleStarClick(i)}
-        >
-          <img
-            src="/images/star_inactive.svg"
-            alt="비어있는 별"
-            className="absolute left-0 top-0 h-full w-full"
-          />
-          <img
-            src="/images/star_active.svg"
-            alt="채워진 별"
-            className="absolute left-0 top-0 h-full w-full"
-            style={{ clipPath: `inset(0 ${100 - fillPercentage}% 0 0)` }}
-          />
-        </div>
-      );
-    }
-    return stars;
-  };
 
   /**
    * 별이 얼마나 채워져야 하는지를 백분율로 계산하는 함수.
@@ -137,7 +106,40 @@ const StarRating: React.FC<StarRatingProps> = ({
     return 0;
   };
 
+  const renderStars = () => {
+    const stars = [];
+    const effectiveRating = hoverRating || currentRating;
+
+    for (let i = 1; i <= 5; i++) {
+      const fillPercentage = getStarFillPercentage(i, effectiveRating);
+
+      stars.push(
+        <button
+          key={i}
+          className={`relative mr-[8px] inline-block h-[17px] w-[17px] sm:h-[22px] sm:w-[22px] ${isInteractive ? 'cursor-pointer' : 'cursor-default'}`}
+          onMouseEnter={() => handleMouseEnter(i)}
+          onMouseLeave={handleMouseLeave}
+          onClick={() => handleStarClick(i)}
+          type="button"
+        >
+          <img
+            src="/images/star_inactive.svg"
+            alt="비어있는 별"
+            className="absolute left-0 top-0 h-full w-full"
+          />
+          <img
+            src="/images/star_active.svg"
+            alt="채워진 별"
+            className="absolute left-0 top-0 h-full w-full"
+            style={{ clipPath: `inset(0 ${100 - fillPercentage}% 0 0)` }}
+          />
+        </button>
+      );
+    }
+    return stars;
+  };
+
   return <div className="flex">{renderStars()}</div>;
-};
+}
 
 export default StarRating;

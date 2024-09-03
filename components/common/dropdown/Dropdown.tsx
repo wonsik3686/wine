@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { useState, ReactNode, useRef, useEffect } from 'react';
+import { ReactNode, useEffect, useRef, useState } from 'react';
 import styles from './Dropdown.module.css';
 
 type Option = {
