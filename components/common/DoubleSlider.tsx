@@ -32,7 +32,7 @@ export default function DoubleSlider({
   return (
     <div style={{ width }}>
       <ReactSlider
-        className="relative w-full h-[6px] bg-gray-100 rounded-full"
+        className="relative h-[6px] w-full rounded-full bg-gray-100"
         trackClassName="bg-gray-100 h-full border border-gray-300 rounded-full"
         value={values}
         onChange={onChange}
@@ -41,7 +41,7 @@ export default function DoubleSlider({
         renderThumb={(props) => (
           <div
             {...props}
-            className="absolute top-[50%] transform -translate-y-1/2 h-[20px] w-[20px] bg-white rounded-full cursor-pointer focus:outline-none focus:ring-2 focus:ring-purple-300 border-[1px] border-gray-300"
+            className="absolute top-[50%] h-[20px] w-[20px] -translate-y-1/2 transform cursor-pointer rounded-full border-[1px] border-gray-300 bg-white focus:outline-none focus:ring-2 focus:ring-purple-300"
           />
         )}
         renderTrack={(props, state) => (

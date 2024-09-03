@@ -46,5 +46,8 @@ module.exports = {
     'react/static-property-placement': 'off', // 클래스의 정적 속성 위치를 강제하지 않습니다.
     'react/jsx-filename-extension': [1, { extensions: ['.tsx'] }], // JSX는 .tsx 파일 내에서만 사용하도록 설정합니다.
     'jsx-a11y/anchor-is-valid': 'off', // <a> 태그의 href 유효성 검사를 비활성화합니다.
+    'react/require-default-props': 'off',
+    'import/extensions': 'off', // 파일 확장자 명시 강제를 비활성화합니다.
+    'react/display-name': 'off',
   },
 };
