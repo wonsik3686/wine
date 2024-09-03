@@ -23,7 +23,7 @@ module.exports = {
   },
   plugins: [
     'react', // React 관련 플러그인 추가
-    // 'jsx-a11y', // 접근성 관련 플러그인 추가
+    'jsx-a11y', // 접근성 관련 플러그인 추가
     '@typescript-eslint', // TypeScript 관련 플러그인 추가
     'import', // ES 모듈 import/export 규칙을 지원하는 플러그인
   ],
