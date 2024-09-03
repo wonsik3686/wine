@@ -25,7 +25,7 @@ export default function DoubleSlider({
   values: [number, number];
   min?: number;
   max?: number;
-  onChange?: (values: [number, number]) => void;
+  onChange?: (sliderValue: [number, number]) => void;
   width?: string;
 }): JSX.Element {
   return (

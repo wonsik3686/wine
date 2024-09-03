@@ -23,7 +23,7 @@ export default function Slider({
 }: {
   value: number;
   mode: 'interactive' | 'readonly';
-  onChange?: (value: number) => void;
+  onChange?: (sliderValue: number) => void;
   width?: string;
 }): JSX.Element {
   return (
