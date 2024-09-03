@@ -51,6 +51,11 @@ const config: Config = {
           950: '#2B1B55',
         },
       },
+      screens: {
+        pc: { min: '1200px' },
+        tab: { max: '1199px' },
+        mob: { max: '743px' },
+      },
     },
   },
   plugins: [],
