@@ -23,7 +23,7 @@ module.exports = {
   },
   plugins: [
     'react', // React 관련 플러그인 추가
-    'jsx-a11y', // 접근성 관련 플러그인 추가
+    // 'jsx-a11y', // 접근성 관련 플러그인 추가
     '@typescript-eslint', // TypeScript 관련 플러그인 추가
     'import', // ES 모듈 import/export 규칙을 지원하는 플러그인
   ],
@@ -40,11 +40,14 @@ module.exports = {
     'react/jsx-props-no-spreading': 'off', // JSX에서 props 스프레딩을 허용합니다.
     'react/react-in-jsx-scope': 'off', // Next.js에서는 필요하지 않으므로 비활성화합니다.
     'react/prop-types': 'off', // TypeScript를 사용하므로 prop-types 검사를 비활성화합니다.
+    'react/require-default-props': 'off',
+    'import/extensions': 'off', // 파일 확장자 명시 강제를 비활성화합니다.
     'import/prefer-default-export': 'off', // 하나의 export만 있을 경우 default export를 강제하지 않습니다.
     'class-methods-use-this': 'off', // 클래스 메서드 내에서 'this'를 반드시 사용하지 않아도 됩니다.
     'react/state-in-constructor': 'off', // 클래스 컴포넌트의 상태(state)를 생성자에서 초기화하지 않아도 됩니다.
     'react/static-property-placement': 'off', // 클래스의 정적 속성 위치를 강제하지 않습니다.
     'react/jsx-filename-extension': [1, { extensions: ['.tsx'] }], // JSX는 .tsx 파일 내에서만 사용하도록 설정합니다.
     'jsx-a11y/anchor-is-valid': 'off', // <a> 태그의 href 유효성 검사를 비활성화합니다.
+    'react/display-name': 'off',
   },
 };

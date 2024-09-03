@@ -2,9 +2,9 @@ function Progressbar({ min, max }: { min: number; max: number }) {
   const percent = ((min / max) * 100).toFixed(2);
 
   return (
-    <div className='rounded-full bg-gray-100 w-full h-1.5'>
+    <div className="h-1.5 w-full rounded-full bg-gray-100">
       <div
-        className='rounded-full bg-purple-100 h-1.5'
+        className="h-1.5 rounded-full bg-purple-100"
         style={{ width: `${percent}%` }}
       />
     </div>
@@ -19,11 +19,11 @@ function RatingProgressbar({
   totalCount: number;
 }) {
   return (
-    <section className='flex flex-col gap-y-2 w-full md:w-[280px]'>
+    <section className="flex w-full flex-col gap-y-2 md:w-[280px]">
       {Ratings.map((Rating) => (
-        <div key={Rating.key + '점'} className='flex items-center gap-x-4'>
-          <span className='w-6 shrink-0 text-lg font-medium text-right'>
-            {Rating.key + '점'}
+        <div key={`${Rating.key}점`} className="flex items-center gap-x-4">
+          <span className="w-6 shrink-0 text-right text-lg font-medium">
+            {`${Rating.key}점`}
           </span>
 
           <Progressbar min={Rating.value} max={totalCount} />

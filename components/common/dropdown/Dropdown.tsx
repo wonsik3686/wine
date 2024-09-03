@@ -1,4 +1,5 @@
 'use client';
+
 import Image from 'next/image';
 import { useState, ReactNode, useRef, useEffect } from 'react';
 import styles from './Dropdown.module.css';
@@ -162,7 +163,7 @@ function Dropdown({
         <div>{trigger}</div>
       ) : (
         <div
-          className={`flex items-center cursor-pointer border rounded-[16px] px-4 py-2 ${dropdownClassName} text-gray-700 font-medium bg-white ring-1 ring-gray-300`}
+          className={`flex cursor-pointer items-center rounded-[16px] border px-4 py-2 ${dropdownClassName} bg-white font-medium text-gray-700 ring-1 ring-gray-300`}
           style={{ width: `${width}px` }}
         >
           <span className={`flex-1 ${isOpen ? 'text-gray-300' : ''}`}>
@@ -198,7 +199,7 @@ function Dropdown({
               <button
                 key={option.label}
                 onClick={() => handleSelect(option)}
-                className={`block rounded-[10px] mx-auto my-[4px] px-4 py-2 font-medium text-left text-lg text-gray-800 hover:bg-purple-10 hover:text-purple-100 ${optionClassName}`}
+                className={`mx-auto my-[4px] block rounded-[10px] px-4 py-2 text-left text-lg font-medium text-gray-800 hover:bg-purple-10 hover:text-purple-100 ${optionClassName}`}
                 style={{ width: `calc(${width}px - 8px)` }}
               >
                 {option.label}
