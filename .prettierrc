@@ -10,5 +10,10 @@
   "endOfLine": "lf",
   "bracketSameLine": false,
   "bracketSpacing": true,
-  "jsxSingleQuote": false
+  "jsxSingleQuote": false,
+  "plugins": ["prettier-plugin-tailwindcss"],
+  "tailwindConfig": "./tailwind.config.ts",
+  "tailwindFunctions": ["clsx"],
+  "tailwindPreserveWhitespace": true,
+  "tailwindPreserveDuplicates": false
 }
