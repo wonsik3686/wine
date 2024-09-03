@@ -9,7 +9,7 @@ interface ProfileProps {
 const Profile: React.FC<ProfileProps> = ({ image }) => {
   const displayImage = image || DefaultProfileImage;
   return (
-    <div className="relative h-16 w-16">
+    <div>
       {/* 문자열 URL일 때는 img 태그 사용, 컴포넌트일 때는 직접 렌더링 */}
       {typeof displayImage === 'string' ? (
         <img
