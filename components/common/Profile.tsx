@@ -1,30 +1,22 @@
 'use client';
 
-import DefaultProfileImage from '@/public/svg/defaultProfile.svg';
+import Image from 'next/image';
 import React from 'react';
 interface ProfileProps {
-  image?: string;
+  src?: string;
 }
 
-const Profile: React.FC<ProfileProps> = ({ image }) => {
-  const displayImage = image || DefaultProfileImage;
+const Profile: React.FC<ProfileProps> = ({ src }) => {
+  const DefaultProfileImage = '/icons/defaultProfile.svg';
+  const displayImage = src || DefaultProfileImage;
   return (
-    <div>
-      {/* 문자열 URL일 때는 img 태그 사용, 컴포넌트일 때는 직접 렌더링 */}
-      {typeof displayImage === 'string' ? (
-        <img
-          src={displayImage}
-          alt="Profile"
-          className="h-full w-full object-cover"
-        />
-      ) : (
-        React.createElement(displayImage, {
-          className: 'h-full w-full object-cover',
-          role: 'img',
-          'aria-label': 'Profile',
-        })
-      )}
-    </div>
+    <Image
+      className="h-full w-full rounded-full ring-1 ring-gray-300"
+      src={displayImage}
+      alt="Profile"
+      width={64}
+      height={64}
+    />
   );
 };
 
