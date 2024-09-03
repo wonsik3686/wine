@@ -1,4 +1,5 @@
 'use client';
+
 import React, { useState } from 'react';
 
 type StarRatingProps = {
@@ -97,7 +98,7 @@ const StarRating: React.FC<StarRatingProps> = ({
       stars.push(
         <div
           key={i}
-          className={`relative inline-block mr-[8px] w-[17px] h-[17px] sm:w-[22px] sm:h-[22px] ${isinteractive ? 'cursor-pointer' : 'cursor-default'}`}
+          className={`relative mr-[8px] inline-block h-[17px] w-[17px] sm:h-[22px] sm:w-[22px] ${isinteractive ? 'cursor-pointer' : 'cursor-default'}`}
           onMouseEnter={() => handleMouseEnter(i)}
           onMouseLeave={handleMouseLeave}
           onClick={() => handleStarClick(i)}
@@ -105,12 +106,12 @@ const StarRating: React.FC<StarRatingProps> = ({
           <img
             src="/images/star_inactive.svg"
             alt="비어있는 별"
-            className="absolute top-0 left-0 w-full h-full"
+            className="absolute left-0 top-0 h-full w-full"
           />
           <img
             src="/images/star_active.svg"
             alt="채워진 별"
-            className="absolute top-0 left-0 w-full h-full"
+            className="absolute left-0 top-0 h-full w-full"
             style={{ clipPath: `inset(0 ${100 - fillPercentage}% 0 0)` }}
           />
         </div>
