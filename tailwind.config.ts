@@ -42,9 +42,9 @@ const config: Config = {
         },
       },
       screens: {
-        mob: { max: '743px' },
-        tab: { max: '1199px' },
         pc: { min: '1200px' },
+        tab: { max: '1199px' },
+        mob: { max: '743px' },
       },
     },
   },
