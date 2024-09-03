@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 
 type StarRatingProps = {
   rating?: number;
-  interactive?: boolean;
+  isinteractive?: boolean;
   onRatingChange?: (rating: number) => void;
 };
 
@@ -15,7 +15,7 @@ type StarRatingProps = {
  * @component
  * @param {StarRatingProps} props - 컴포넌트에 전달되는 props.
  * @param {number} [props.rating=0] - 초기 별점 값 (0-5 사이의 숫자).
- * @param {boolean} [props.interactive=false] - 사용자가 별점과 상호작용할 수 있는지 여부.
+ * @param {boolean} [props.isinteractive=false] - 사용자가 별점과 상호작용할 수 있는지 여부.
  * @param {(rating: number) => void} [props.onRatingChange] - 사용자가 별점을 변경할 때 호출되는 콜백 함수.
  * @returns {JSX.Element} 별점 컴포넌트.
  * @example 'use client';
@@ -35,14 +35,14 @@ function TestComponent() {
   return (
     <>
       <StarRating rating={3.8} /> //값을 받아서 별점을 정적 렌더링
-      <StarRating interactive={true} onRatingChange={handleRatingChange} /> //사용자가 누르는 값을 보여주도록 렌더링
+      <StarRating isinteractive={true} onRatingChange={handleRatingChange} /> //사용자가 누르는 값을 보여주도록 렌더링
     </>
   );
 }
  */
 const StarRating: React.FC<StarRatingProps> = ({
   rating = 0,
-  interactive = false,
+  isinteractive = false,
   onRatingChange,
 }) => {
   const [hoverRating, setHoverRating] = useState<number | null>(null);
@@ -54,7 +54,7 @@ const StarRating: React.FC<StarRatingProps> = ({
    * @param {number} newRating - 사용자가 선택한 새로운 별점 값.
    */
   const handleStarClick = (newRating: number) => {
-    if (interactive) {
+    if (isinteractive) {
       setCurrentRating(newRating);
       if (onRatingChange) {
         onRatingChange(newRating);
@@ -68,7 +68,7 @@ const StarRating: React.FC<StarRatingProps> = ({
    * @param {number} starIndex - 마우스가 호버 중인 별의 인덱스 (1-5).
    */
   const handleMouseEnter = (starIndex: number) => {
-    if (interactive) {
+    if (isinteractive) {
       setHoverRating(starIndex);
     }
   };
@@ -77,7 +77,7 @@ const StarRating: React.FC<StarRatingProps> = ({
    * 사용자가 별에서 마우스를 뗐을 때 호출되는 함수.
    */
   const handleMouseLeave = () => {
-    if (interactive) {
+    if (isinteractive) {
       setHoverRating(null);
     }
   };
@@ -97,7 +97,7 @@ const StarRating: React.FC<StarRatingProps> = ({
       stars.push(
         <div
           key={i}
-          className={`relative inline-block mr-[8px] w-[17px] h-[17px] sm:w-[22px] sm:h-[22px] ${interactive ? 'cursor-pointer' : 'cursor-default'}`}
+          className={`relative inline-block mr-[8px] w-[17px] h-[17px] sm:w-[22px] sm:h-[22px] ${isinteractive ? 'cursor-pointer' : 'cursor-default'}`}
           onMouseEnter={() => handleMouseEnter(i)}
           onMouseLeave={handleMouseLeave}
           onClick={() => handleStarClick(i)}
