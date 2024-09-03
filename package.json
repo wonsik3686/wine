@@ -48,5 +48,17 @@
     "prettier-plugin-tailwindcss": "^0.6.6",
     "tailwindcss": "^3.4.10",
     "typescript": "^5"
-  }
+  },
+  "compilerOptions": {
+    "target": "es6",
+    "module": "commonjs",
+    "strict": true
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }
