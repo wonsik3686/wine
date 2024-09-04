@@ -100,8 +100,8 @@ function AddWineModal({ isOpen, onClick }: ModalProps) {
           <Button
             buttonStyle="box"
             buttonWidth="fitToChildren"
-            buttonColor="white"
-            textColor="black"
+            buttonColor="lightPurple"
+            textColor="purple"
             style={{ flexGrow: '1' }}
           >
             취소
