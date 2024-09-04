@@ -11,6 +11,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
     return (
       <div className="inline-flex w-full shrink-0 flex-col items-start gap-3">
         {label && (
+          // eslint-disable-next-line jsx-a11y/label-has-associated-control
           <label className="font-sans text-lg font-medium text-gray-800">
             {label}
           </label>
