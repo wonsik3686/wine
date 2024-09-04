@@ -67,7 +67,7 @@ function Chip({
 }: ChipProps): JSX.Element {
   return (
     <div
-      className={clsx('px-4 py-2 bg-gray-200 rounded-full text-sm', {
+      className={clsx('rounded-full bg-gray-200 px-4 py-2 text-sm', {
         'bg-red-500 text-white': selected,
         'cursor-pointer': !isDisabled,
         'cursor-default': isDisabled,
