@@ -125,7 +125,7 @@ function Dropdown({
   const [selectedLabel, setSelectedLabel] = useState<string | undefined>(
     initialLabel
   );
-  const dropdownRef = useRef<HTMLDivElement | null>(null);
+  const dropdownRef = useRef<HTMLButtonElement | null>(null);
 
   // 클릭 외부 감지
   useEffect(() => {
@@ -154,9 +154,10 @@ function Dropdown({
   };
 
   return (
-    <div
+    <button
       className="relative inline-block text-left"
       ref={dropdownRef}
+      type="button"
       onClick={() => setIsOpen(!isOpen)}
     >
       {type === 'action' ? (
@@ -198,6 +199,7 @@ function Dropdown({
             {options.map((option) => (
               <button
                 key={option.label}
+                type="button"
                 onClick={() => handleSelect(option)}
                 className={`mx-auto my-[4px] block rounded-[10px] px-4 py-2 text-left text-lg font-medium text-gray-800 hover:bg-purple-10 hover:text-purple-100 ${optionClassName}`}
                 style={{ width: `calc(${width}px - 8px)` }}
@@ -208,7 +210,7 @@ function Dropdown({
           </div>
         </div>
       )}
-    </div>
+    </button>
   );
 }
 
