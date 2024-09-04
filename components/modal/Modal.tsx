@@ -86,7 +86,7 @@ function Modal({ isOpen, onClose, children, className }: ModalProps) {
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       <div className="fixed inset-0 bg-black opacity-50" onClick={onClose} />
       <div
-        className={`${className} relative z-10 w-full max-w-lg rounded-lg bg-white p-8 shadow-lg`}
+        className={`${className} relative z-10 w-fit max-w-lg rounded-lg bg-white p-8 shadow-lg`}
       >
         {children}
       </div>
