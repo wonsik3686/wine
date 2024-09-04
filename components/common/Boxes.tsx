@@ -1,4 +1,4 @@
-import Star from '@/public/svg/star.svg';
+import Star from '@/public/icons/star.svg';
 
 export function RatingBox({ rating }: { rating: number }) {
   const isRating = rating.toFixed(1);
