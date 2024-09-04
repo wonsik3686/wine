@@ -8,9 +8,9 @@ export default function Header() {
     <div className="flex justify-center">
       <header
         className="flex items-center justify-between bg-black 
-    								 pc:mx-5 pc:mt-6 pc:w-[75rem] pc:rounded-2xl pc:px-16 
-    								pc:py-4 tab:mx-5 tab:mt-6 tab:w-[46.5rem] tab:rounded-2xl tab:px-14
-    								tab:py-4 mob:mx-4 mob:mt-4 mob:rounded-xl mob:px-5 mob:py-4 "
+      pc:mx-5 pc:mt-6 pc:w-[75rem] pc:rounded-2xl pc:px-16 
+      pc:py-4 tab:mx-5 tab:mt-6 tab:w-[46.5rem] tab:rounded-2xl tab:px-14
+      tab:py-4 mob:mx-4 mob:mt-4 mob:rounded-xl mob:px-5 mob:py-4 "
       >
         <Link href="/">
           <Image
