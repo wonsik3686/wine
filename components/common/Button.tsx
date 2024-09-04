@@ -6,8 +6,8 @@ import { ButtonHTMLAttributes } from 'react';
 type ButtonProps = {
   buttonStyle: 'box' | 'floating';
   buttonWidth: 'fitToChildren' | 'fitToParent';
-  buttonColor: 'purple' | 'white';
-  textColor: 'white' | 'gray' | 'black';
+  buttonColor: 'purple' | 'white' | 'lightPurple';
+  textColor: 'white' | 'gray' | 'black' | 'purple';
 } & ButtonHTMLAttributes<HTMLButtonElement>;
 
 function Button({
@@ -33,10 +33,13 @@ function Button({
           buttonColor === 'purple',
         'border-[1px] border-solid border-gray-300 bg-white hover:bg-gray-50 active:bg-gray-100':
           buttonColor === 'white',
+        'bg-purple-10 hover:bg-purple-50 active:bg-purple-10':
+          buttonColor === 'lightPurple',
         // textColor
         'text-white': textColor === 'white',
         'text-gray-500': textColor === 'gray',
         'text-gray-800': textColor === 'black',
+        'text-purple-100': textColor === 'purple',
       })}
       {...buttonAttributes}
     />
