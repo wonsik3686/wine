@@ -1,12 +1,12 @@
 'use client';
 
 import Image from 'next/image';
-import React from 'react';
-interface ProfileProps {
-  src?: string;
-}
 
-const Profile: React.FC<ProfileProps> = ({ src }) => {
+type ProfileProps = {
+  src?: string;
+};
+
+export default function Profile({ src }: ProfileProps) {
   const DefaultProfileImage = '/icons/defaultProfile.svg';
   const displayImage = src || DefaultProfileImage;
   return (
@@ -18,6 +18,4 @@ const Profile: React.FC<ProfileProps> = ({ src }) => {
       height={64}
     />
   );
-};
-
-export default Profile;
+}
