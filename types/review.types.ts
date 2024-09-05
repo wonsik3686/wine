@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 import { Aroma } from './wine.types';
 
 // 리뷰 작성자 정보

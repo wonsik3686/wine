@@ -5,8 +5,8 @@ import { axiosInstance } from './_axiosInstance';
 export const getWineDetail = async ({ ...params }: WineDetailRequest) => {
   const response = await axiosInstance<WineDetailResponse>({
     method: 'GET',
-    url: '/wines/' + params.id,
-    params: params,
+    url: `/wines/${params.id}`,
+    params,
   });
   return response;
 };

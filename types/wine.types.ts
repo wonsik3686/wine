@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 import { AvgRatings, RecentReview, ReviewListType } from './review.types';
 
 // WineType Enum 정의

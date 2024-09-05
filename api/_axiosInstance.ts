@@ -1,7 +1,7 @@
 import axios, { InternalAxiosRequestConfig } from 'axios';
 
 const TEAM_ID = '8-4';
-const BASE_URL = 'https://winereview-api.vercel.app/' + TEAM_ID;
+const BASE_URL = `https://winereview-api.vercel.app/${TEAM_ID}`;
 
 const axiosInstance = axios.create({
   baseURL: BASE_URL,
@@ -14,8 +14,10 @@ axiosInstance.interceptors.request.use(
     const accessToken = 'token';
 
     if (accessToken) {
-      config.headers.Authorization = `Bearer ${accessToken}`;
-      return config;
+      const modifiedConfig = { ...config }; // 새로운 객체를 생성하여 수정
+      // eslint-disable-next-line dot-notation
+      modifiedConfig.headers['Authorization'] = `Bearer ${accessToken}`;
+      return modifiedConfig;
     }
     // throw new Error('로그인이 필요합니다.');
     return config;
