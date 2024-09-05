@@ -1,5 +1,5 @@
-import Header from '@/components/common/Header';
 import { QueryProvider } from '@/providers/query';
+import RootHeader from '@/providers/RootHeader';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
@@ -19,8 +19,9 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body className={inter.className}>
-        <Header />
-        <QueryProvider>{children}</QueryProvider>
+        <QueryProvider>
+          <RootHeader>{children}</RootHeader>
+        </QueryProvider>
       </body>
     </html>
   );
