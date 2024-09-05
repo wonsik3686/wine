@@ -1,6 +1,7 @@
 import axios, { InternalAxiosRequestConfig } from 'axios';
 
-const BASE_URL = 'https://winereview-api.vercel.app';
+const TEAM_ID = '8-4';
+const BASE_URL = 'https://winereview-api.vercel.app/' + TEAM_ID;
 
 const axiosInstance = axios.create({
   baseURL: BASE_URL,
