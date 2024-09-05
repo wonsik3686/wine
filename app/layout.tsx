@@ -1,3 +1,4 @@
+import Header from '@/components/common/Header';
 import { QueryProvider } from '@/providers/query';
 import RootHeader from '@/providers/RootHeader';
 import type { Metadata } from 'next';
