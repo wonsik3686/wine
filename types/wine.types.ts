@@ -1,5 +1,12 @@
 import { AvgRatings, RecentReview, ReviewListType } from './review.types';
 
+// WineType Enum 정의
+export enum WineType {
+  RED = 'RED',
+  WHITE = 'WHITE',
+  SPARKLING = 'SPARKLING',
+}
+
 // Aroma에 대한 Enum 정의
 export enum Aroma {
   CHERRY = 'CHERRY',
