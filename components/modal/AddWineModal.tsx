@@ -5,27 +5,35 @@ import Button from '../common/Button';
 import Dropdown from '../common/dropdown/Dropdown';
 import Input from '../common/Input';
 import Modal from './Modal';
+import WineImageInput from './WineImageInput';
+
+type FormValues = {
+  name: string;
+  price: string;
+  origin: string;
+  type: string;
+  imgFile: File | null;
+};
 
 type ModalProps = {
   isOpen: boolean;
   onClick: () => void;
+  initialFormValue: FormValues | (() => FormValues);
 };
 
-function AddWineModal({ isOpen, onClick }: ModalProps) {
-  const [formValue, setFormValue] = useState({
-    name: '',
-    price: '',
-    origin: '',
-    type: 'Red',
-  });
+function AddWineModal({ isOpen, onClick, initialFormValue }: ModalProps) {
+  const [formValue, setFormValue] = useState<FormValues>(initialFormValue);
 
   const wineOption = [
     { label: 'Red', value: 'red' },
-    { label: 'White', value: 'White' },
+    { label: 'White', value: 'white' },
     { label: 'Sparkling', value: 'Sparkling' },
   ];
 
-  const handleFormChange = (name: string, value: string | null) => {
+  const handleFormChange = (
+    name: string,
+    value: string | number | File | null
+  ) => {
     setFormValue((prevValues) => ({
       ...prevValues,
       [name]: value,
@@ -37,19 +45,32 @@ function AddWineModal({ isOpen, onClick }: ModalProps) {
     handleFormChange(name, value);
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log(formValue);
-  };
-
   const handleSelect = (value: string | number) => {
-    return value;
+    handleFormChange('type', value); // 와인 타입을 선택할 때 상태 업데이트
   };
 
   const checkAllInputsFilled = () => {
     return (
       formValue.name !== '' && formValue.price !== '' && formValue.origin !== ''
     );
+  };
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+    formData.append('name', formValue.name);
+    formData.append('price', formValue.price);
+    formData.append('origin', formValue.origin);
+    formData.append('type', formValue.type);
+
+    if (formValue.imgFile) {
+      formData.append('imgFile', formValue.imgFile); // 파일 있을 때만 추가
+    }
+
+    // API POST 요청 대신 임시로 넣은 값
+    console.log(formValue);
+    setFormValue(initialFormValue);
   };
 
   return (
@@ -96,6 +117,13 @@ function AddWineModal({ isOpen, onClick }: ModalProps) {
           width={412}
           initialLabel="Red"
         />
+        <br />
+        <br />
+        <WineImageInput
+          name="imgFile"
+          value={formValue.imgFile}
+          onChange={handleFormChange}
+        />
         <div className="mt-[32px] flex gap-[5px]">
           <Button
             buttonStyle="box"
@@ -103,6 +131,7 @@ function AddWineModal({ isOpen, onClick }: ModalProps) {
             buttonColor="lightPurple"
             textColor="purple"
             style={{ flexGrow: '1' }}
+            onClick={onClick}
           >
             취소
           </Button>

@@ -192,7 +192,7 @@ function Dropdown({
 
       {isOpen && (
         <div
-          className={`absolute mt-2 rounded-[16px] bg-white ring-1 ring-gray-300 ${dropdownClassName} ${styles.fadeInDown}`}
+          className={`absolute z-10 mt-2 rounded-[16px] bg-white ring-1 ring-gray-300 ${dropdownClassName} ${styles.fadeInDown}`}
           style={{ width: `${width}px` }}
         >
           <div className="py-1">
