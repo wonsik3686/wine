@@ -140,12 +140,6 @@ function AddWineModal({ isOpen, onClick, initialFormValue }: ModalProps) {
             buttonWidth="fitToChildren"
             buttonColor="purple"
             textColor="white"
-            style={{
-              flexGrow: '2',
-              backgroundColor: !checkAllInputsFilled() ? '#d1d5db' : '', // Gray 300
-              color: !checkAllInputsFilled() ? '#6b7280' : '', // Gray 500
-              cursor: !checkAllInputsFilled() ? 'not-allowed' : 'pointer',
-            }}
             disabled={!checkAllInputsFilled()}
           >
             와인 등록하기
