@@ -53,9 +53,9 @@ export type WineListType = {
   region: string;
   image: string;
   price: number;
-  type: string;
+  type: string; // "RED", "WHITE", "SPARKLING" 중 하나
   avgRating: number;
   reviewCount: number;
   recentReview: RecentReview | null; // nullable true
-  userId: number;
+  userId?: number;
 };

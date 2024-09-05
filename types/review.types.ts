@@ -44,13 +44,17 @@ export type AvgRatings = {
   [key: string]: number; // 동적 속성 이름에 대한 숫자 값
 };
 
-// 최근 리뷰 정보
+// 최근 리뷰 타입
 export type RecentReview = {
-  user: ReviewUser;
-  updatedAt: string; // 날짜 시간 형식
-  createdAt: string; // 날짜 시간 형식
-  content: string;
-  aroma: Aroma[]; // Aroma Enum 사용
-  rating: number;
   id: number;
+  rating: number;
+  lightBold?: number;
+  smoothTannic?: number;
+  drySweet?: number;
+  softAcidic?: number;
+  aroma: Aroma[]; // Aroma Enum 배열
+  content: string;
+  createdAt: string; // ISO 8601 날짜 시간 형식
+  updatedAt: string; // ISO 8601 날짜 시간 형식
+  user: ReviewUser;
 };
