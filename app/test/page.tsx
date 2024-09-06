@@ -2,6 +2,7 @@
 
 import { PriceBox, RatingBox } from '@/components/common/Boxes';
 import Button from '@/components/common/Button';
+import StarRating from '@/components/common/StarRating';
 import AddReviewModal from '@/components/modal/AddReviewModal';
 import { useState } from 'react';
 
@@ -101,6 +102,7 @@ function Test() {
         onClick={handleClick}
         initialFormValue={initialWineValue}
       />
+      <StarRating isInteractive />
     </main>
   );
 }
