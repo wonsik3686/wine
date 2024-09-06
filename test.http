@@ -1,0 +1,11 @@
+POST https://winereview-api.vercel.app/8-4/auth/signUp
+# Accept: application/json
+Content-Type: application/json
+
+{
+    "email": "test12345@naver.com",
+    "nickname": "테스트중",
+    "password": "p@ssword",
+    "passwordConfirmation":"p@ssword"
+
+}

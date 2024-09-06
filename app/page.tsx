@@ -1,5 +1,5 @@
 // import Header from '@/components/common/Header';
-import Register from '@/app/register/Register';
+import Signup from '@/app/auth/register/Signup';
 
 export default function Home() {
   return (
@@ -7,7 +7,7 @@ export default function Home() {
       {/* <Header /> */}
 
       <main className="flex min-h-screen flex-col items-center justify-center bg-white p-24">
-        <Register />
+        <Signup />
       </main>
     </div>
   );
