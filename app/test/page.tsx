@@ -1,7 +1,26 @@
+'use client';
+
 import { PriceBox, RatingBox } from '@/components/common/Boxes';
 import Button from '@/components/common/Button';
+import AddReviewModal from '@/components/modal/AddReviewModal';
+import { useState } from 'react';
 
 function Test() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleClick = () => {
+    if (!isOpen) {
+      setIsOpen(true);
+    } else setIsOpen(false);
+  };
+
+  const initialWineValue = {
+    name: '',
+    price: '',
+    origin: '',
+    type: 'Red',
+    imgFile: null,
+  };
   return (
     <main className="grid grid-cols-3 gap-8 bg-white p-8">
       <PriceBox price={50000} />
@@ -74,6 +93,14 @@ function Test() {
       >
         취소
       </Button>
+      <button type="button" onClick={handleClick}>
+        리뷰모달열기
+      </button>
+      <AddReviewModal
+        isOpen={isOpen}
+        onClick={handleClick}
+        initialFormValue={initialWineValue}
+      />
     </main>
   );
 }
