@@ -7,7 +7,7 @@ type StarRatingProps = {
   rating?: number;
   isInteractive?: boolean;
   onRatingChange?: (rating: number) => void;
-  size?: string;
+  size?: 'default' | 'small';
 };
 
 /**
