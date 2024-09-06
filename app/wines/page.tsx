@@ -1,7 +1,15 @@
+import '@/app/globals.css';
+import MonthlyWineSection from '@/components/wines/MonthlyWineSection';
+import WineSection from '@/components/wines/WineSection';
+
 export default function Wines() {
   return (
-    <div className="bg-white">
-      <main className="flex min-h-screen flex-col items-center justify-center bg-white p-24" />
-    </div>
+    <main
+      className="mt-[50px] flex min-h-screen flex-col bg-white
+      p-[20px] mob:p-[16px]"
+    >
+      <MonthlyWineSection />
+      <WineSection />
+    </main>
   );
 }
