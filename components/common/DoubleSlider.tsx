@@ -10,10 +10,32 @@ import ReactSlider from 'react-slider';
  * - width - 슬라이더의 너비 (기본값: '200px')
  * - min - 슬라이더의 최솟값
  * - max - 슬라이더의 최댓값
- * 아래와 같이 사용합니다.
- * - const [sliderValues, setSliderValues] = useState<[number, number]>([20, 80]);
- * - const handleSliderChange = (values: [number, number]) => {
- * - setSliderValues(values);
+ * @example
+ *
+ * import DoubleSlider from './DoubleSlider';
+ * import { useState } from 'react';
+ *
+ * function Example() {
+ *   const [sliderValues, setSliderValues] = useState<[number, number]>([20, 80]);
+ *
+ *   const handleSliderChange = (values: [number, number]) => {
+ *     setSliderValues(values);
+ *   };
+ *
+ *   return (
+ *     <>
+ *       <DoubleSlider
+ *         values={sliderValues}
+ *         onChange={handleSliderChange}
+ *         min={0}
+ *         max={100}
+ *         width="300px"
+ *       />
+ *       <p>선택된 영역: {sliderValues[0]} ~ {sliderValues[1]}</p>
+ *     </>
+ *   );
+ * }
+ *
  */
 export default function DoubleSlider({
   values,
