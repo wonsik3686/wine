@@ -1,5 +1,6 @@
 import { PriceBox, RatingBox } from '@/components/common/Boxes';
 import Button from '@/components/common/Button';
+import StarRating from '@/components/common/StarRating';
 
 function Test() {
   return (
@@ -74,6 +75,8 @@ function Test() {
       >
         취소
       </Button>
+      <StarRating isInteractive />
+      <StarRating rating={3.8} size="small" />
     </main>
   );
 }

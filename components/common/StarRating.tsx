@@ -1,11 +1,13 @@
 'use client';
 
+import clsx from 'clsx';
 import { useState } from 'react';
 
 type StarRatingProps = {
   rating?: number;
   isInteractive?: boolean;
   onRatingChange?: (rating: number) => void;
+  size?: 'default' | 'small';
 };
 
 /**
@@ -45,6 +47,7 @@ function StarRating({
   rating = 0,
   isInteractive = false,
   onRatingChange,
+  size,
 }: StarRatingProps) {
   const [hoverRating, setHoverRating] = useState<number | null>(null);
   const [currentRating, setCurrentRating] = useState<number>(rating);
@@ -116,7 +119,16 @@ function StarRating({
       stars.push(
         <button
           key={i}
-          className={`relative mr-[8px] inline-block h-[17px] w-[17px] sm:h-[22px] sm:w-[22px] ${isInteractive ? 'cursor-pointer' : 'cursor-default'}`}
+          className={clsx(
+            'relative inline-block',
+            isInteractive ? 'cursor-pointer' : 'cursor-default',
+            {
+              'mr-[8px] h-[17px] w-[17px] sm:mr-[5px] sm:h-[22px] sm:w-[22px]':
+                size !== 'small',
+              'mr-[5px] h-[13px] w-[14px] sm:mr-[3px] sm:h-[16px] sm:w-[17px]':
+                size === 'small',
+            }
+          )}
           onMouseEnter={() => handleMouseEnter(i)}
           onMouseLeave={handleMouseLeave}
           onClick={() => handleStarClick(i)}
