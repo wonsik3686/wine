@@ -1,10 +1,11 @@
 'use client';
 
+import { axiosInstance } from '@/api/_axiosInstance';
 import Button from '@/components/common/Button';
 import Input from '@/components/common/Input';
-import axios from 'axios';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { ChangeEvent, FormEvent, useCallback, useState } from 'react';
 
 type FormValues = {
@@ -43,6 +44,7 @@ export default function Signup() {
       [name]: !value,
     }));
   }, []);
+  const router = useRouter();
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -62,12 +64,13 @@ export default function Signup() {
       setError('비밀번호가 일치하지 않습니다.');
       return;
     }
-
-    await axios.post('/auth/signUp', {
+    // console.log(axiosInstance.defaults.baseURL);
+    await axiosInstance.post('/auth/signUp', {
       email,
       nickname,
       password,
     });
+    router.push('/');
   }
 
   return (
@@ -78,85 +81,70 @@ export default function Signup() {
           alt="로고"
           width={104}
           height={30}
-          mb-16
+          // className="mb-16"
         />
       </Link>
-      <div className="mt-16 w-[400px]">
-        <form onSubmit={handleSubmit}>
-          <div className="h-[108px]">
-            <Input
-              label="이메일"
-              // errorMessage= '이메일을 입력해주세요'
-              errorMessage={
-                formErrors.email ? '이메일을 입력해주세요' : undefined
-              }
-              placeholder="whyne@email.com"
-              type="email"
-              name="email"
-              value={values.email}
-              onChange={handleChange}
-            />
-          </div>
+      <form onSubmit={handleSubmit}>
+        <Input
+          label="이메일"
+          errorMessage={formErrors.email ? '이메일을 입력해주세요' : undefined}
+          placeholder="whyne@email.com"
+          type="email"
+          name="email"
+          value={values.email}
+          onChange={handleChange}
+        />
 
-          <div className="h-[108px]">
-            <Input
-              label="닉네임"
-              errorMessage={
-                formErrors.nickname ? '닉네임을 입력해주세요' : undefined
-              }
-              placeholder="whyne"
-              type="text"
-              name="nickname"
-              value={values.nickname}
-              onChange={handleChange}
-            />
-          </div>
+        <Input
+          label="닉네임"
+          errorMessage={
+            formErrors.nickname ? '닉네임을 입력해주세요' : undefined
+          }
+          placeholder="whyne"
+          type="text"
+          name="nickname"
+          value={values.nickname}
+          onChange={handleChange}
+        />
 
-          <div className="h-[108px]">
-            <Input
-              label="비밀번호"
-              errorMessage={
-                formErrors.password ? '비밀번호를 입력해주세요' : undefined
-              }
-              placeholder="영문, 숫자 포함 8자 이상"
-              type="password"
-              name="password"
-              value={values.password}
-              onChange={handleChange}
-            />
-          </div>
+        <Input
+          label="비밀번호"
+          errorMessage={
+            formErrors.password ? '비밀번호를 입력해주세요' : undefined
+          }
+          placeholder="영문, 숫자 포함 8자 이상"
+          type="password"
+          name="password"
+          value={values.password}
+          onChange={handleChange}
+        />
 
-          <div className="h-[108px]">
-            <Input
-              label="비밀번호 확인"
-              errorMessage={
-                error ||
-                (formErrors.passwordConfirmation
-                  ? '비밀번호를 입력해주세요'
-                  : undefined)
-              }
-              // errorMessage={error || '비밀번호를 입력해주세요'}
-              placeholder="비밀번호 확인"
-              type="password"
-              name="passwordConfirmation"
-              value={values.passwordConfirmation}
-              onChange={handleChange}
-            />
-          </div>
+        <Input
+          label="비밀번호 확인"
+          errorMessage={
+            error ||
+            (formErrors.passwordConfirmation
+              ? '비밀번호를 입력해주세요'
+              : undefined)
+          }
+          // errorMessage={error || '비밀번호를 입력해주세요'}
+          placeholder="비밀번호 확인"
+          type="password"
+          name="passwordConfirmation"
+          value={values.passwordConfirmation}
+          onChange={handleChange}
+        />
 
-          <div>
-            <Button
-              buttonStyle="box"
-              buttonWidth="fitToParent"
-              buttonColor="purple"
-              textColor="white"
-              type="submit"
-            >
-              가입하기
-            </Button>
-          </div>
-        </form>
-      </div>
+        <Button
+          buttonStyle="box"
+          buttonWidth="fitToParent"
+          buttonColor="purple"
+          textColor="white"
+          type="submit"
+        >
+          가입하기
+        </Button>
+      </form>
       {/* TODO:띄어쓰기 다시보기 */}
       <div className="mt-10 text-gray-500">
         계정이 이미 있으신가요?{' '}
