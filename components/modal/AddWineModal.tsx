@@ -79,7 +79,7 @@ function AddWineModal({ isOpen, onClick, initialFormValue }: ModalProps) {
         와인 등록
       </h1>
       <form
-        style={{ marginBottom: '32px', width: '412px' }}
+        style={{ marginBottom: '32px', width: '100%' }}
         onSubmit={handleSubmit}
       >
         <Input
@@ -87,7 +87,7 @@ function AddWineModal({ isOpen, onClick, initialFormValue }: ModalProps) {
           id="name"
           name="name"
           placeholder="와인 이름 입력"
-          style={{ marginBottom: '32px', width: '412px', height: '48px' }}
+          style={{ marginBottom: '32px', width: '100%', height: '48px' }}
           onChange={handleInputChange}
         />
         <Input
@@ -96,7 +96,7 @@ function AddWineModal({ isOpen, onClick, initialFormValue }: ModalProps) {
           name="price"
           type="number"
           placeholder="가격 입력"
-          style={{ marginBottom: '32px', width: '412px', height: '48px' }}
+          style={{ marginBottom: '32px', width: '100%', height: '48px' }}
           onChange={handleInputChange}
         />
         <Input
@@ -104,7 +104,7 @@ function AddWineModal({ isOpen, onClick, initialFormValue }: ModalProps) {
           id="origin"
           name="origin"
           placeholder="원산지 입력"
-          style={{ marginBottom: '32px', width: '412px', height: '48px' }}
+          style={{ marginBottom: '32px', width: '100%', height: '48px' }}
           onChange={handleInputChange}
         />
         <h2 className="mb-[10px] font-sans text-lg font-medium text-gray-800">
@@ -114,7 +114,6 @@ function AddWineModal({ isOpen, onClick, initialFormValue }: ModalProps) {
           options={wineOption}
           onSelect={handleSelect}
           type="select"
-          width={412}
           initialLabel="Red"
         />
         <br />
@@ -140,6 +139,7 @@ function AddWineModal({ isOpen, onClick, initialFormValue }: ModalProps) {
             buttonWidth="fitToChildren"
             buttonColor="purple"
             textColor="white"
+            style={{ flexGrow: '2' }}
             disabled={!checkAllInputsFilled()}
           >
             와인 등록하기
