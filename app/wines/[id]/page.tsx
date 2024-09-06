@@ -1,7 +1,10 @@
+import WineDetailCard from '@/components/wines/WineDetailCard';
+
 export default function WineDetail({ params }: { params: { id: number } }) {
   return (
-    <main>
-      <section>{params.id}</section>
-    </main>
+    <>
+      <section className="hidden">{params.id}</section>
+      <WineDetailCard />
+    </>
   );
 }
