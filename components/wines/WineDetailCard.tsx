@@ -1,4 +1,5 @@
 'use client';
+
 import { WineDetailType } from '@/types/wine.types';
 import Image from 'next/image';
 import { PriceBox } from '../common/Boxes';
@@ -18,7 +19,7 @@ export default function WineDetailCard({ wineDetail }: WineDetailProps) {
       </div>
       <div className="h-[16.25rem] w-full rounded-2xl border-[1px] border-gray-300 mob:h-[13.0625rem]">
         <div className="ml-[15.25rem] mt-2 flex h-full flex-col justify-center tab:ml-[12.75rem] mob:ml-[6.13rem]">
-          <h2 className="text-h2xl mb-5 w-[18.75rem] font-sans font-semibold text-gray-800 mob:mb-3 mob:w-[12.5rem] mob:text-xl">
+          <h2 className="mb-5 w-[18.75rem] font-sans text-h2xl font-semibold text-gray-800 mob:mb-3 mob:w-[12.5rem] mob:text-xl">
             {wineDetail.name}
           </h2>
           <p className="mb-[0.81rem] font-sans text-lg font-regular text-gray-500 mob:mb-1 mob:text-sm">

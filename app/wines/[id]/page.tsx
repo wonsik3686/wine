@@ -1,4 +1,5 @@
 'use client';
+
 import WineDetailCard from '@/components/wines/WineDetailCard';
 import useWineDetail from '@/queries/wines.queries';
 
