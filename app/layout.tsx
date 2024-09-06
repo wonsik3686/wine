@@ -1,4 +1,5 @@
 import { QueryProvider } from '@/providers/query';
+import RootHeader from '@/providers/RootHeader';
 import type { Metadata } from 'next';
 import './globals.css';
 
@@ -15,7 +16,9 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body className="font-sans">
-        <QueryProvider>{children}</QueryProvider>
+        <QueryProvider>
+          <RootHeader>{children}</RootHeader>
+        </QueryProvider>
       </body>
     </html>
   );
