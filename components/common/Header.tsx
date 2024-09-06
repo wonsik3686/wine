@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 export default function Header() {
   return (
-    <div className="flex w-full justify-center">
+    <div className="sticky top-0 z-30 flex w-full justify-center">
       <header
         className="flex w-full items-center justify-between bg-black
     								pc:mx-5 pc:mt-6 pc:w-[71.25rem] pc:rounded-2xl pc:px-16 pc:py-4
