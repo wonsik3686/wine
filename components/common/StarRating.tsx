@@ -116,7 +116,7 @@ function StarRating({
       stars.push(
         <button
           key={i}
-          className={`relative mr-[8px] inline-block h-[17px] w-[17px] sm:h-[22px] sm:w-[22px] ${isInteractive ? 'cursor-pointer' : 'cursor-default'}`}
+          className={`relative inline-block flex h-[14px] w-[14px] mob:h-[10px] mob:w-[10px] ${isInteractive ? 'cursor-pointer' : 'cursor-default'}`}
           onMouseEnter={() => handleMouseEnter(i)}
           onMouseLeave={handleMouseLeave}
           onClick={() => handleStarClick(i)}
@@ -139,7 +139,7 @@ function StarRating({
     return stars;
   };
 
-  return <div className="flex">{renderStars()}</div>;
+  return <div className="flex gap-[5px] mob:gap-[px]">{renderStars()}</div>;
 }
 
 export default StarRating;
