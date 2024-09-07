@@ -2,11 +2,11 @@
 
 import Button from '@/components/common/Button';
 import Input from '@/components/common/Input';
+import { useAuthStore } from '@/store/useAuthStore';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { ChangeEvent, FormEvent, useCallback, useState } from 'react';
-import { useAuthStore } from '@/store/useAuthStore';
 
 type FormValues = {
   email: string;
@@ -24,6 +24,7 @@ export default function Page() {
     email: false,
     password: false,
   });
+  const router = useRouter();
 
   const handleChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -38,26 +39,43 @@ export default function Page() {
     //   [name]: !value,
     // }));
   }, []);
-  const router = useRouter();
-  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    const { email, password } = values;
 
+  const validateForm = useCallback(() => {
+    const { email, password } = values;
     if (!email || !password) {
       setFormErrors({
         email: !email,
         password: !password,
       });
-      return;
+      return false;
     }
 
-    try {
-      await login(email, password);
-      router.push('/');
-    } catch (e) {
-      // TODO: 실패한 이유 사용자에게 노티
-    }
-  }
+    setFormErrors({
+      email: false,
+      password: false,
+    });
+    return true;
+  }, [values]);
+
+  const handleSubmit = useCallback(
+    async (e: FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      const { email, password } = values;
+
+      const valResult = validateForm();
+      if (!valResult) {
+        return;
+      }
+
+      try {
+        await login(email, password);
+        router.push('/');
+      } catch (e) {
+        // TODO: 실패한 이유 사용자에게 노티
+      }
+    },
+    [login, router, validateForm, values]
+  );
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-white p-24">
@@ -78,6 +96,8 @@ export default function Page() {
           type="email"
           name="email"
           value={values.email}
+          onBlur={() => validateForm()}
+          onKeyDown={(e) => (e.key === 'Enter' ? handleSubmit : () => {})}
           onChange={handleChange}
         />
 
@@ -92,6 +112,8 @@ export default function Page() {
           name="password"
           value={values.password}
           onChange={handleChange}
+          onKeyDown={(e) => (e.key === 'Enter' ? handleChange : () => {})}
+          onBlur={() => validateForm()}
         />
 
         <div className="pt-[10px] text-[14px] text-purple-700">
