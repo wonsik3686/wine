@@ -1,6 +1,9 @@
+'use client';
+
 import { PriceBox, RatingBox } from '@/components/common/Boxes';
 import Button from '@/components/common/Button';
 import RatingProgressbar from '@/components/common/RatingProgressbar';
+import Chip from '@/components/common/Chip';
 import StarRating from '@/components/common/StarRating';
 
 function Test() {
@@ -88,6 +91,8 @@ function Test() {
         ]}
         totalCount={5000}
       />
+      <Chip label="체리" selected isDisabled={false} />
+      <Chip label="오크" isDisabled />
     </main>
   );
 }
