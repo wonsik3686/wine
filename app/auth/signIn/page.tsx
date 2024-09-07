@@ -1,12 +1,12 @@
 'use client';
 
-import { axiosInstance } from '@/api/_axiosInstance';
 import Button from '@/components/common/Button';
 import Input from '@/components/common/Input';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { ChangeEvent, FormEvent, useCallback, useState } from 'react';
+import { useAuthStore } from '@/store/useAuthStore';
 
 type FormValues = {
   email: string;
@@ -14,6 +14,7 @@ type FormValues = {
 };
 
 export default function Page() {
+  const login = useAuthStore((state) => state.login);
   const [values, setValues] = useState<FormValues>({
     email: '',
     password: '',
@@ -50,19 +51,10 @@ export default function Page() {
       return;
     }
 
-    const response = await axiosInstance.post(
-      '/auth/signIn',
-      {
-        email,
-        password,
-      },
-      {
-        headers: { 'Content-Type': 'application/json' },
-      }
-    );
-    if (response.status === 201) {
+    try {
+      await login(email, password);
       router.push('/');
-    } else {
+    } catch (e) {
       // TODO: 실패한 이유 사용자에게 노티
     }
   }
