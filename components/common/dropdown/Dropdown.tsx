@@ -161,7 +161,7 @@ function Dropdown({
       onClick={() => setIsOpen(!isOpen)}
     >
       {type === 'action' ? (
-        <div>{trigger}</div>
+        <>{trigger}</>
       ) : (
         <div
           className={`flex cursor-pointer items-center rounded-[16px] border px-4 py-2 ${dropdownClassName} bg-white font-medium text-gray-700 ring-1 ring-gray-300`}
