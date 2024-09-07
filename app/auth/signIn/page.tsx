@@ -68,7 +68,7 @@ export default function Page() {
   }
 
   return (
-    <>
+    <div className="flex min-h-screen flex-col items-center justify-center bg-white p-24">
       <Link href="/">
         <Image
           className="mb-16"
@@ -89,19 +89,18 @@ export default function Page() {
           onChange={handleChange}
         />
 
-        <div className="pt-[25px]">
-          <Input
-            label="비밀번호"
-            errorMessage={
-              formErrors.password ? '비밀번호를 입력해주세요' : undefined
-            }
-            placeholder="비밀번호 입력"
-            type="password"
-            name="password"
-            value={values.password}
-            onChange={handleChange}
-          />
-        </div>
+        <Input
+          labelClassNames="pt-[20px]"
+          label="비밀번호"
+          errorMessage={
+            formErrors.password ? '비밀번호를 입력해주세요' : undefined
+          }
+          placeholder="비밀번호 입력"
+          type="password"
+          name="password"
+          value={values.password}
+          onChange={handleChange}
+        />
 
         <div className="pt-[10px] text-[14px] text-purple-700">
           {/* Link href 재설정 필요, 임시로 "/" 페이지 설정 */}
@@ -157,6 +156,6 @@ export default function Page() {
           <div>회원가입하기</div>
         </Link>
       </div>
-    </>
+    </div>
   );
 }
