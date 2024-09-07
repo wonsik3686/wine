@@ -2,6 +2,7 @@
 
 import { PriceBox, RatingBox } from '@/components/common/Boxes';
 import Button from '@/components/common/Button';
+import Chip from '@/components/common/Chip';
 import StarRating from '@/components/common/StarRating';
 import AddReviewModal from '@/components/modal/AddReviewModal';
 import { useState } from 'react';
@@ -104,6 +105,8 @@ function Test() {
       />
       <StarRating isInteractive />
       <StarRating rating={3.8} size="small" />
+      <Chip label="체리" selected isDisabled={false} />
+      <Chip label="오크" isDisabled />
     </main>
   );
 }
