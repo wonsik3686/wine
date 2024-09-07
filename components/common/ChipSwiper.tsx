@@ -14,9 +14,9 @@ export default function ChipSwiper({ slideData }: ChipSwiperProps) {
     <div className="overflow-hidden">
       <Swiper
         loop={false}
-        slidesPerView={'auto'}
+        slidesPerView="auto"
         spaceBetween={8}
-        freeMode={true}
+        freeMode
         modules={[FreeMode]}
       >
         {slideData.map((text, index) => (
@@ -24,7 +24,7 @@ export default function ChipSwiper({ slideData }: ChipSwiperProps) {
             key={`slider-${text}-${index}`}
             style={{ width: 'auto' }}
           >
-            <Chip label={text} isDisabled={true} />
+            <Chip label={text} isDisabled />
           </SwiperSlide>
         ))}
       </Swiper>
