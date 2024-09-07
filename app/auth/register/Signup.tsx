@@ -65,11 +65,24 @@ export default function Signup() {
       return;
     }
     // console.log(axiosInstance.defaults.baseURL);
-    await axiosInstance.post('/auth/signUp', {
-      email,
-      nickname,
-      password,
-    });
+    const response = await axiosInstance.post(
+      '/auth/signUp',
+      {
+        email,
+        nickname,
+        password,
+        passwordConfirmation,
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+    // TODO: 정상적으로 계정 생성 후 자동으로 로그인 되도록 처리하기
+    if (response.status !== 201) {
+      // TODO: 어떤 이유로 생성 안된건지 사용자에게 알림 보내기
+    }
     router.push('/');
   }
 
