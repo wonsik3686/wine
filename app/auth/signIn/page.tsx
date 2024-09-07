@@ -21,8 +21,8 @@ export default function Page() {
   });
 
   const [formErrors, setFormErrors] = useState({
-    email: false,
-    password: false,
+    email: '',
+    password: '',
   });
   const router = useRouter();
 
@@ -44,15 +44,15 @@ export default function Page() {
     const { email, password } = values;
     if (!email || !password) {
       setFormErrors({
-        email: !email,
-        password: !password,
+        email: !email ? '이메일이 입력되지 않았습니다.' : '',
+        password: !password ? '비밀번호가 입력되지 않았습니다.' : '',
       });
       return false;
     }
 
     setFormErrors({
-      email: false,
-      password: false,
+      email: '',
+      password: '',
     });
     return true;
   }, [values]);
@@ -72,6 +72,10 @@ export default function Page() {
         router.push('/');
       } catch (e) {
         // TODO: 실패한 이유 사용자에게 노티
+        setFormErrors({
+          email: '이메일 혹은 비밀번호를 확인해주세요.',
+          password: '   ',
+        });
       }
     },
     [login, router, validateForm, values]
@@ -91,7 +95,7 @@ export default function Page() {
       <form onSubmit={handleSubmit}>
         <Input
           label="이메일"
-          errorMessage={formErrors.email ? '이메일을 입력해주세요' : undefined}
+          errorMessage={formErrors.email}
           placeholder="이메일 입력"
           type="email"
           name="email"
@@ -104,9 +108,7 @@ export default function Page() {
         <Input
           labelClassNames="pt-[20px]"
           label="비밀번호"
-          errorMessage={
-            formErrors.password ? '비밀번호를 입력해주세요' : undefined
-          }
+          errorMessage={formErrors.password}
           placeholder="비밀번호 입력"
           type="password"
           name="password"
