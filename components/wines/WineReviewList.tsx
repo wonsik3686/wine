@@ -1,6 +1,8 @@
 'use client';
 
 import { WineDetailType } from '@/types/wine.types';
+import formatDistanceToNowKor from '@/utils/dateTimeUtils/FormatDistanceToNow';
+import translateAromaToKorean from '@/utils/translate/TranslateAromaToKorean';
 import Image from 'next/image';
 import { useState } from 'react';
 import { RatingBox } from '../common/Boxes';
@@ -43,14 +45,14 @@ export default function WineRevieList({ reviews }: WineRevieListProps) {
           <div className="flex w-full flex-row justify-between">
             <div className="flex flex-row items-center gap-4">
               <div className="h-16 w-16 mob:h-[2.625rem] mob:w-[2.625rem]">
-                <Profile src="" />
+                <Profile src={review.user.image?.toString()} />
               </div>
               <div className="flex flex-col">
                 <b className="font-sans text-2lg font-semibold text-gray-800 mob:text-lg">
-                  와인러버
+                  {review.user.nickname}
                 </b>
                 <p className="font-sans text-lg font-normal text-gray-500 mob:text-md">
-                  10시간 전
+                  {formatDistanceToNowKor(review.updatedAt)}
                 </p>
               </div>
             </div>
@@ -83,48 +85,23 @@ export default function WineRevieList({ reviews }: WineRevieListProps) {
               />
             </div>
           </div>
-          <div className="mt-5 flex w-full">
+          <div className="mt-5 flex w-full justify-between">
             <div className="relative overflow-hidden">
               <div
                 className="pointer-events-none absolute z-10 h-full w-full
 															bg-gradient-to-l from-white via-white/0 via-5% to-transparent"
               />
-              <ChipSwiper
-                slideData={[
-                  '체리',
-                  '오크',
-                  '카라멜',
-                  '시트러스',
-                  '담배잎',
-                  '커피',
-                  '체리',
-                  '오크',
-                  '카라멜',
-                  '시트러스',
-                  '담배잎',
-                  '커피',
-                  '체리',
-                  '오크',
-                  '카라멜',
-                  '시트러스',
-                  '담배잎',
-                  '커피',
-                ]}
-              />
+              <ChipSwiper slideData={translateAromaToKorean(review.aroma)} />
             </div>
             <div>
-              <RatingBox rating={5} />
+              <RatingBox rating={review.rating} />
             </div>
           </div>
           <div
             className={`mt-6 ${expandedReviewIndexes.includes(index) ? '' : 'hidden'}`}
           >
             <p className="font-sans text-lg font-normal text-gray-800">
-              Deep maroon color, tasting notes of blackberry, dark chocolate,
-              plum. Super jammy and bold with some smoky after notes. Big
-              flavor. Amazing value (would pay three times the price for it),
-              well balanced flavor. Could drink all day everyday with or without
-              food. I need more immediately.
+              {review.content}
             </p>
             <div className="mt-5">바디감 타닌 당도 산미</div>
           </div>
