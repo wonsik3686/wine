@@ -41,6 +41,7 @@ export default function WineRevieList({ reviews }: WineRevieListProps) {
           className="mb-5 mt-2 flex flex-col items-center justify-center
 												gap-[0.625rem] self-stretch rounded-2xl border-[1px] border-gray-300 px-10 pb-6 pt-8
 												mob:px-6 mob:py-4"
+          key={`review-${review.id}`}
         >
           <div className="flex w-full flex-row justify-between">
             <div className="flex flex-row items-center gap-4">
@@ -58,7 +59,7 @@ export default function WineRevieList({ reviews }: WineRevieListProps) {
             </div>
             <div className="flex items-start gap-7 mob:gap-[1.12rem]">
               <div className="relative h-[2.375rem] w-[2.375rem] mob:h-8 mob:w-8">
-                <button>
+                <button type="button">
                   <Image
                     src="/icons/iconHeart.png"
                     alt="하트 아이콘"
@@ -70,10 +71,15 @@ export default function WineRevieList({ reviews }: WineRevieListProps) {
               <Dropdown
                 type="action"
                 options={dropdwonOptions}
-                onSelect={(value: string | number) => {}}
+                onSelect={(value: string | number) => {
+                  alert(value);
+                }}
                 optionClassName="text-center"
                 trigger={
-                  <button className="relative h-[2.375rem] w-[2.375rem] cursor-pointer mob:h-8 mob:w-8">
+                  <button
+                    type="button"
+                    className="relative h-[2.375rem] w-[2.375rem] cursor-pointer mob:h-8 mob:w-8"
+                  >
                     <Image
                       src="/icons/iconDot.png"
                       alt="더보기 아이콘"
@@ -107,6 +113,7 @@ export default function WineRevieList({ reviews }: WineRevieListProps) {
           </div>
           <button
             id="btnExpandReview"
+            type="button"
             onClick={() => toggleReview(index)}
             className="relative h-[1.875rem] w-full rounded-b-xl transition-all duration-200 ease-in-out hover:bg-gray-200 hover:opacity-80"
           >
