@@ -13,7 +13,7 @@ type FormValues = {
   password: string;
 };
 
-export default function SignIn() {
+export default function Page() {
   const [values, setValues] = useState<FormValues>({
     email: '',
     password: '',
@@ -50,17 +50,21 @@ export default function SignIn() {
       return;
     }
 
-    await axiosInstance.post(
+    const response = await axiosInstance.post(
       '/auth/signIn',
       {
         email,
         password,
       },
       {
-        withCredentials: true,
+        headers: { 'Content-Type': 'application/json' },
       }
     );
-    router.push('/');
+    if (response.status === 201) {
+      router.push('/');
+    } else {
+      // TODO: 실패한 이유 사용자에게 노티
+    }
   }
 
   return (
