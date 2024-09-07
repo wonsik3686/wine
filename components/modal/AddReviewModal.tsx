@@ -1,10 +1,13 @@
 'use client';
 
+import Image from 'next/image';
 import { ChangeEvent, FormEvent, useState } from 'react';
 import Button from '../common/Button';
-import Dropdown from '../common/dropdown/Dropdown';
-import Input from '../common/Input';
+import StarRating from '../common/StarRating';
+import TextArea from '../common/TextArea';
 import Modal from './Modal';
+import TagSelector from './Tagselector';
+import TasteSlider from './TasteSlider';
 
 type FormValues = {
   name: string;
@@ -18,20 +21,25 @@ type ModalProps = {
   isOpen: boolean;
   onClick: () => void;
   initialFormValue: FormValues | (() => FormValues);
+  WineDetail: {
+    id: string;
+    name: string;
+  };
+};
+
+// API로 받을 정보를 대신해서 테스트
+const TestWineDetail = {
+  id: '3',
+  name: 'Sentinel Carbernet Sauvignon 2016',
 };
 
 export default function AddReviewModal({
   isOpen,
   onClick,
   initialFormValue,
+  WineDetail = TestWineDetail,
 }: ModalProps) {
   const [formValue, setFormValue] = useState<FormValues>(initialFormValue);
-
-  const wineOption = [
-    { label: 'Red', value: 'red' },
-    { label: 'White', value: 'white' },
-    { label: 'Sparkling', value: 'Sparkling' },
-  ];
 
   const handleFormChange = (
     name: string,
@@ -43,13 +51,9 @@ export default function AddReviewModal({
     }));
   };
 
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     handleFormChange(name, value);
-  };
-
-  const handleSelect = (value: string | number) => {
-    handleFormChange('type', value); // 와인 타입을 선택할 때 상태 업데이트
   };
 
   const checkAllInputsFilled = () => {
@@ -77,79 +81,52 @@ export default function AddReviewModal({
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClick}>
-      <section className="space-between mb-[40px] flex">
-        <h1 className="font-sans text-2xl font-bold text-gray-800">
-          리뷰 등록
-        </h1>
-        <button type="button" onClick={onClick}>
-          X
-        </button>
-      </section>
-      <form
-        style={{ marginBottom: '32px', width: '100%' }}
-        onSubmit={handleSubmit}
-      >
-        <Input
-          label="와인 이름"
-          id="name"
-          name="name"
-          placeholder="와인 이름 입력"
-          style={{ marginBottom: '32px', width: '100%', height: '48px' }}
-          onChange={handleInputChange}
-        />
-        <Input
-          label="가격"
-          id="price"
-          name="price"
-          type="number"
-          placeholder="가격 입력"
-          style={{ marginBottom: '32px', width: '100%', height: '48px' }}
-          onChange={handleInputChange}
-        />
-        <Input
-          label="원산지"
-          id="origin"
-          name="origin"
-          placeholder="원산지 입력"
-          style={{ marginBottom: '32px', width: '100%', height: '48px' }}
-          onChange={handleInputChange}
-        />
-        <h2 className="mb-[10px] font-sans text-lg font-medium text-gray-800">
-          타입
-        </h2>
-        <Dropdown
-          options={wineOption}
-          onSelect={handleSelect}
-          type="select"
-          initialLabel="Red"
-        />
-        <br />
-        <br />
-
-        <div className="mt-[32px] flex gap-[5px]">
-          <Button
-            buttonStyle="box"
-            buttonWidth="fitToChildren"
-            buttonColor="lightPurple"
-            textColor="purple"
-            style={{ flexGrow: '1' }}
-            onClick={onClick}
-          >
-            취소
-          </Button>
-          <Button
-            buttonStyle="box"
-            buttonWidth="fitToChildren"
-            buttonColor="purple"
-            textColor="white"
-            style={{ flexGrow: '2' }}
-            disabled={!checkAllInputsFilled()}
-          >
-            와인 등록하기
-          </Button>
-        </div>
-      </form>
+    <Modal isOpen={isOpen} onClose={onClick} className="">
+      <div className="w-[528px] ">
+        <section className="mb-[40px] flex justify-between">
+          <h1 className="font-sans text-2xl font-bold text-gray-800">
+            리뷰 등록
+          </h1>
+          <button type="button" onClick={onClick}>
+            X
+          </button>
+        </section>
+        <form
+          style={{ marginBottom: '32px', width: '100%', whiteSpace: 'nowrap' }}
+          onSubmit={handleSubmit}
+        >
+          <Image
+            width={67}
+            height={67}
+            alt="기본 와인 이미지"
+            src="/icons/defaultWine.png"
+          />
+          <p>{WineDetail.name}</p>
+          <StarRating isInteractive />
+          <TextArea
+            id="content"
+            name="content"
+            placeholder="후기를 작성해주세요"
+            style={{ marginBottom: '32px', width: '100%', height: '100px' }}
+            onChange={handleInputChange}
+          />
+          <p>와인의 맛은 어땠나요?</p>
+          <TasteSlider />
+          <TagSelector />
+          <div className="mt-[32px] flex gap-[5px]">
+            <Button
+              buttonStyle="box"
+              buttonWidth="fitToChildren"
+              buttonColor="purple"
+              textColor="white"
+              style={{ flexGrow: '2' }}
+              disabled={!checkAllInputsFilled()}
+            >
+              리뷰 남기기
+            </Button>
+          </div>
+        </form>
+      </div>
     </Modal>
   );
 }

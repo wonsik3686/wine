@@ -103,6 +103,7 @@ function Test() {
         initialFormValue={initialWineValue}
       />
       <StarRating isInteractive />
+      <StarRating rating={3.8} size="small" />
     </main>
   );
 }

@@ -3,10 +3,6 @@
 }
 
 .customScrollbar::-webkit-scrollbar {
-  width: 0px;
-}
-
-.customScrollbar:hover::-webkit-scrollbar {
   width: 6px;
 }
 
