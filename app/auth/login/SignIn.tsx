@@ -1,8 +1,8 @@
 'use client';
 
+import { axiosInstance } from '@/api/_axiosInstance';
 import Button from '@/components/common/Button';
 import Input from '@/components/common/Input';
-import axios from 'axios';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -50,7 +50,7 @@ export default function SignIn() {
       return;
     }
 
-    await axios.post(
+    await axiosInstance.post(
       '/auth/signIn',
       {
         email,
