@@ -21,6 +21,7 @@
     "react-dom": "^18",
     "react-hook-form": "^7.53.0",
     "react-slider": "^2.0.6",
+    "swiper": "^11.1.12",
     "zustand": "^4.5.5"
   },
   "devDependencies": {
