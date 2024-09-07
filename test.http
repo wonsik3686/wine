@@ -1,8 +1,0 @@
-POST https://winereview-api.vercel.app/8-4/auth/signIn
-
-Content-Type: application/json
-
-{
-    "email": "test12345@naver.com",
-    "password": "p@ssword"
-}
