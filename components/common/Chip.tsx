@@ -68,7 +68,7 @@ function Chip({
   return (
     <button
       className={clsx(
-        'rounded-full bg-white px-3 py-2 text-sm font-medium ring-1 ring-gray-300 sm:px-4 sm:text-lg',
+        'rounded-[6.25rem] border-[1px] border-gray-300 bg-white px-[0.625rem] py-[0.375rem] text-sm font-medium  text-gray-600 sm:px-4 sm:text-lg',
         {
           'bg-purple-610 text-white': selected,
           'cursor-pointer': !isDisabled,
