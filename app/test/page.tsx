@@ -3,6 +3,7 @@
 import { PriceBox, RatingBox } from '@/components/common/Boxes';
 import Button from '@/components/common/Button';
 import Chip from '@/components/common/Chip';
+import RatingProgressbar from '@/components/common/RatingProgressbar';
 import StarRating from '@/components/common/StarRating';
 
 function Test() {
@@ -80,6 +81,16 @@ function Test() {
       </Button>
       <StarRating isInteractive />
       <StarRating rating={3.8} size="small" />
+      <RatingProgressbar
+        Ratings={[
+          { key: 5, value: 50 }, // 5점의 개수는 50개
+          { key: 4, value: 30 }, // 4점의 개수는 30개
+          { key: 3, value: 20 }, // 3점의 개수는 20개
+          { key: 2, value: 10 }, // 2점의 개수는 10개
+          { key: 1, value: 5 }, // 1점의 개수는 5개
+        ]}
+        totalCount={5000}
+      />
       <Chip label="체리" selected isDisabled={false} />
       <Chip label="오크" isDisabled />
     </main>
