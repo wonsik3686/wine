@@ -45,7 +45,7 @@ export default function WineReviewsRating({
           </Button>
         </div>
       </div>
-      <div className="pc: mb-[1.88rem]">
+      <div className="pc:mb-[1.88rem]">
         <RatingProgressbar Ratings={ratingsArray} totalCount={reviewCount} />
       </div>
       <div className="tab:hidden">
