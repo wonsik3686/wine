@@ -19,11 +19,8 @@ export default function ChipSwiper({ slideData }: ChipSwiperProps) {
         freeMode
         modules={[FreeMode]}
       >
-        {slideData.map((text, index) => (
-          <SwiperSlide
-            key={`slider-${text}-${index}`}
-            style={{ width: 'auto' }}
-          >
+        {slideData.map((text) => (
+          <SwiperSlide key={`slider-${text}`} style={{ width: 'auto' }}>
             <Chip label={text} isDisabled />
           </SwiperSlide>
         ))}
