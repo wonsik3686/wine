@@ -49,5 +49,7 @@ module.exports = {
     'react/require-default-props': 'off',
     'import/extensions': 'off', // 파일 확장자 명시 강제를 비활성화합니다.
     'react/display-name': 'off',
+    'jsx-a11y/click-events-have-key-events': 'off',
+    'jsx-a11y/no-static-element-interactions' : 'off',
   },
 };

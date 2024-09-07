@@ -1,6 +1,4 @@
-'use client';
-
-import SignIn from './auth/login/SignIn';
+import Header from '@/components/common/Header';
 
 export default function Home() {
   return (
@@ -15,9 +13,8 @@ export default function Home() {
     // </BrowserRouter>
 
     <div className="bg-white">
-      <main className="flex min-h-screen flex-col items-center justify-center bg-white p-24">
-        <SignIn />
-      </main>
+      <Header />
+      <main className="flex min-h-screen flex-col items-center justify-center bg-white p-24" />
     </div>
   );
 }
