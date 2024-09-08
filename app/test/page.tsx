@@ -4,6 +4,8 @@ import { PriceBox, RatingBox } from '@/components/common/Boxes';
 import Button from '@/components/common/Button';
 import AddWineModal from '@/components/modal/AddWineModal';
 import { useState } from 'react';
+import Chip from '@/components/common/Chip';
+import StarRating from '@/components/common/StarRating';
 
 function Test() {
   const [isOpen, setIsOpen] = useState(false);
@@ -102,6 +104,10 @@ function Test() {
       >
         취소
       </Button>
+      <StarRating isInteractive />
+      <StarRating rating={3.8} size="small" />
+      <Chip label="체리" selected isDisabled={false} />
+      <Chip label="오크" isDisabled />
     </main>
   );
 }
