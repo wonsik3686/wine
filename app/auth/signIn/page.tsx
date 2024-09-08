@@ -13,7 +13,7 @@ type FormValues = {
   password: string;
 };
 
-export default function Page() {
+export default function SingInPage() {
   const login = useAuthStore((state) => state.login);
   const [values, setValues] = useState<FormValues>({
     email: '',
