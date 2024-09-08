@@ -123,10 +123,8 @@ function StarRating({
             'relative inline-block flex',
             isInteractive ? 'cursor-pointer' : 'cursor-default',
             {
-              'h-[22px] w-[22px] mob:h-[17px] mob:w-[17px]':
-                size !== 'small',
-              'h-[17px] w-[17px] mob:h-[14px] mob:w-[14px]':
-                size === 'small',
+              'h-[22px] w-[22px] mob:h-[17px] mob:w-[17px]': size !== 'small',
+              'h-[17px] w-[17px] mob:h-[14px] mob:w-[14px]': size === 'small',
             }
           )}
           onMouseEnter={() => handleMouseEnter(i)}
