@@ -120,13 +120,11 @@ function StarRating({
         <button
           key={i}
           className={clsx(
-            'relative inline-block',
+            'relative inline-block flex',
             isInteractive ? 'cursor-pointer' : 'cursor-default',
             {
-              'mr-[8px] h-[17px] w-[17px] sm:mr-[5px] sm:h-[22px] sm:w-[22px]':
-                size !== 'small',
-              'mr-[5px] h-[13px] w-[14px] sm:mr-[3px] sm:h-[16px] sm:w-[17px]':
-                size === 'small',
+              'h-[22px] w-[22px] mob:h-[17px] mob:w-[17px]': size !== 'small',
+              'h-[17px] w-[17px] mob:h-[14px] mob:w-[14px]': size === 'small',
             }
           )}
           onMouseEnter={() => handleMouseEnter(i)}
@@ -151,7 +149,7 @@ function StarRating({
     return stars;
   };
 
-  return <div className="flex">{renderStars()}</div>;
+  return <div className="flex gap-[5px] mob:gap-[px]">{renderStars()}</div>;
 }
 
 export default StarRating;
