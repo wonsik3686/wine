@@ -70,7 +70,8 @@ export default function Page() {
       try {
         await login(email, password);
         router.push('/');
-      } catch (e) {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      } catch (_) {
         // TODO: 실패한 이유 사용자에게 노티
         setFormErrors({
           email: '이메일 혹은 비밀번호를 확인해주세요.',
