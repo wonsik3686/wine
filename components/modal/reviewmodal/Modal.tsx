@@ -87,7 +87,7 @@ function Modal({ isOpen, onClose, children, className }: ModalProps) {
     <div className="fixed inset-0 z-10 flex items-center justify-center">
       <div className="fixed inset-0 bg-black opacity-50 " onClick={onClose} />
       <div
-        className={`${className} ${styles.customScrollbar} fixed inset-x-0 bottom-0 top-20 z-20 w-full overflow-y-auto rounded-lg bg-white p-8 shadow-lg sm:relative sm:w-fit`}
+        className={`${className} ${styles.customScrollbar} fixed inset-x-0 bottom-0 top-20 z-20 w-full max-w-lg overflow-y-auto rounded-lg bg-white p-8 shadow-lg sm:relative sm:w-fit`}
       >
         {children}
       </div>

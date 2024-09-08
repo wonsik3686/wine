@@ -4,6 +4,7 @@ import { PriceBox, RatingBox } from '@/components/common/Boxes';
 import Button from '@/components/common/Button';
 import Chip from '@/components/common/Chip';
 import StarRating from '@/components/common/StarRating';
+import AddWineModal from '@/components/modal/AddWineModal';
 import AddReviewModal from '@/components/modal/reviewmodal/AddReviewModal';
 import { useState } from 'react';
 
@@ -23,10 +24,19 @@ function Test() {
     type: 'Red',
     imgFile: null,
   };
+
   return (
     <main className="grid grid-cols-3 gap-8 bg-white p-8">
       <PriceBox price={50000} />
       <RatingBox rating={3} />
+      <button type="button" onClick={handleClick}>
+        모달열기
+      </button>
+      <AddWineModal
+        isOpen={isOpen}
+        onClick={handleClick}
+        initialFormValue={initialWineValue}
+      />
       <Button
         buttonColor="purple"
         buttonStyle="box"
