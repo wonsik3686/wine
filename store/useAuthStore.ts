@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 import { axiosInstance } from '@/api/_axiosInstance';
 import { User } from '@/types/user.types';
 import { create } from 'zustand';
@@ -46,7 +47,7 @@ export const useAuthStore = create(
       },
       setAccessToken: (accessToken) => {
         setState(() => ({
-          accessToken: accessToken,
+          accessToken,
         }));
       },
     }),

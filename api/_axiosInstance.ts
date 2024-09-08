@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 import { useAuthStore } from '@/store/useAuthStore';
 import axios, { InternalAxiosRequestConfig } from 'axios';
 
@@ -29,10 +30,10 @@ axiosInstance.interceptors.request.use(
 
 axiosInstance.interceptors.response.use(
   (res) => res,
-  async (error) => {
-    const originalRequest = error.config;
-    if (error.response?.status === 401 && !originalRequest._retry) {
-      const refreshToken = useAuthStore.getState().refreshToken;
+  async (responseError) => {
+    const originalRequest = responseError.config;
+    if (responseError.response?.status === 401 && !originalRequest._retry) {
+      const { refreshToken } = useAuthStore.getState();
 
       if (refreshToken) {
         try {
@@ -49,14 +50,14 @@ axiosInstance.interceptors.response.use(
           originalRequest._retry = true;
           originalRequest.headers.Authorization = `Bearer ${accessToken}`;
           return axiosInstance(originalRequest);
-        } catch (error) {
+        } catch (refreshError) {
           // 토큰 갱신 실패 시 로그아웃 처리
           useAuthStore.getState().logout();
-          return Promise.reject(error);
+          return Promise.reject(refreshError);
         }
       }
     }
-    return Promise.reject(error);
+    return Promise.reject(responseError);
   }
 );
 
