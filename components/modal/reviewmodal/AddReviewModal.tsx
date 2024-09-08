@@ -3,7 +3,7 @@
 import { useReviewModalStore } from '@/store/useReviewModalStore';
 import { FormEvent } from 'react';
 import Button from '../../common/Button';
-import Modal from './Modal';
+import Modal from '../Modal';
 import ReviewInput from './ReviewInput';
 import TagSelector from './TagSelector';
 import TasteSlider from './TasteSlider';
