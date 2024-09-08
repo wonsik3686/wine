@@ -8,6 +8,7 @@ type ButtonProps = {
   buttonWidth: 'fitToChildren' | 'fitToParent';
   buttonColor: 'purple' | 'white';
   textColor: 'white' | 'gray' | 'black';
+  className: string;
 } & ButtonHTMLAttributes<HTMLButtonElement>;
 
 function Button({
@@ -15,12 +16,13 @@ function Button({
   buttonWidth,
   buttonColor,
   textColor,
+  className,
   ...buttonAttributes
 }: ButtonProps) {
   return (
     // eslint-disable-next-line react/button-has-type
     <button
-      className={clsx({
+      className={`${clsx({
         // buttonStyle
         'inline-flex items-center justify-center gap-3 rounded-2xl px-5 py-4 font-sans text-lg font-semibold':
           buttonStyle === 'box',
@@ -37,7 +39,7 @@ function Button({
         'text-white': textColor === 'white',
         'text-gray-500': textColor === 'gray',
         'text-gray-800': textColor === 'black',
-      })}
+      })} ${className}`}
       {...buttonAttributes}
     />
   );

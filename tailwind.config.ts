@@ -52,9 +52,10 @@ const config: Config = {
         },
       },
       screens: {
-        pc: { min: '1200px' },
-        tab: { max: '1199px' },
         mob: { max: '743px' },
+        tab2: { min: '744px' },
+        tab: { max: '1199px' },
+        pc: { min: '1200px' },
       },
     },
   },
