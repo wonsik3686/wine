@@ -1,10 +1,10 @@
 'use client';
 
-import { useState } from 'react';
-import Chip from '../common/Chip';
+import { useReviewModalStore } from '@/store/useReviewModalStore';
+import Chip from '../../common/Chip';
 
 export default function TagSelector() {
-  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const { selectedTags, setSelectedTags } = useReviewModalStore();
 
   const handleTagClick = (tag: string) => {
     if (selectedTags.includes(tag)) {
@@ -37,7 +37,7 @@ export default function TagSelector() {
   ];
 
   return (
-    <div className="flex flex-wrap gap-2">
+    <div className="flex flex-wrap gap-[15px] mob:gap-[10px]">
       {tags.map((tag) => (
         <Chip
           key={tag}

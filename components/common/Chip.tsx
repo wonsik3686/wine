@@ -70,13 +70,16 @@ function Chip({
       className={clsx(
         'rounded-full bg-white px-3 py-2 text-sm font-medium ring-1 ring-gray-300 sm:px-4 sm:text-lg',
         {
-          'bg-purple-610 text-white': selected,
           'cursor-pointer': !isDisabled,
           'cursor-default': isDisabled,
         }
       )}
       onClick={!isDisabled ? onClick : undefined}
       type="button"
+      style={{
+        backgroundColor: selected ? '#6A42DB' : 'transparent',
+        color: selected ? 'white' : 'inherit',
+      }}
     >
       {label}
     </button>
