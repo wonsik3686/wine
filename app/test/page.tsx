@@ -108,11 +108,7 @@ function Test() {
       <button type="button" onClick={handleClick}>
         리뷰모달열기
       </button>
-      <AddReviewModal
-        isOpen={isOpen}
-        onClick={handleClick}
-        initialFormValue={initialWineValue}
-      />
+      <AddReviewModal isOpen={isOpen} onClick={handleClick} />
       <StarRating isInteractive />
       <StarRating rating={3.8} size="small" />
       <Chip label="체리" selected isDisabled={false} />
