@@ -13,6 +13,7 @@ const config: Config = {
       },
       fontSize: {
         '3xl': ['2rem', '2.625rem'],
+        h2xl: ['1.875rem', ''],
         '2xl': ['1.5rem', '2rem'],
         xl: ['1.25rem', '2rem'],
         '2lg': ['1.125rem', '1.625rem'],
