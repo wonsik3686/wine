@@ -45,9 +45,10 @@ export const useAuthStore = create(
           refreshToken: null,
         }));
       },
-      setAccessToken: (accessToken) => {
-        setState(() => ({
-          accessToken,
+      setAccessToken: (pAccessToken) => {
+        setState((state) => ({
+          ...state,
+          accessToken: pAccessToken,
         }));
       },
     }),
