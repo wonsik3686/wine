@@ -124,7 +124,7 @@ export default function SingInPage() {
           <Link href="/">비밀번호를 잊으셨나요?</Link>
         </div>
 
-        <div className=" mb-[15px] mt-[56px]">
+        <div className="mb-[15px] mt-[56px] flex w-full flex-col gap-[0.94rem] mob:gap-4">
           <Button
             buttonStyle="box"
             buttonWidth="fitToParent"
@@ -166,7 +166,7 @@ export default function SingInPage() {
           </Button>
         </div>
       </form>
-      <div>
+      <div className="flex flex-row items-center gap-2">
         계정이 없으신가요?
         {/* Link href 재설정 필요, 임시로 "/" 페이지 설정 */}
         <Link href="/">
