@@ -12,6 +12,7 @@ export type AuthState = {
 export type AuthActions = {
   login: (email: string, password: string) => Promise<void>;
   logout: () => void;
+  setAccessToken: (accessToken: string) => void;
 };
 
 export type AuthStore = AuthState & AuthActions;
@@ -43,10 +44,15 @@ export const useAuthStore = create(
           refreshToken: null,
         }));
       },
+      setAccessToken: (accessToken) => {
+        setState(() => ({
+          accessToken: accessToken,
+        }));
+      },
     }),
     {
       name: 'auth-storage',
-      storage: createJSONStorage(() => sessionStorage),
+      storage: createJSONStorage(() => localStorage),
     }
   )
 );
