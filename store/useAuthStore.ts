@@ -1,6 +1,7 @@
 import { axiosInstance } from '@/api/_axiosInstance';
 import { User } from '@/types/user.types';
 import { create } from 'zustand';
+import { createJSONStorage, persist } from 'zustand/middleware';
 
 export type AuthState = {
   user: User | null;
@@ -15,29 +16,37 @@ export type AuthActions = {
 
 export type AuthStore = AuthState & AuthActions;
 
-export const useAuthStore = create<AuthStore>((setState, getState) => ({
-  user: null,
-  accessToken: null,
-  refreshToken: null,
-
-  login: async (email, password) => {
-    const response = await axiosInstance.post<AuthState>(
-      '/auth/signIn',
-      {
-        email,
-        password,
-      },
-      {
-        headers: { 'Content-Type': 'application/json' },
-      }
-    );
-    setState(() => ({ ...response.data }));
-  },
-  logout: () => {
-    setState(() => ({
+export const useAuthStore = create(
+  persist<AuthStore>(
+    (setState) => ({
       user: null,
       accessToken: null,
       refreshToken: null,
-    }));
-  },
-}));
+
+      login: async (email, password) => {
+        const response = await axiosInstance.post<AuthState>(
+          '/auth/signIn',
+          {
+            email,
+            password,
+          },
+          {
+            headers: { 'Content-Type': 'application/json' },
+          }
+        );
+        setState(() => ({ ...response.data }));
+      },
+      logout: () => {
+        setState(() => ({
+          user: null,
+          accessToken: null,
+          refreshToken: null,
+        }));
+      },
+    }),
+    {
+      name: 'auth-storage',
+      storage: createJSONStorage(() => sessionStorage),
+    }
+  )
+);
