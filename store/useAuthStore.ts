@@ -13,6 +13,17 @@ export type AuthState = {
 export type AuthActions = {
   login: (email: string, password: string) => Promise<void>;
   logout: () => void;
+  register: ({
+    email,
+    nickname,
+    password,
+    passwordConfirmation,
+  }: {
+    email: string;
+    nickname: string;
+    password: string;
+    passwordConfirmation: string;
+  }) => Promise<void>;
   setAccessToken: (accessToken: string) => void;
 };
 
@@ -44,6 +55,27 @@ export const useAuthStore = create(
           accessToken: null,
           refreshToken: null,
         }));
+      },
+      register: async ({ email, nickname, password, passwordConfirmation }) => {
+        const response = await axiosInstance.post(
+          '/auth/signUp',
+          {
+            email,
+            nickname,
+            password,
+            passwordConfirmation,
+          },
+          {
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          }
+        );
+        if (response.status === 201) {
+          setState(() => ({ ...response.data }));
+        } else {
+          throw new Error(response.data);
+        }
       },
       setAccessToken: (pAccessToken) => {
         setState((state) => ({

@@ -1,8 +1,8 @@
 'use client';
 
-import { axiosInstance } from '@/api/_axiosInstance';
 import Button from '@/components/common/Button';
 import Input from '@/components/common/Input';
+import { useAuthStore } from '@/store/useAuthStore';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -16,6 +16,7 @@ type FormValues = {
 };
 
 export default function Signup() {
+  const register = useAuthStore((state) => state.register);
   const [values, setValues] = useState<FormValues>({
     email: '',
     nickname: '',
@@ -65,25 +66,14 @@ export default function Signup() {
       return;
     }
     // console.log(axiosInstance.defaults.baseURL);
-    const response = await axiosInstance.post(
-      '/auth/signUp',
-      {
-        email,
-        nickname,
-        password,
-        passwordConfirmation,
-      },
-      {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }
-    );
-    // TODO: 정상적으로 계정 생성 후 자동으로 로그인 되도록 처리하기
-    if (response.status !== 201) {
-      // TODO: 어떤 이유로 생성 안된건지 사용자에게 알림 보내기
-    }
-    router.push('/');
+    register({ email, nickname, password, passwordConfirmation })
+      .then(() => {
+        router.push('/');
+      })
+      .catch((responseError) => {
+        // TODO: 어떤 이유로 생성 안된건지 사용자에게 알림 보내기
+        console.error(responseError);
+      });
   }
 
   return (
