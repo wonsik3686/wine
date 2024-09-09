@@ -27,8 +27,8 @@ function Test() {
 
   const initialWineValue = {
     name: '',
-    price: '',
-    origin: '',
+    price: 0,
+    region: '',
     type: 'Red',
     imgFile: null,
   };

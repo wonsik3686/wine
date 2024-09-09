@@ -1,5 +1,6 @@
 'use client';
 
+import { postWineDetail, uploadWineImage } from '@/api/wines.api';
 import { ChangeEvent, FormEvent, useState } from 'react';
 import Button from '../common/Button';
 import Dropdown from '../common/dropdown/Dropdown';
@@ -9,8 +10,8 @@ import WineImageInput from './WineImageInput';
 
 type FormValues = {
   name: string;
-  price: string;
-  origin: string;
+  price: number;
+  region: string;
   type: string;
   imgFile: File | null;
 };
@@ -23,6 +24,7 @@ type ModalProps = {
 
 function AddWineModal({ isOpen, onClick, initialFormValue }: ModalProps) {
   const [formValue, setFormValue] = useState<FormValues>(initialFormValue);
+  const [postError, setPostError] = useState('');
 
   const wineOption = [
     { label: 'Red', value: 'red' },
@@ -51,25 +53,37 @@ function AddWineModal({ isOpen, onClick, initialFormValue }: ModalProps) {
 
   const checkAllInputsFilled = () => {
     return (
-      formValue.name !== '' && formValue.price !== '' && formValue.origin !== ''
+      formValue.name !== '' && formValue.price !== 0 && formValue.region !== ''
     );
   };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const formData = new FormData();
-    formData.append('name', formValue.name);
-    formData.append('price', formValue.price);
-    formData.append('origin', formValue.origin);
-    formData.append('type', formValue.type);
+    let imageUrl = '';
 
-    if (formValue.imgFile) {
-      formData.append('imgFile', formValue.imgFile); // 파일 있을 때만 추가
+    try {
+      // 이미지 파일이 있을 때 업로드 진행
+      if (formValue.imgFile) {
+        imageUrl = await uploadWineImage(formValue.imgFile);
+      }
+
+      const wineData = {
+        name: formValue.name,
+        region: formValue.region,
+        price: formValue.price,
+        type: formValue.type,
+        imageUrl,
+      };
+
+      // 와인 정보 POST 요청
+      await postWineDetail(wineData);
+      setFormValue(initialFormValue); // 폼 값을 초기 상태로 되돌리기
+      setPostError(''); // 에러 초기화
+    } catch (error) {
+      console.error('와인 등록에 실패했습니다:', error);
+      setPostError('와인 등록에 실패했습니다. 다시 시도해 주세요.'); // 에러 메시지 설정
     }
-
-    // API POST 요청 대신 임시로 넣은 값
-    setFormValue(initialFormValue);
   };
 
   return (
@@ -77,10 +91,9 @@ function AddWineModal({ isOpen, onClick, initialFormValue }: ModalProps) {
       <h1 className="mb-[40px] font-sans text-2xl font-bold text-gray-800">
         와인 등록
       </h1>
-      <form
-        style={{ marginBottom: '32px', width: '100%' }}
-        onSubmit={handleSubmit}
-      >
+      <form className="mb-[32px] w-[412px] mob:w-full" onSubmit={handleSubmit}>
+        {postError && <p className="text-red-500">{postError}</p>}{' '}
+        {/* 에러 메시지 표시 */}
         <Input
           label="와인 이름"
           id="name"
@@ -100,8 +113,8 @@ function AddWineModal({ isOpen, onClick, initialFormValue }: ModalProps) {
         />
         <Input
           label="원산지"
-          id="origin"
-          name="origin"
+          id="region"
+          name="region"
           placeholder="원산지 입력"
           style={{ marginBottom: '32px', width: '100%', height: '48px' }}
           onChange={handleInputChange}
