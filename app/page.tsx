@@ -5,7 +5,7 @@ import Link from 'next/link';
 export default function Home() {
   return (
     <main className="flex w-full flex-col items-center justify-center">
-      <section className="pc:mx-5 pc:mt-20 tab:mx-5 tab:mt-6 mob:hidden">
+      <section className="tab:mx-5 tab:mt-6 mob:hidden pc:mx-5 pc:mt-20">
         <Image
           src="/images/landing/landingBanner.png"
           alt="메인 배너"
@@ -21,7 +21,7 @@ export default function Home() {
           height={535}
         />
       </section>
-      <section className="pc:mt-40 tab:mt-20 mob:hidden">
+      <section className="tab:mt-20 mob:hidden pc:mt-40">
         <Image
           src="/images/landing/landingIntro1.png"
           alt="서비스 소개 이미지"
