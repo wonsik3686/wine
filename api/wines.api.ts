@@ -13,15 +13,16 @@ export const getWineDetail = async ({ ...params }: WineDetailRequest) => {
 
 // 이미지 업로드
 export const uploadWineImage = async (imgFile: File): Promise<string> => {
+  const accessToken = `Bearer ${localStorage.getItem('accessToken')}`;
   const formData = new FormData();
-  formData.append('imgFile', imgFile);
+  formData.append('imgFile', imgFile, btoa(encodeURI(imgFile.name)));
 
   const response = await axiosInstance({
     method: 'POST',
     url: '/images/upload',
     data: formData,
     headers: {
-      Authorization: 'Bearer your-fake-token', // 테스트용 토큰
+      Authorization: accessToken,
     },
   });
 
@@ -36,12 +37,13 @@ export const postWineDetail = async (wineData: {
   type: string;
   imageUrl: string;
 }) => {
+  const accessToken = `Bearer ${localStorage.getItem('accessToken')}`;
   const response = await axiosInstance({
     method: 'POST',
     url: '/wines',
     data: wineData,
     headers: {
-      Authorization: 'Bearer your-fake-token', // 테스트용 토큰
+      Authorization: accessToken,
     },
   });
 

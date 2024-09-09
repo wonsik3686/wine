@@ -16,7 +16,7 @@ import ReactSlider from 'react-slider';
  * - setSliderValue(value); };
  */
 export default function Slider({
-  value = 50,
+  value = 5,
   mode = 'interactive',
   onChange,
   width = '200px',
@@ -41,7 +41,7 @@ export default function Slider({
         disabled={mode === 'readonly'}
         renderThumb={(props) => <div {...props} />}
         min={0}
-        max={100}
+        max={10}
       />
     </div>
   );
