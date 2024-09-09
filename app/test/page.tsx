@@ -56,7 +56,7 @@ function Test() {
       <DeleteModal
         isOpen={deleteIsOpen}
         onClick={handleCancelClick}
-        onDelete={handleDeleteClick}
+        onCancel={handleDeleteClick}
       />
       <Button
         buttonColor="purple"

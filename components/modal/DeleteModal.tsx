@@ -6,13 +6,13 @@ import Button from '../common/Button';
 type DeleteModalProps = {
   isOpen: boolean;
   onClick: () => void;
-  onDelete: () => void;
+  onCancel: () => void;
 };
 
 export default function DeleteModal({
   isOpen,
   onClick,
-  onDelete,
+  onCancel,
 }: DeleteModalProps) {
   useEffect(() => {
     if (isOpen) {
@@ -55,7 +55,7 @@ export default function DeleteModal({
             buttonColor="purple"
             textColor="white"
             style={{ flexGrow: '1' }}
-            onClick={onDelete}
+            onClick={onCancel}
           >
             삭제
           </Button>
