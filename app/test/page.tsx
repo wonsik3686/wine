@@ -2,18 +2,32 @@
 
 import { PriceBox, RatingBox } from '@/components/common/Boxes';
 import Button from '@/components/common/Button';
-import AddWineModal from '@/components/modal/AddWineModal';
-import { useState } from 'react';
 import Chip from '@/components/common/Chip';
 import StarRating from '@/components/common/StarRating';
+import AddWineModal from '@/components/modal/AddWineModal';
+import DeleteModal from '@/components/modal/DeleteModal';
+import { useState } from 'react';
 
 function Test() {
   const [isOpen, setIsOpen] = useState(false);
+  const [deleteIsOpen, setDeleteIsOpen] = useState(false);
 
   const handleClick = () => {
     if (!isOpen) {
       setIsOpen(true);
     } else setIsOpen(false);
+  };
+
+  const handleCancelClick = () => {
+    if (!deleteIsOpen) {
+      setDeleteIsOpen(true);
+    } else setDeleteIsOpen(false);
+  };
+
+  const handleDeleteClick = () => {
+    // DELETE요청 대신 넣은 값
+    console.log('삭제되었습니다!');
+    setDeleteIsOpen(false);
   };
 
   const initialWineValue = {
@@ -35,6 +49,14 @@ function Test() {
         isOpen={isOpen}
         onClick={handleClick}
         initialFormValue={initialWineValue}
+      />
+      <button type="button" onClick={handleCancelClick}>
+        삭제모달열기
+      </button>
+      <DeleteModal
+        isOpen={deleteIsOpen}
+        onClick={handleCancelClick}
+        onDelete={handleDeleteClick}
       />
       <Button
         buttonColor="purple"
