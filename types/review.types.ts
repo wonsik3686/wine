@@ -59,3 +59,10 @@ export type RecentReview = {
   updatedAt: string; // ISO 8601 날짜 시간 형식
   user: ReviewUser;
 };
+
+export type WineTastes = {
+  lightBold: number;
+  smoothTannic: number;
+  drySweet: number;
+  softAcidic: number;
+};
