@@ -1,0 +1,70 @@
+POST https://winereview-api.vercel.app/8-4/auth/signUp
+Content-Type: application/json
+
+{
+  "email": "qest5678@email.com",
+  "nickname": "teqtID2345",
+  "password": "1qaz2wsx3edc",
+  "passwordConfirmation": "1qaz2wsx3edc"
+}
+
+###
+
+POST https://winereview-api.vercel.app/8-4/auth/signIn
+Content-Type: application/json
+
+{
+  "email": "test1234@email.com",
+  "password": "1qaz2wsx3edc"
+}
+
+###
+
+Get https://winereview-api.vercel.app/8-4/users/me
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTI4LCJ0ZWFtSWQiOiI4LTQiLCJzY29wZSI6InJlZnJlc2giLCJpYXQiOjE3MjU4NTg1ODIsImV4cCI6MTcyNjQ2MzM4MiwiaXNzIjoic3AtZXBpZ3JhbSJ9.fwwb2OLUbrYxg_Vw3i3UKtX9ymq-QrSQ-fDz_cgnylE
+
+###
+
+PATCH https://winereview-api.vercel.app/8-4/users/me
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTI4LCJ0ZWFtSWQiOiI4LTQiLCJzY29wZSI6InJlZnJlc2giLCJpYXQiOjE3MjU4NTg1ODIsImV4cCI6MTcyNjQ2MzM4MiwiaXNzIjoic3AtZXBpZ3JhbSJ9.fwwb2OLUbrYxg_Vw3i3UKtX9ymq-QrSQ-fDz_cgnylE
+
+{
+  "image": "https://sprint-fe-project.s3.ap-northeast-2.amazonaws.com/Wine/user/128/1725507856494/20240609_210338.jpg",
+  "nickname": "testID123"
+}
+
+###
+
+Get https://winereview-api.vercel.app/8-4/users/me/reviews?limit=7
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTI4LCJ0ZWFtSWQiOiI4LTQiLCJzY29wZSI6InJlZnJlc2giLCJpYXQiOjE3MjU4NTg1ODIsImV4cCI6MTcyNjQ2MzM4MiwiaXNzIjoic3AtZXBpZ3JhbSJ9.fwwb2OLUbrYxg_Vw3i3UKtX9ymq-QrSQ-fDz_cgnylE
+
+###
+
+Get https://winereview-api.vercel.app/8-4/users/me/wines?limit=7
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTI4LCJ0ZWFtSWQiOiI4LTQiLCJzY29wZSI6InJlZnJlc2giLCJpYXQiOjE3MjU4NTg1ODIsImV4cCI6MTcyNjQ2MzM4MiwiaXNzIjoic3AtZXBpZ3JhbSJ9.fwwb2OLUbrYxg_Vw3i3UKtX9ymq-QrSQ-fDz_cgnylE
+
+###
+
+POST https://winereview-api.vercel.app/8-4/auth/refresh-token
+Content-Type: application/json; charset=utf-8
+
+{
+  "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTI4LCJ0ZWFtSWQiOiI4LTQiLCJzY29wZSI6InJlZnJlc2giLCJpYXQiOjE3MjU4NTg1ODIsImV4cCI6MTcyNjQ2MzM4MiwiaXNzIjoic3AtZXBpZ3JhbSJ9.fwwb2OLUbrYxg_Vw3i3UKtX9ymq-QrSQ-fDz_cgnylE"
+}
+
+###
+
+POST https://winereview-api.vercel.app/8-4/images/upload
+Content-Type: multipart/form-data; boundary=b
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTI4LCJ0ZWFtSWQiOiI4LTQiLCJzY29wZSI6InJlZnJlc2giLCJpYXQiOjE3MjU4NTg1ODIsImV4cCI6MTcyNjQ2MzM4MiwiaXNzIjoic3AtZXBpZ3JhbSJ9.fwwb2OLUbrYxg_Vw3i3UKtX9ymq-QrSQ-fDz_cgnylE
+
+--b
+Content-Disposition: form-data; name="image"; filename="89.png"
+Content-Type: image/jpg
+
+< d:\OneDrive\사진\삼성 갤러리\DCIM\소장\89.png
+--b--
+
+###
+
+get https://sprint-fe-project.s3.ap-northeast-2.amazonaws.com/Wine/user/128/1725630510423/89.png
