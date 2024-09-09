@@ -27,7 +27,7 @@ export default function TasteSlider() {
           key={slider.label}
           className="mb-3 flex items-center justify-between gap-3"
         >
-          <p className="w-[40px] flex-shrink-0 rounded-lg bg-gray-100 px-2 py-1 text-center text-sm font-semibold text-gray-500 mob:w-[40px] mob:px-1 mob:py-0.5 mob:text-xs">
+          <p className="w-[50px] flex-shrink-0 rounded-lg bg-gray-100 px-2 py-1 text-center text-sm font-semibold text-gray-500 mob:w-[40px] mob:px-1 mob:py-0.5 mob:text-xs">
             {slider.label}
           </p>
           <p className="w-[75px] flex-shrink-0 text-lg font-medium mob:w-[60px] mob:text-md">
