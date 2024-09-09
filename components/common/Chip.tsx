@@ -67,12 +67,15 @@ function Chip({
 }: ChipProps): JSX.Element {
   return (
     <button
-      className={clsx('rounded-full px-4 py-2 text-base font-medium ring-1', {
-        'bg-purple-600 text-white ring-purple-100': selected,
-        'bg-white text-inherit ring-gray-300': !selected,
-        'cursor-pointer': !isDisabled,
-        'cursor-default': isDisabled,
-      })}
+      className={clsx(
+        'rounded-[6.25rem] border-[1px] px-[0.625rem] py-[0.375rem] text-sm font-medium text-gray-600 sm:text-lg',
+        {
+          'border-purple-100 bg-purple-600 text-white': selected,
+          'border-gray-300 bg-white text-inherit': !selected,
+          'cursor-pointer': !isDisabled,
+          'cursor-default': isDisabled,
+        }
+      )}
       onClick={!isDisabled ? onClick : undefined}
       type="button"
       style={{
