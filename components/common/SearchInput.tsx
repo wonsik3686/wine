@@ -21,7 +21,7 @@ const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
             />
           </div>
           <input
-            className="flex w-full flex-shrink-0 items-center rounded-full border-[1px] border-gray-300 bg-white px-5 py-[0.88rem] pl-14 text-gray-800 focus:outline-none focus:ring-2 focus:ring-purple-100"
+            className="flex w-full flex-shrink-0 items-center rounded-full border-[1px] border-gray-300 bg-white px-5 py-[0.88rem] pl-14 text-base font-medium leading-relaxed text-gray-800 focus:outline-none focus:ring-2 focus:ring-purple-100"
             ref={ref}
             {...props}
           />

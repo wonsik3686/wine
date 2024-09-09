@@ -4,8 +4,8 @@ export function RatingBox({ rating }: { rating: number }) {
   const isRating = rating.toFixed(1);
 
   return (
-    <div className="flex h-9 w-[3.75rem] items-center justify-center rounded-xl bg-purple-10 md:h-[2.625rem] md:w-20">
-      <Star />
+    <div className="flex h-9 w-[3.75rem] items-center justify-center gap-[0.125rem] rounded-xl bg-purple-10 md:h-[2.625rem] md:w-20">
+      <Star className="h-4 w-4 md:h-5 md:w-5" />
       <span className="text-md font-bold text-purple-100 md:text-2lg">
         {isRating}
       </span>
@@ -19,7 +19,7 @@ export function RatingBox({ rating }: { rating: number }) {
 
 export function PriceBox({
   price,
-  className = 'px-2.5 md:px-[0.9375rem] h-9 md:h-[2.625rem] text-nowrap',
+  className = 'px-2.5 h-9 md:h-[2.625rem] md:px-[0.9375rem] text-nowrap',
 }: {
   price: number;
   className?: string;
@@ -28,7 +28,7 @@ export function PriceBox({
 
   return (
     <div
-      className={`flex items-center justify-center rounded-xl bg-purple-10 ${className}`}
+      className={`flex w-fit items-center justify-center rounded-xl bg-purple-10 ${className}`}
     >
       <span className="text-md font-bold text-purple-100 md:text-2lg">
         {krw}
