@@ -6,15 +6,23 @@ import Chip from '@/components/common/Chip';
 import RatingProgressbar from '@/components/common/RatingProgressbar';
 import StarRating from '@/components/common/StarRating';
 import AddWineModal from '@/components/modal/AddWineModal';
+import AddReviewModal from '@/components/modal/reviewmodal/AddReviewModal';
 import { useState } from 'react';
 
 function Test() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isReviewOpen, setIsReviewOpen] = useState(false);
 
   const handleClick = () => {
     if (!isOpen) {
       setIsOpen(true);
     } else setIsOpen(false);
+  };
+
+  const handleReviewClick = () => {
+    if (!isReviewOpen) {
+      setIsReviewOpen(true);
+    } else setIsReviewOpen(false);
   };
 
   const initialWineValue = {
@@ -105,6 +113,10 @@ function Test() {
       >
         취소
       </Button>
+      <button type="button" onClick={handleReviewClick}>
+        리뷰모달열기
+      </button>
+      <AddReviewModal isOpen={isReviewOpen} onClick={handleReviewClick} />
       <StarRating isInteractive />
       <StarRating rating={3.8} size="small" />
       <RatingProgressbar

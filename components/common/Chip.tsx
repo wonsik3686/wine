@@ -78,6 +78,10 @@ function Chip({
       )}
       onClick={!isDisabled ? onClick : undefined}
       type="button"
+      style={{
+        backgroundColor: selected ? '#6A42DB' : 'transparent',
+        color: selected ? 'white' : 'inherit',
+      }}
     >
       {label}
     </button>
