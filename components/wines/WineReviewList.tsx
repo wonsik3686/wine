@@ -9,6 +9,7 @@ import { RatingBox } from '../common/Boxes';
 import ChipSwiper from '../common/ChipSwiper';
 import Dropdown from '../common/dropdown/Dropdown';
 import Profile from '../common/Profile';
+import WineTasteSlider from './WineTasteSlider';
 
 type WineRevieListProps = Pick<WineDetailType, 'reviews'>;
 
@@ -109,7 +110,14 @@ export default function WineRevieList({ reviews }: WineRevieListProps) {
             <p className="font-sans text-lg font-normal text-gray-800">
               {review.content}
             </p>
-            <div className="mt-5">바디감 타닌 당도 산미</div>
+            <div className="mt-5">
+              <WineTasteSlider
+                lightBold={review.lightBold}
+                smoothTannic={review.smoothTannic}
+                drySweet={review.drySweet}
+                softAcidic={review.softAcidic}
+              />
+            </div>
           </div>
           <button
             id="btnExpandReview"
