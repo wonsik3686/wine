@@ -69,7 +69,6 @@ function AddWineModal({ isOpen, onClick, initialFormValue }: ModalProps) {
     }
 
     // API POST 요청 대신 임시로 넣은 값
-    console.log(formValue);
     setFormValue(initialFormValue);
   };
 

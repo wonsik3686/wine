@@ -34,7 +34,7 @@ export default function WineRevieList({ reviews }: WineRevieListProps) {
 
   return (
     <div className="flex flex-col pc:mt-[3.75rem] pc:w-[50rem]">
-      <h3 className="font-sans text-xl font-bold text-gray-800 pc:mb-[1.38rem] tab:hidden mob:hidden">
+      <h3 className="font-sans text-xl font-bold text-gray-800 tab:hidden mob:hidden pc:mb-[1.38rem]">
         리뷰 목록
       </h3>
       {reviews.map((review, index) => (
