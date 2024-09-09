@@ -1,9 +1,13 @@
 'use client';
 
+import { useAuthStore } from '@/store/useAuthStore';
 import Image from 'next/image';
 import Link from 'next/link';
 
 export default function Header() {
+  const logout = useAuthStore((state) => state.logout);
+  const user = useAuthStore((state) => state.user);
+
   return (
     <div className="sticky top-0 z-30 flex w-full justify-center">
       <header
@@ -21,8 +25,23 @@ export default function Header() {
           />
         </Link>
 
-        {/* 로그인 페이지 생성 후 Link로 수정 */}
-        <span className="text-[16px] font-medium text-white">로그인</span>
+        <div>
+          {user ? (
+            <Link
+              href="/"
+              className="text-[16px] font-medium text-white"
+              onClick={() => {
+                logout();
+              }}
+            >
+              로그아웃
+            </Link>
+          ) : (
+            <Link href="/login" className="text-[16px] font-medium text-white">
+              로그인
+            </Link>
+          )}
+        </div>
       </header>
     </div>
   );
