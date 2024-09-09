@@ -12,7 +12,7 @@ export default function WineDetailLayout({
 }) {
   return (
     <main className="flex w-full flex-col items-center justify-center">
-      <div className="flex w-full max-w-[71.25rem] flex-col pc:mt-5 tab:mt-5 tab:px-5 mob:mt-3 mob:px-4">
+      <div className="flex w-full max-w-[71.25rem] flex-col tab:mt-5 tab:px-5 mob:mt-3 mob:px-4 pc:mt-5">
         {children}
       </div>
     </main>

@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
 
 interface Props {
@@ -60,7 +61,7 @@ function WineImageInput({ name, value, onChange }: Props) {
           </button>
         )}
         {preview && (
-          <img
+          <Image
             src={preview}
             alt="이미지 미리보기"
             className="h-[150px] w-[150px] rounded-lg object-cover"
