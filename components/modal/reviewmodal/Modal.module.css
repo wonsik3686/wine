@@ -1,8 +1,8 @@
-.customScrollbar::-webkit-scrollbar {
-  width: 0px;
+.customScrollbar {
+  overflow-y: scroll;
 }
 
-.customScrollbar:hover::-webkit-scrollbar {
+.customScrollbar::-webkit-scrollbar {
   width: 6px;
 }
 
