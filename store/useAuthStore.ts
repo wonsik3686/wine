@@ -1,5 +1,5 @@
 /* eslint-disable import/no-cycle */
-import { axiosInstance } from '@/api/_axiosInstance';
+import { loginAPI, registerAPI } from '@/api/auth.api';
 import { User } from '@/types/user.types';
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
@@ -37,17 +37,8 @@ export const useAuthStore = create(
       refreshToken: null,
 
       login: async (email, password) => {
-        const response = await axiosInstance.post<AuthState>(
-          '/auth/signIn',
-          {
-            email,
-            password,
-          },
-          {
-            headers: { 'Content-Type': 'application/json' },
-          }
-        );
-        setState(() => ({ ...response.data }));
+        const userInfo = await loginAPI({ email, password });
+        setState(() => ({ ...userInfo }));
       },
       logout: () => {
         setState(() => ({
@@ -57,25 +48,13 @@ export const useAuthStore = create(
         }));
       },
       register: async ({ email, nickname, password, passwordConfirmation }) => {
-        const response = await axiosInstance.post(
-          '/auth/signUp',
-          {
-            email,
-            nickname,
-            password,
-            passwordConfirmation,
-          },
-          {
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          }
-        );
-        if (response.status === 201) {
-          setState(() => ({ ...response.data }));
-        } else {
-          throw new Error(response.data);
-        }
+        const userInfo = await registerAPI({
+          email,
+          nickname,
+          password,
+          passwordConfirmation,
+        });
+        setState(() => ({ ...userInfo }));
       },
       setAccessToken: (pAccessToken) => {
         setState((state) => ({
