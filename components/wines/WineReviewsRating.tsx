@@ -24,9 +24,9 @@ export default function WineReviewsRating({
   }));
 
   return (
-    <div className="mt-14 flex pc:flex-col tab:justify-center mob:mt-10 mob:flex-col">
+    <div className="mt-14 flex tab:justify-center mob:mt-10 mob:flex-col pc:flex-col">
       <div className="flex tab:flex-col mob:mb-4 mob:flex-row mob:justify-between">
-        <div className="flex justify-center pc:mb-5 tab:mb-5 tab:mr-20 mob:mb-0 mob:mr-0">
+        <div className="flex justify-center tab:mb-5 tab:mr-20 mob:mb-0 mob:mr-0 pc:mb-5">
           <b className="font-font-sans text-7xl font-extrabold text-gray-800">
             {avgRating.toFixed(1)}
           </b>

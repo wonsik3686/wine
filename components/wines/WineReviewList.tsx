@@ -1,5 +1,6 @@
 'use client';
 
+import useLikeReview from '@/hooks/wines/useLikeReview';
 import { WineDetailType } from '@/types/wine.types';
 import formatDistanceToNowKor from '@/utils/dateTimeUtils/FormatDistanceToNow';
 import translateAromaToKorean from '@/utils/translate/TranslateAromaToKorean';
@@ -17,6 +18,7 @@ export default function WineReviewList({ reviews }: WineReviewListProps) {
   const [expandedReviewIndexes, setExpandedReviewIndexes] = useState<number[]>(
     []
   );
+  const { isReviewLiked, likeReview } = useLikeReview();
   const dropdwonOptions = [
     { label: '수정하기', value: 'edit' },
     { label: '삭제하기', value: 'delete' },
@@ -34,7 +36,7 @@ export default function WineReviewList({ reviews }: WineReviewListProps) {
 
   return (
     <div className="flex flex-col pc:mt-[3.75rem] pc:w-[50rem]">
-      <h3 className="font-sans text-xl font-bold text-gray-800 pc:mb-[1.38rem] tab:hidden mob:hidden">
+      <h3 className="font-sans text-xl font-bold text-gray-800 tab:hidden mob:hidden pc:mb-[1.38rem]">
         리뷰 목록
       </h3>
       {reviews.map((review, index) => (
@@ -59,10 +61,20 @@ export default function WineReviewList({ reviews }: WineReviewListProps) {
               </div>
             </div>
             <div className="flex items-start gap-7 mob:gap-[1.12rem]">
-              <div className="relative h-[2.375rem] w-[2.375rem] mob:h-8 mob:w-8">
-                <button type="button">
+              <div>
+                <button
+                  type="button"
+                  className="relative h-[2.375rem] w-[2.375rem] mob:h-8 mob:w-8"
+                  onClick={() => {
+                    likeReview(review.id);
+                  }}
+                >
                   <Image
-                    src="/icons/iconHeart.png"
+                    src={
+                      isReviewLiked(review.id)
+                        ? '/icons/iconHeartFilled.svg'
+                        : '/icons/iconHeart.svg'
+                    }
                     alt="하트 아이콘"
                     fill
                     className="object-contain"
