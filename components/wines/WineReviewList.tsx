@@ -11,9 +11,9 @@ import Dropdown from '../common/dropdown/Dropdown';
 import Profile from '../common/Profile';
 import WineTasteSlider from './WineTasteSlider';
 
-type WineRevieListProps = Pick<WineDetailType, 'reviews'>;
+type WineReviewListProps = Pick<WineDetailType, 'reviews'>;
 
-export default function WineRevieList({ reviews }: WineRevieListProps) {
+export default function WineReviewList({ reviews }: WineReviewListProps) {
   const [expandedReviewIndexes, setExpandedReviewIndexes] = useState<number[]>(
     []
   );
@@ -34,7 +34,7 @@ export default function WineRevieList({ reviews }: WineRevieListProps) {
 
   return (
     <div className="flex flex-col pc:mt-[3.75rem] pc:w-[50rem]">
-      <h3 className="font-sans text-xl font-bold text-gray-800 tab:hidden mob:hidden pc:mb-[1.38rem]">
+      <h3 className="font-sans text-xl font-bold text-gray-800 pc:mb-[1.38rem] tab:hidden mob:hidden">
         리뷰 목록
       </h3>
       {reviews.map((review, index) => (
