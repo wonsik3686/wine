@@ -12,6 +12,7 @@ const config: Config = {
         sans: ['Pretendard', 'sans-serif'],
       },
       fontSize: {
+        '7xl': ['3.375rem', '4.5rem'],
         '3xl': ['2rem', '2.625rem'],
         h2xl: ['1.875rem', ''],
         '2xl': ['1.5rem', '2rem'],
