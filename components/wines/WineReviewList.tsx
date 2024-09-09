@@ -123,7 +123,7 @@ export default function WineRevieList({ reviews }: WineRevieListProps) {
             id="btnExpandReview"
             type="button"
             onClick={() => toggleReview(index)}
-            className="relative h-[1.875rem] w-full rounded-b-xl transition-all duration-200 ease-in-out hover:bg-gray-200 hover:opacity-80"
+            className="relative h-[1.875rem] w-full rounded-b-xl bg-white transition-all duration-200 ease-in-out hover:bg-gray-200 hover:opacity-80 focus:bg-white active:opacity-70 active:hover:bg-gray-300"
           >
             <Image
               src={
