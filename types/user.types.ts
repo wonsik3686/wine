@@ -1,11 +1,11 @@
 type User = {
-  id: number;
+  id: number; // 최소값 1
   email: string;
-  nickname: string;
-  image: string;
+  nickname: string; // 닉네임, 최소 길이 1, 최대 길이 30
+  image: string | null; // URL 형식, nullable: true
   teamId: string;
-  createdAt: string;
-  updatedAt: string;
+  createdAt: string; // ISO 8601 날짜 시간 형식
+  updatedAt: string; // ISO 8601 날짜 시간 형식
 };
 
 type Login = {

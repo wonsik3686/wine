@@ -1,11 +1,13 @@
 'use client';
 
+import clsx from 'clsx';
 import { useState } from 'react';
 
 type StarRatingProps = {
   rating?: number;
   isInteractive?: boolean;
   onRatingChange?: (rating: number) => void;
+  size?: 'default' | 'small';
 };
 
 /**
@@ -45,6 +47,7 @@ function StarRating({
   rating = 0,
   isInteractive = false,
   onRatingChange,
+  size,
 }: StarRatingProps) {
   const [hoverRating, setHoverRating] = useState<number | null>(null);
   const [currentRating, setCurrentRating] = useState<number>(rating);
@@ -116,7 +119,14 @@ function StarRating({
       stars.push(
         <button
           key={i}
-          className={`relative mr-[8px] inline-block h-[17px] w-[17px] sm:h-[22px] sm:w-[22px] ${isInteractive ? 'cursor-pointer' : 'cursor-default'}`}
+          className={clsx(
+            'relative inline-block flex',
+            isInteractive ? 'cursor-pointer' : 'cursor-default',
+            {
+              'h-[22px] w-[22px] mob:h-[17px] mob:w-[17px]': size !== 'small',
+              'h-[17px] w-[17px] mob:h-[14px] mob:w-[14px]': size === 'small',
+            }
+          )}
           onMouseEnter={() => handleMouseEnter(i)}
           onMouseLeave={handleMouseLeave}
           onClick={() => handleStarClick(i)}
@@ -139,7 +149,7 @@ function StarRating({
     return stars;
   };
 
-  return <div className="flex">{renderStars()}</div>;
+  return <div className="flex gap-[5px] mob:gap-[px]">{renderStars()}</div>;
 }
 
 export default StarRating;
