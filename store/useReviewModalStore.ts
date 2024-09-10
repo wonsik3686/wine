@@ -1,43 +1,43 @@
 import { create } from 'zustand';
 
-// 수정된 useReviewModalStore
 type ReviewState = {
+  id: number;
   content: string;
   selectedTags: string[];
-  tasteValues: number[]; // 배열로 유지
-  wineId: number;
-  wineName: string;
+  tasteValues: number[];
   rating: number;
+  setId: (id: number) => void;
   setContent: (content: string) => void;
   setSelectedTags: (tags: string[]) => void;
   setTasteValues: (values: number[]) => void;
-  setWineId: (id: number) => void;
   setRating: (rating: number) => void;
+  setReviewState: (review: {
+    content: string;
+    selectedTags: string[];
+    tasteValues: number[];
+    rating: number;
+  }) => void;
   resetReview: () => void;
 };
 
-// 테스트를 위한 더미 데이터
-const TestWineDetail = {
-  id: 3,
-  name: 'Sentinel Carbernet Sauvignon 2016',
-};
-
 export const useReviewModalStore = create<ReviewState>((set) => ({
+  id: 0,
   content: '',
   selectedTags: [],
-  tasteValues: [5, 5, 5, 5], // 4개의 슬라이더 값 초기화
-  wineId: TestWineDetail.id,
-  wineName: TestWineDetail.name,
+  tasteValues: [5, 5, 5, 5],
   rating: 0,
+  setId: (id) => set({ id }),
   setContent: (content) => set({ content }),
   setSelectedTags: (tags) => set({ selectedTags: tags }),
   setTasteValues: (values) => set({ tasteValues: values }),
-  setWineId: (id) => set({ wineId: id }),
   setRating: (rating) => set({ rating }),
+  setReviewState: ({ content, selectedTags, tasteValues, rating }) =>
+    set({ content, selectedTags, tasteValues, rating }),
   resetReview: () =>
     set({
       content: '',
       selectedTags: [],
       tasteValues: [5, 5, 5, 5],
+      rating: 0,
     }),
 }));

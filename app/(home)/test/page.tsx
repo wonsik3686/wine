@@ -15,6 +15,7 @@ function Test() {
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [isReviewOpen, setIsReviewOpen] = useState(false);
+  const [isReviewEditOpen, setIsReviewEditOpen] = useState(false);
 
   const handleClick = () => {
     if (!isOpen) {
@@ -40,10 +41,32 @@ function Test() {
     setIsDeleteOpen(false);
   };
 
+  const TestWineDetail = {
+    id: 279,
+    name: 'Sentinel Carbernet Sauvignon 2016',
+  };
+
+  const existingReviewValue = {
+    id: 972,
+    rating: 5,
+    lightBold: 4,
+    smoothTannic: 8,
+    drySweet: 7,
+    softAcidic: 2,
+    aroma: ['CHERRY'],
+    content: '수정할 와인 후기',
+  };
+
   const handleReviewClick = () => {
     if (!isReviewOpen) {
       setIsReviewOpen(true);
     } else setIsReviewOpen(false);
+  };
+
+  const handleReviewEditClick = () => {
+    if (!isReviewEditOpen) {
+      setIsReviewEditOpen(true);
+    } else setIsReviewEditOpen(false);
   };
 
   const initialWineValue = {
@@ -166,7 +189,22 @@ function Test() {
       <button type="button" onClick={handleReviewClick}>
         리뷰모달열기
       </button>
-      <AddReviewModal isOpen={isReviewOpen} onClick={handleReviewClick} />
+      <AddReviewModal
+        isOpen={isReviewOpen}
+        onClick={handleReviewClick}
+        mode="add"
+        WineDetail={TestWineDetail}
+      />
+      <button type="button" onClick={handleReviewEditClick}>
+        리뷰수정모달열기
+      </button>
+      <AddReviewModal
+        isOpen={isReviewEditOpen}
+        onClick={handleReviewEditClick}
+        initialReviewValue={existingReviewValue}
+        mode="edit"
+        WineDetail={TestWineDetail}
+      />
       <StarRating isInteractive />
       <StarRating rating={3.8} size="small" />
       <RatingProgressbar

@@ -1,19 +1,36 @@
 'use client';
 
-import { postWineReview } from '@/api/reviews.api';
+import { postWineReview, updateWineDetail } from '@/api/reviews.api';
 import { useReviewModalStore } from '@/store/useReviewModalStore';
-import { FormEvent } from 'react';
+import { FormEvent, useEffect } from 'react';
 import Button from '../../common/Button';
 import Modal from '../Modal';
 import ReviewInput from './ReviewInput';
 import TagSelector from './TagSelector';
 import TasteSlider from './TasteSlider';
 
+type WineDetailProps = {
+  id: number;
+  name: string;
+};
+
+type ReviewFormValue = {
+  id: number;
+  rating: number;
+  lightBold: number;
+  smoothTannic: number;
+  drySweet: number;
+  softAcidic: number;
+  aroma: string[];
+  content: string;
+};
+
 type ReviewModalProps = {
   isOpen: boolean;
   onClick: () => void;
-  initialReviewValue: SVGFEDropShadowElement;
+  initialReviewValue?: ReviewFormValue;
   mode: 'add' | 'edit';
+  WineDetail: WineDetailProps;
 };
 
 export default function AddReviewModal({
@@ -21,31 +38,75 @@ export default function AddReviewModal({
   onClick,
   initialReviewValue,
   mode,
+  WineDetail,
 }: ReviewModalProps) {
   const {
     rating,
     content,
     tasteValues,
     selectedTags: aroma, // aroma를 selectedTags로 사용
-    wineId,
     resetReview,
+    setId,
+    setContent,
+    setRating,
+    setTasteValues,
+    setSelectedTags,
   } = useReviewModalStore();
+
+  useEffect(() => {
+    if (mode === 'edit' && initialReviewValue) {
+      setId(initialReviewValue.id);
+      setContent(initialReviewValue.content);
+      setRating(initialReviewValue.rating);
+      setTasteValues([
+        initialReviewValue.lightBold,
+        initialReviewValue.smoothTannic,
+        initialReviewValue.drySweet,
+        initialReviewValue.softAcidic,
+      ]);
+      setSelectedTags(initialReviewValue.aroma);
+      console.log(initialReviewValue);
+    }
+  }, [
+    initialReviewValue,
+    mode,
+    setId,
+    setContent,
+    setRating,
+    setTasteValues,
+    setSelectedTags,
+    resetReview,
+  ]);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const reviewData = {
+      wineId: WineDetail.id,
       rating,
-      wineId,
       content,
-      aroma, // selectedTags 대신 aroma로 수정
+      aroma,
       lightBold: tasteValues[0],
       smoothTannic: tasteValues[1],
       drySweet: tasteValues[2],
       softAcidic: tasteValues[3],
     };
 
-    await postWineReview(reviewData);
+    const editReviewData = {
+      rating,
+      content,
+      aroma,
+      lightBold: tasteValues[0],
+      smoothTannic: tasteValues[1],
+      drySweet: tasteValues[2],
+      softAcidic: tasteValues[3],
+    };
+
+    if (mode === 'edit' && initialReviewValue) {
+      await updateWineDetail(initialReviewValue.id, editReviewData); // PATCH 요청으로 수정
+    } else if (mode === 'add') {
+      await postWineReview(reviewData); // POST 요청으로 추가
+    }
 
     // 제출 후 초기화
     resetReview();
@@ -59,7 +120,7 @@ export default function AddReviewModal({
       <div className="sm:w-[528px]">
         <section className="mb-[40px] flex items-center justify-between mob:mb-[30px]">
           <h1 className="font-sans text-2xl font-bold text-gray-800 mob:text-xl">
-            리뷰 등록
+            {mode === 'add' ? '리뷰 등록' : '리뷰 수정'}
           </h1>
           <button
             type="button"
@@ -73,7 +134,7 @@ export default function AddReviewModal({
           style={{ marginBottom: '32px', width: '100%' }}
           onSubmit={handleSubmit}
         >
-          <ReviewInput />
+          <ReviewInput wineName={WineDetail.name} />
           <p className="mb-[24px] font-sans text-xl font-bold text-gray-800 mob:mb-[20px] mob:text-lg">
             와인의 맛은 어땠나요?
           </p>
@@ -91,7 +152,7 @@ export default function AddReviewModal({
               style={{ flexGrow: '2', marginTop: '20px' }}
               disabled={isButtonDisabled}
             >
-              리뷰 남기기
+              {mode === 'add' ? '리뷰 남기기' : '리뷰 수정하기'}
             </Button>
           </div>
         </form>

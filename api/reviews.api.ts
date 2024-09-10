@@ -1,33 +1,23 @@
 import { axiosInstance } from './_axiosInstance';
 
-type ReviewRequest = {
-  id: string;
-};
-
-type ReviewResponse = {
-  name: string;
-  price: number;
-  region: string;
-  type: string;
-  imageUrl?: string;
-};
-
 type UpdateReviewRequest = {
-  name?: string;
-  price?: number;
-  region?: string;
-  type?: string;
-  imageUrl?: string;
+  rating: number;
+  lightBold: number;
+  smoothTannic: number;
+  drySweet: number;
+  softAcidic: number;
+  aroma: string[];
+  content: string;
 };
 
 export const updateWineDetail = async (
-  id: string,
+  id: number,
   updateData: UpdateReviewRequest
 ) => {
   try {
-    const response = await axiosInstance<ReviewResponse>({
+    const response = await axiosInstance({
       method: 'PATCH',
-      url: `/wines/${id}`,
+      url: `/reviews/${id}`,
       data: updateData,
     });
     return response.data;
