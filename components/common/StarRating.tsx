@@ -134,12 +134,14 @@ function StarRating({
           type="button"
         >
           <Image
+            fill
             src="/images/star_inactive.svg"
             alt="비어있는 별"
             className="absolute left-0 top-0 h-full w-full"
             fill
           />
           <Image
+            fill
             src="/images/star_active.svg"
             alt="채워진 별"
             className="absolute left-0 top-0 h-full w-full"
