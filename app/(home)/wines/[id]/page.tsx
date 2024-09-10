@@ -26,7 +26,14 @@ export default function WineDetail({ params }: { params: { id: number } }) {
           />
         )}
       </section>
-      <AddReviewModal isOpen={isReviewOpen} onClick={handleOpenAddReview} />
+      {wineDetail && (
+        <AddReviewModal
+          isOpen={isReviewOpen}
+          onClick={handleOpenAddReview}
+          mode="add"
+          wineDetail={{ id: wineDetail.id, name: wineDetail.name }}
+        />
+      )}
     </>
   );
 }

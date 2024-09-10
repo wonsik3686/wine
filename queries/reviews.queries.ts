@@ -1,5 +1,30 @@
-import { deleteReview } from '@/api/reviews.api';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { deleteReview, getReview, updateReview } from '@/api/reviews.api';
+import { GetReviewRequest } from '@/types/dto/request/review.request.types';
+import { GetReviewResponse } from '@/types/dto/response/review.response.types';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+
+export function useReview({ ...params }: GetReviewRequest) {
+  const { data, error, isLoading, refetch } = useQuery<GetReviewResponse>({
+    queryKey: ['reviewDetail', params.id],
+    queryFn: async () => {
+      const response = await getReview(params);
+      return response.data;
+    },
+  });
+  return { data, error, isLoading, refetch };
+}
+
+export function useUpdateReview() {
+  const queryClient = useQueryClient();
+  const { mutate, data, error, isError, isPending } = useMutation({
+    mutationKey: ['updateReview'],
+    mutationFn: updateReview,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['reviewDetail'] });
+    },
+  });
+  return { mutate, data, error, isError, isPending };
+}
 
 export function useRemoveReview(onSuccess?: () => void) {
   const queryClient = useQueryClient();

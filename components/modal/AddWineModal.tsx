@@ -33,12 +33,7 @@ function AddWineModal({ isOpen, onClick, initialFormValue, mode }: ModalProps) {
   const [postError, setPostError] = useState('');
 
   useEffect(() => {
-    console.log('Updated formValue:', formValue); // formValue가 업데이트될 때마다 로그 출력
-  }, [formValue]); // formValue가 변경될 때마다 실행
-
-  useEffect(() => {
     setFormValue(initialFormValue);
-    console.log('Initial formValue set:', initialFormValue); // 초깃값이 설정될 때 로그 출력
   }, [initialFormValue]);
 
   const wineOption = [
