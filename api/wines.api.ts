@@ -15,7 +15,7 @@ export const getWineDetail = async ({ ...params }: WineDetailRequest) => {
 export const uploadWineImage = async (imgFile: File): Promise<string> => {
   const accessToken = `Bearer ${localStorage.getItem('accessToken')}`;
   const formData = new FormData();
-  formData.append('imgFile', imgFile, btoa(encodeURI(imgFile.name)));
+  formData.append('image', imgFile, btoa(encodeURI(imgFile.name)));
 
   const response = await axiosInstance({
     method: 'POST',
@@ -35,15 +35,14 @@ export const postWineDetail = async (wineData: {
   region: string;
   price: number;
   type: string;
-  imageUrl: string;
+  image: string;
 }) => {
-  const accessToken = `Bearer ${localStorage.getItem('accessToken')}`;
   const response = await axiosInstance({
     method: 'POST',
     url: '/wines',
     data: wineData,
     headers: {
-      Authorization: accessToken,
+      'Content-Type': 'application/json',
     },
   });
 

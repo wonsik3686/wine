@@ -40,8 +40,8 @@ function Test() {
     name: '',
     price: 0,
     region: '',
-    type: 'Red',
-    imgFile: null,
+    type: 'RED',
+    image: null,
   };
 
   return (

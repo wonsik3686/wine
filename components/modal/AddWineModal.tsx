@@ -13,7 +13,7 @@ type FormValues = {
   price: number;
   region: string;
   type: string;
-  imgFile: File | null;
+  image: File | null;
 };
 
 type ModalProps = {
@@ -27,9 +27,9 @@ function AddWineModal({ isOpen, onClick, initialFormValue }: ModalProps) {
   const [postError, setPostError] = useState('');
 
   const wineOption = [
-    { label: 'Red', value: 'red' },
-    { label: 'White', value: 'white' },
-    { label: 'Sparkling', value: 'Sparkling' },
+    { label: 'RED', value: 'RED' },
+    { label: 'WHITE', value: 'WHITE' },
+    { label: 'SPARKLING', value: 'SPARKLING' },
   ];
 
   const handleFormChange = (
@@ -56,7 +56,7 @@ function AddWineModal({ isOpen, onClick, initialFormValue }: ModalProps) {
       formValue.name !== '' &&
       formValue.price !== 0 &&
       formValue.region !== '' &&
-      formValue.imgFile !== null
+      formValue.image !== null
     );
   };
 
@@ -68,16 +68,16 @@ function AddWineModal({ isOpen, onClick, initialFormValue }: ModalProps) {
 
     try {
       // 이미지 파일이 있을 때 업로드 진행
-      if (formValue.imgFile) {
-        imageUrl = await uploadWineImage(formValue.imgFile);
+      if (formValue.image) {
+        imageUrl = await uploadWineImage(formValue.image);
       }
 
       const wineData = {
         name: formValue.name,
         region: formValue.region,
-        price: formValue.price,
+        price: Number(formValue.price),
         type: formValue.type,
-        imageUrl,
+        image: imageUrl,
       };
 
       // 와인 정보 POST 요청
@@ -92,9 +92,18 @@ function AddWineModal({ isOpen, onClick, initialFormValue }: ModalProps) {
 
   return (
     <Modal isOpen={isOpen} onClose={onClick}>
-      <h1 className="mb-[40px] font-sans text-2xl font-bold text-gray-800">
-        와인 등록
-      </h1>
+      <section className="mb-[40px] flex items-center justify-between mob:mb-[30px]">
+        <h1 className="font-sans text-2xl font-bold text-gray-800">
+          와인 등록
+        </h1>
+        <button
+          type="button"
+          onClick={onClick}
+          className="text-2xl text-gray-500 mob:text-xl"
+        >
+          X
+        </button>
+      </section>
       <form className="mb-[32px] w-[412px] mob:w-full" onSubmit={handleSubmit}>
         {postError && <p className="text-red-500">{postError}</p>}{' '}
         {/* 에러 메시지 표시 */}
@@ -130,13 +139,13 @@ function AddWineModal({ isOpen, onClick, initialFormValue }: ModalProps) {
           options={wineOption}
           onSelect={handleSelect}
           type="select"
-          initialLabel="Red"
+          initialLabel="RED"
         />
         <br />
         <br />
         <WineImageInput
-          name="imgFile"
-          value={formValue.imgFile}
+          name="image"
+          value={formValue.image}
           onChange={handleFormChange}
         />
         <div className="mt-[32px] flex gap-[5px]">
