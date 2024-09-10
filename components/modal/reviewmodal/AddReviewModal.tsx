@@ -8,12 +8,19 @@ import ReviewInput from './ReviewInput';
 import TagSelector from './TagSelector';
 import TasteSlider from './TasteSlider';
 
-type ModalProps = {
+type ReviewModalProps = {
   isOpen: boolean;
   onClick: () => void;
+  initialReviewValue: SVGFEDropShadowElement;
+  mode: 'add' | 'edit';
 };
 
-export default function AddReviewModal({ isOpen, onClick }: ModalProps) {
+export default function AddReviewModal({
+  isOpen,
+  onClick,
+  initialReviewValue,
+  mode,
+}: ReviewModalProps) {
   const { rating, content, tasteValues, selectedTags, wineId, resetReview } =
     useReviewModalStore();
 
