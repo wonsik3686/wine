@@ -138,7 +138,6 @@ function StarRating({
             src="/images/star_inactive.svg"
             alt="비어있는 별"
             className="absolute left-0 top-0 h-full w-full"
-            fill
           />
           <Image
             fill
@@ -146,7 +145,6 @@ function StarRating({
             alt="채워진 별"
             className="absolute left-0 top-0 h-full w-full"
             style={{ clipPath: `inset(0 ${100 - fillPercentage}% 0 0)` }}
-            fill
           />
         </button>
       );
