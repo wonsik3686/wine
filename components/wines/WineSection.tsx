@@ -58,7 +58,7 @@ export default function WineSection() {
       <section className="flex w-full max-w-[1140px] gap-[60px]">
         {/* PC: 필터링 기능 및 와인 등록하기 버튼 */}
         <div className="tab:hidden">
-          <div className="pt-[117px]" />
+          <div className="pt-[108px]" />
           <FilteringModal
             isModal={false}
             onClick={() => setIsFilteringOpen(false)}
