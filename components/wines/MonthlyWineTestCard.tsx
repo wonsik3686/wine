@@ -1,15 +1,15 @@
 import StarRating from '@/components/common/StarRating';
 
 type MonthlyWineCardProps = {
-  wineName: string;
-  wineImageUrl: string;
-  wineRating: number;
+  wineName?: string;
+  wineImageUrl?: string;
+  wineRating?: number;
 };
 
-export default function MonthlyWineCard({
-  wineName,
-  wineImageUrl,
-  wineRating,
+export default function MonthlyWineTestCard({
+  wineName = 'Sentinel Carbernet Sauvignon 2016',
+  wineImageUrl = 'https://www.winenara.com/uploads/product/550/ff4dd11a946671d88fd904590b1488fc.png',
+  wineRating = 4.5,
 }: MonthlyWineCardProps) {
   return (
     <div
