@@ -21,7 +21,7 @@ export default function MonthlyWineSection() {
         const response = await getRecommendedWines(5);
         setRecommendedWines(response);
       } catch (error) {
-        console.error('Error fetching recommended wines:', error);
+        console.error('Error fetchRecommendedWines:', error);
       } finally {
         setLoading(false);
       }
@@ -36,7 +36,7 @@ export default function MonthlyWineSection() {
 
   return (
     <section
-      className="relative mb-[40px] flex h-[310px] max-w-[1140px] flex-col
+      className="relative flex h-[310px] w-full max-w-[1140px] flex-col
     gap-[30px] rounded-2xl bg-gray-100
     pb-[30px] pl-[30px] pr-[30px] pt-[30px] mob:h-[241px] 
     mob:gap-[20px] mob:pb-[20px] mob:pl-[20px] mob:pr-[20px] mob:pt-[20px]"

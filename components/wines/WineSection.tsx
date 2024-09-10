@@ -93,7 +93,7 @@ export default function WineSection() {
             <Button
               buttonStyle="box"
               buttonColor="purple"
-              buttonWidth="fitToParent"
+              buttonWidth="fitToChildren"
               textColor="white"
               className="h-[48px] w-[220px] mob:hidden"
               onClick={() => setIsAddWineModalOpen(true)} // 와인 등록 모달 열기
