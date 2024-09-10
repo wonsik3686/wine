@@ -3,13 +3,13 @@
 import Image from 'next/image';
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
 
-interface Props {
+type FileProps = {
   name: string;
   value: string | File | null;
   onChange: (name: string, value: string | File | null) => void;
-}
+};
 
-function WineImageInput({ name, value, onChange }: Props) {
+function WineImageInput({ name, value, onChange }: FileProps) {
   const [preview, setPreview] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -23,18 +23,27 @@ function WineImageInput({ name, value, onChange }: Props) {
     if (!inputNode) return;
     inputNode.value = '';
     onChange(name, null);
+    setPreview(null);
   };
 
   useEffect(() => {
-    if (!value) return;
-
-    const nextPreview: string = URL.createObjectURL(value as File);
-    setPreview(nextPreview);
-
-    return () => {
+    if (!value) {
       setPreview(null);
-      URL.revokeObjectURL(nextPreview);
-    };
+      return;
+    }
+
+    if (typeof value === 'string') {
+      // URL일 경우 바로 사용
+      setPreview(value);
+    } else {
+      // File일 경우 URL.createObjectURL 사용
+      const nextPreview: string = URL.createObjectURL(value);
+      setPreview(nextPreview);
+
+      return () => {
+        URL.revokeObjectURL(nextPreview); // 메모리 누수 방지
+      };
+    }
   }, [value]);
 
   return (
