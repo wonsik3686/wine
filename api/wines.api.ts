@@ -20,7 +20,7 @@ export const getWineDetail = async ({ ...params }: WineDetailRequest) => {
 };
 
 export const updateWineDetail = async (
-  id: string,
+  id: number,
   updateData: UpdateWineRequest
 ) => {
   try {

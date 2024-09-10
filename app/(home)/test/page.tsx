@@ -13,6 +13,7 @@ import { useState } from 'react';
 function Test() {
   const [isOpen, setIsOpen] = useState(false);
   const [deleteIsOpen, setDeleteIsOpen] = useState(false);
+  const [editIsOpen, setEditIsOpen] = useState(false);
   const [isReviewOpen, setIsReviewOpen] = useState(false);
 
   const handleClick = () => {
@@ -25,6 +26,12 @@ function Test() {
     if (!deleteIsOpen) {
       setDeleteIsOpen(true);
     } else setDeleteIsOpen(false);
+  };
+
+  const handleEditClick = () => {
+    if (!editIsOpen) {
+      setEditIsOpen(true);
+    } else setEditIsOpen(false);
   };
 
   const handleDeleteClick = () => {
@@ -40,6 +47,7 @@ function Test() {
   };
 
   const initialWineValue = {
+    id: 0,
     name: '',
     price: 0,
     region: '',
@@ -47,17 +55,37 @@ function Test() {
     image: null,
   };
 
+  const existingWineValue = {
+    id: 279,
+    name: '수정할 와인 이름',
+    price: 999999,
+    region: '수정할 원산지',
+    type: 'WHITE',
+    image:
+      'https://sprint-fe-project.s3.ap-northeast-2.amazonaws.com/Wine/user/284/1725959926821/NGRjMmFiYjk4NTU5Yy5qcGc=',
+  };
+
   return (
     <main className="grid grid-cols-3 gap-8 bg-white p-8">
       <PriceBox price={50000} />
       <RatingBox rating={3} />
       <button type="button" onClick={handleClick}>
-        모달열기
+        와인등록모달열기
       </button>
       <AddWineModal
         isOpen={isOpen}
         onClick={handleClick}
         initialFormValue={initialWineValue}
+        mode="add"
+      />
+      <button type="button" onClick={handleEditClick}>
+        와인수정모달열기
+      </button>
+      <AddWineModal
+        isOpen={editIsOpen}
+        onClick={handleEditClick}
+        initialFormValue={existingWineValue}
+        mode="edit"
       />
       <button type="button" onClick={handleCancelClick}>
         삭제모달열기
