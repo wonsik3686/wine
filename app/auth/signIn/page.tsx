@@ -33,23 +33,27 @@ export default function SingInPage() {
       ...prevValues,
       [name]: value,
     }));
-
-    // setFormErrors((prevErrors) => ({
-    //   ...prevErrors,
-    //   [name]: !value,
-    // }));
   }, []);
+
+  const validateEmail = (email: string): string => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email) ? '' : '이메일 형식으로 작성해 주세요.';
+  };
 
   const validateForm = useCallback(() => {
     const { email, password } = values;
-    if (!email || !password) {
+    const emailError = !email
+      ? '이메일은 필수 입력입니다.'
+      : validateEmail(email);
+    const passwordError = !password ? '비밀번호는 필수 입력입니다.' : '';
+
+    if (emailError || passwordError) {
       setFormErrors({
-        email: !email ? '이메일이 입력되지 않았습니다.' : '',
-        password: !password ? '비밀번호가 입력되지 않았습니다.' : '',
+        email: emailError,
+        password: passwordError,
       });
       return false;
     }
-
     setFormErrors({
       email: '',
       password: '',
@@ -124,7 +128,7 @@ export default function SingInPage() {
           <Link href="/">비밀번호를 잊으셨나요?</Link>
         </div>
 
-        <div className=" mb-[15px] mt-[56px]">
+        <div className="mb-[15px] mt-[56px] flex w-full flex-col gap-[0.94rem] mob:gap-4">
           <Button
             buttonStyle="box"
             buttonWidth="fitToParent"
@@ -166,7 +170,7 @@ export default function SingInPage() {
           </Button>
         </div>
       </form>
-      <div>
+      <div className="flex flex-row items-center gap-2">
         계정이 없으신가요?
         {/* Link href 재설정 필요, 임시로 "/" 페이지 설정 */}
         <Link href="/">
