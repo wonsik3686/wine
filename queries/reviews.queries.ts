@@ -1,4 +1,4 @@
-import { getReview, updateReview } from '@/api/reviews.api';
+import { deleteReview, getReview, updateReview } from '@/api/reviews.api';
 import { GetReviewRequest } from '@/types/dto/request/review.request.types';
 import { GetReviewResponse } from '@/types/dto/response/review.response.types';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -24,4 +24,18 @@ export function useUpdateReview() {
     },
   });
   return { mutate, data, error, isError, isPending };
+}
+
+export function useRemoveReview(onSuccess?: () => void) {
+  const queryClient = useQueryClient();
+  const { mutate: removeReview, isPending: isRemoveReviewPending } =
+    useMutation({
+      mutationFn: deleteReview,
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ['wineDetail'] });
+        onSuccess?.();
+      },
+    });
+
+  return { removeReview, isRemoveReviewPending };
 }

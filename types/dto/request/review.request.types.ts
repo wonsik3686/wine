@@ -27,3 +27,7 @@ export type PostWineReviewRequest = Pick<
   | 'content'
   | 'wineId'
 >;
+
+export type DeleteReviewRequest = {
+  id: number;
+};
