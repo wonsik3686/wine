@@ -1,7 +1,9 @@
 'use client';
 
-import { postWineReview, updateWineDetail } from '@/api/reviews.api';
+import { postWineReview } from '@/api/reviews.api';
+import { useReview, useUpdateReview } from '@/queries/reviews.queries';
 import { useReviewModalStore } from '@/store/useReviewModalStore';
+import { convertToAroma } from '@/utils/convert/convertToAroma';
 import { FormEvent, useEffect } from 'react';
 import Button from '../../common/Button';
 import Modal from '../Modal';
@@ -14,32 +16,24 @@ type WineDetailProps = {
   name: string;
 };
 
-type ReviewFormValue = {
-  id: number;
-  rating: number;
-  lightBold: number;
-  smoothTannic: number;
-  drySweet: number;
-  softAcidic: number;
-  aroma: string[];
-  content: string;
-};
-
 type ReviewModalProps = {
   isOpen: boolean;
   onClick: () => void;
-  initialReviewValue?: ReviewFormValue;
   mode: 'add' | 'edit';
-  WineDetail: WineDetailProps;
+  wineDetail: WineDetailProps;
 };
 
 export default function AddReviewModal({
   isOpen,
   onClick,
-  initialReviewValue,
   mode,
-  WineDetail,
+  wineDetail,
 }: ReviewModalProps) {
+  const { data: serverReviewData, isLoading: isReviewLoading } = useReview({
+    id: wineDetail.id,
+  });
+  const { mutate: updateReview } = useUpdateReview();
+
   const {
     rating,
     content,
@@ -54,21 +48,19 @@ export default function AddReviewModal({
   } = useReviewModalStore();
 
   useEffect(() => {
-    if (mode === 'edit' && initialReviewValue) {
-      setId(initialReviewValue.id);
-      setContent(initialReviewValue.content);
-      setRating(initialReviewValue.rating);
+    if (mode === 'edit' && serverReviewData && !isReviewLoading) {
+      setId(serverReviewData.id);
+      setContent(serverReviewData.content);
+      setRating(serverReviewData.rating);
       setTasteValues([
-        initialReviewValue.lightBold,
-        initialReviewValue.smoothTannic,
-        initialReviewValue.drySweet,
-        initialReviewValue.softAcidic,
+        serverReviewData.lightBold,
+        serverReviewData.smoothTannic,
+        serverReviewData.drySweet,
+        serverReviewData.softAcidic,
       ]);
-      setSelectedTags(initialReviewValue.aroma);
-      console.log(initialReviewValue);
+      setSelectedTags(serverReviewData.aroma);
     }
   }, [
-    initialReviewValue,
     mode,
     setId,
     setContent,
@@ -76,36 +68,36 @@ export default function AddReviewModal({
     setTasteValues,
     setSelectedTags,
     resetReview,
+    serverReviewData,
   ]);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const reviewData = {
-      wineId: WineDetail.id,
-      rating,
-      content,
-      aroma,
-      lightBold: tasteValues[0],
-      smoothTannic: tasteValues[1],
-      drySweet: tasteValues[2],
-      softAcidic: tasteValues[3],
-    };
-
-    const editReviewData = {
-      rating,
-      content,
-      aroma,
-      lightBold: tasteValues[0],
-      smoothTannic: tasteValues[1],
-      drySweet: tasteValues[2],
-      softAcidic: tasteValues[3],
-    };
-
-    if (mode === 'edit' && initialReviewValue) {
-      await updateWineDetail(initialReviewValue.id, editReviewData); // PATCH 요청으로 수정
+    if (mode === 'edit' && serverReviewData) {
+      await updateReview({
+        reviewId: serverReviewData.id,
+        data: {
+          rating,
+          content,
+          aroma: convertToAroma(aroma),
+          lightBold: tasteValues[0],
+          smoothTannic: tasteValues[1],
+          drySweet: tasteValues[2],
+          softAcidic: tasteValues[3],
+        },
+      }); // PATCH 요청으로 수정
     } else if (mode === 'add') {
-      await postWineReview(reviewData); // POST 요청으로 추가
+      await postWineReview({
+        wineId: wineDetail.id,
+        rating,
+        content,
+        aroma: convertToAroma(aroma),
+        lightBold: tasteValues[0],
+        smoothTannic: tasteValues[1],
+        drySweet: tasteValues[2],
+        softAcidic: tasteValues[3],
+      }); // POST 요청으로 추가
     }
 
     // 제출 후 초기화
@@ -134,7 +126,7 @@ export default function AddReviewModal({
           style={{ marginBottom: '32px', width: '100%' }}
           onSubmit={handleSubmit}
         >
-          <ReviewInput wineName={WineDetail.name} />
+          <ReviewInput wineName={wineDetail.name} />
           <p className="mb-[24px] font-sans text-xl font-bold text-gray-800 mob:mb-[20px] mob:text-lg">
             와인의 맛은 어땠나요?
           </p>

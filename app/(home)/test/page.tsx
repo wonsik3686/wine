@@ -42,19 +42,8 @@ function Test() {
   };
 
   const TestWineDetail = {
-    id: 279,
+    id: 941,
     name: 'Sentinel Carbernet Sauvignon 2016',
-  };
-
-  const existingReviewValue = {
-    id: 972,
-    rating: 5,
-    lightBold: 4,
-    smoothTannic: 8,
-    drySweet: 7,
-    softAcidic: 2,
-    aroma: ['CHERRY'],
-    content: '수정할 와인 후기',
   };
 
   const handleReviewClick = () => {
@@ -193,7 +182,7 @@ function Test() {
         isOpen={isReviewOpen}
         onClick={handleReviewClick}
         mode="add"
-        WineDetail={TestWineDetail}
+        wineDetail={TestWineDetail}
       />
       <button type="button" onClick={handleReviewEditClick}>
         리뷰수정모달열기
@@ -201,9 +190,8 @@ function Test() {
       <AddReviewModal
         isOpen={isReviewEditOpen}
         onClick={handleReviewEditClick}
-        initialReviewValue={existingReviewValue}
         mode="edit"
-        WineDetail={TestWineDetail}
+        wineDetail={TestWineDetail}
       />
       <StarRating isInteractive />
       <StarRating rating={3.8} size="small" />

@@ -1,50 +1,36 @@
+import {
+  GetReviewRequest,
+  PostWineReviewRequest,
+  UpdateReviewRequest,
+} from '@/types/dto/request/review.request.types';
+import {
+  GetReviewResponse,
+  PostWineReviewResponse,
+} from '@/types/dto/response/review.response.types';
 import { axiosInstance } from './_axiosInstance';
 
-type UpdateReviewRequest = {
-  rating: number;
-  lightBold: number;
-  smoothTannic: number;
-  drySweet: number;
-  softAcidic: number;
-  aroma: string[];
-  content: string;
+export const getReview = async ({ ...params }: GetReviewRequest) => {
+  const response = await axiosInstance<GetReviewResponse>({
+    method: 'GET',
+    url: `/reviews/${params.id}`,
+  });
+  return response;
 };
 
-export const updateWineDetail = async (
-  id: number,
-  updateData: UpdateReviewRequest
-) => {
-  try {
-    const response = await axiosInstance({
-      method: 'PATCH',
-      url: `/reviews/${id}`,
-      data: updateData,
-    });
-    return response.data;
-  } catch (error) {
-    console.error('와인 정보를 수정하는 데 실패했습니다:', error);
-    throw error; // 에러를 호출자에게 전달합니다.
-  }
+export const updateReview = async ({ ...params }: UpdateReviewRequest) => {
+  const response = await axiosInstance<PostWineReviewResponse>({
+    method: 'PATCH',
+    url: `/reviews/${params.reviewId}`,
+    data: params.data,
+  });
+  return response.data;
 };
 
-export const postWineReview = async (reviewData: {
-  rating: number;
-  lightBold: number;
-  smoothTannic: number;
-  drySweet: number;
-  softAcidic: number;
-  aroma: string[];
-  content: string;
-  wineId: number;
-}) => {
-  const accessToken = `Bearer ${localStorage.getItem('accessToken')}`;
-  const response = await axiosInstance({
+export const postWineReview = async (reviewData: PostWineReviewRequest) => {
+  const response = await axiosInstance<PostWineReviewResponse>({
     method: 'POST',
     url: '/reviews',
     data: reviewData,
-    headers: {
-      Authorization: accessToken,
-    },
   });
 
   return response;
