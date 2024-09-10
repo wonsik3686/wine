@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 import { axiosInstance } from '@/api/_axiosInstance';
 import { User } from '@/types/user.types';
 import { create } from 'zustand';
@@ -12,6 +13,7 @@ export type AuthState = {
 export type AuthActions = {
   login: (email: string, password: string) => Promise<void>;
   logout: () => void;
+  setAccessToken: (accessToken: string) => void;
 };
 
 export type AuthStore = AuthState & AuthActions;
@@ -43,10 +45,16 @@ export const useAuthStore = create(
           refreshToken: null,
         }));
       },
+      setAccessToken: (pAccessToken) => {
+        setState((state) => ({
+          ...state,
+          accessToken: pAccessToken,
+        }));
+      },
     }),
     {
       name: 'auth-storage',
-      storage: createJSONStorage(() => sessionStorage),
+      storage: createJSONStorage(() => localStorage),
     }
   )
 );
