@@ -24,7 +24,7 @@ export default function TasteSlider() {
     <section className="whitespace-nowrap">
       {sliderData.map((slider, index) => (
         <div
-          key={slider.label}
+          key={slider.label} // index를 key로 사용
           className="mb-3 flex items-center justify-between gap-3"
         >
           <p className="w-[50px] flex-shrink-0 rounded-lg bg-gray-100 px-2 py-1 text-center text-sm font-semibold text-gray-500 mob:w-[40px] mob:px-1 mob:py-0.5 mob:text-xs">
@@ -34,7 +34,7 @@ export default function TasteSlider() {
             {slider.descriptions[0]}
           </p>
           <Slider
-            value={tasteValues[index]}
+            value={tasteValues[index]} // 배열에서 슬라이더 값을 가져옵니다.
             mode="interactive"
             onChange={(value) => handleSliderChange(index, value)}
             width="100%"

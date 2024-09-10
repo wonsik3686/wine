@@ -1,12 +1,15 @@
-'use client';
-
 import { useReviewModalStore } from '@/store/useReviewModalStore';
+import { Aroma } from '@/types/wine.types';
+import translateAromaToKorean from '@/utils/translate/TranslateAromaToKorean';
 import Chip from '../../common/Chip';
+
+const englishTags: Aroma[] = Object.values(Aroma);
+const koreanTags = translateAromaToKorean(englishTags);
 
 export default function TagSelector() {
   const { selectedTags, setSelectedTags } = useReviewModalStore();
 
-  const handleTagClick = (tag: string) => {
+  const handleTagClick = (tag: Aroma) => {
     if (selectedTags.includes(tag)) {
       setSelectedTags(selectedTags.filter((t) => t !== tag));
     } else {
@@ -14,36 +17,14 @@ export default function TagSelector() {
     }
   };
 
-  const tags = [
-    '체리',
-    '베리',
-    '오크',
-    '바닐라',
-    '후추',
-    '제빵',
-    '풀',
-    '사과',
-    '복숭아',
-    '시트러스',
-    '트로피컬',
-    '미네랄',
-    '꽃',
-    '담뱃잎',
-    '흙',
-    '초콜릿',
-    '스파이스',
-    '카라멜',
-    '가죽',
-  ];
-
   return (
     <div className="flex flex-wrap gap-[15px] mob:gap-[10px]">
-      {tags.map((tag) => (
+      {koreanTags.map((tag, index) => (
         <Chip
-          key={tag}
+          key={englishTags[index]} // 영어 태그를 키로 사용
           label={tag}
-          selected={selectedTags.includes(tag)}
-          onClick={() => handleTagClick(tag)}
+          selected={selectedTags.includes(englishTags[index])} // 선택된 태그가 영어로 저장됨
+          onClick={() => handleTagClick(englishTags[index])} // 클릭 시 영어 태그로 처리
           isDisabled={false}
         />
       ))}

@@ -1,5 +1,6 @@
 'use client';
 
+import { postWineDetail, uploadWineImage } from '@/api/wines.api';
 import { ChangeEvent, FormEvent, useState } from 'react';
 import Button from '../common/Button';
 import Dropdown from '../common/dropdown/Dropdown';
@@ -9,10 +10,10 @@ import WineImageInput from './WineImageInput';
 
 type FormValues = {
   name: string;
-  price: string;
-  origin: string;
+  price: number;
+  region: string;
   type: string;
-  imgFile: File | null;
+  image: File | null;
 };
 
 type ModalProps = {
@@ -23,11 +24,12 @@ type ModalProps = {
 
 function AddWineModal({ isOpen, onClick, initialFormValue }: ModalProps) {
   const [formValue, setFormValue] = useState<FormValues>(initialFormValue);
+  const [postError, setPostError] = useState('');
 
   const wineOption = [
-    { label: 'Red', value: 'red' },
-    { label: 'White', value: 'white' },
-    { label: 'Sparkling', value: 'Sparkling' },
+    { label: 'RED', value: 'RED' },
+    { label: 'WHITE', value: 'WHITE' },
+    { label: 'SPARKLING', value: 'SPARKLING' },
   ];
 
   const handleFormChange = (
@@ -51,36 +53,60 @@ function AddWineModal({ isOpen, onClick, initialFormValue }: ModalProps) {
 
   const checkAllInputsFilled = () => {
     return (
-      formValue.name !== '' && formValue.price !== '' && formValue.origin !== ''
+      formValue.name !== '' &&
+      formValue.price !== 0 &&
+      formValue.region !== '' &&
+      formValue.image !== null
     );
   };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const formData = new FormData();
-    formData.append('name', formValue.name);
-    formData.append('price', formValue.price);
-    formData.append('origin', formValue.origin);
-    formData.append('type', formValue.type);
+    let imageUrl = '';
+    console.log(formValue);
 
-    if (formValue.imgFile) {
-      formData.append('imgFile', formValue.imgFile); // 파일 있을 때만 추가
+    try {
+      // 이미지 파일이 있을 때 업로드 진행
+      if (formValue.image) {
+        imageUrl = await uploadWineImage(formValue.image);
+      }
+
+      const wineData = {
+        name: formValue.name,
+        region: formValue.region,
+        price: Number(formValue.price),
+        type: formValue.type,
+        image: imageUrl,
+      };
+
+      // 와인 정보 POST 요청
+      await postWineDetail(wineData);
+      setFormValue(initialFormValue); // 폼 값을 초기 상태로 되돌리기
+      setPostError(''); // 에러 초기화
+    } catch (error) {
+      console.error('와인 등록에 실패했습니다:', error);
+      setPostError('와인 등록에 실패했습니다. 다시 시도해 주세요.'); // 에러 메시지 설정
     }
-
-    // API POST 요청 대신 임시로 넣은 값
-    setFormValue(initialFormValue);
   };
 
   return (
     <Modal isOpen={isOpen} onClose={onClick}>
-      <h1 className="mb-[40px] font-sans text-2xl font-bold text-gray-800">
-        와인 등록
-      </h1>
-      <form
-        style={{ marginBottom: '32px', width: '100%' }}
-        onSubmit={handleSubmit}
-      >
+      <section className="mb-[40px] flex items-center justify-between mob:mb-[30px]">
+        <h1 className="font-sans text-2xl font-bold text-gray-800">
+          와인 등록
+        </h1>
+        <button
+          type="button"
+          onClick={onClick}
+          className="text-2xl text-gray-500 mob:text-xl"
+        >
+          X
+        </button>
+      </section>
+      <form className="mb-[32px] w-[412px] mob:w-full" onSubmit={handleSubmit}>
+        {postError && <p className="text-red-500">{postError}</p>}{' '}
+        {/* 에러 메시지 표시 */}
         <Input
           label="와인 이름"
           id="name"
@@ -100,8 +126,8 @@ function AddWineModal({ isOpen, onClick, initialFormValue }: ModalProps) {
         />
         <Input
           label="원산지"
-          id="origin"
-          name="origin"
+          id="region"
+          name="region"
           placeholder="원산지 입력"
           style={{ marginBottom: '32px', width: '100%', height: '48px' }}
           onChange={handleInputChange}
@@ -113,13 +139,13 @@ function AddWineModal({ isOpen, onClick, initialFormValue }: ModalProps) {
           options={wineOption}
           onSelect={handleSelect}
           type="select"
-          initialLabel="Red"
+          initialLabel="RED"
         />
         <br />
         <br />
         <WineImageInput
-          name="imgFile"
-          value={formValue.imgFile}
+          name="image"
+          value={formValue.image}
           onChange={handleFormChange}
         />
         <div className="mt-[32px] flex gap-[5px]">

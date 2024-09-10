@@ -1,5 +1,6 @@
 'use client';
 
+import { postWineReview } from '@/api/reviews.api';
 import { useReviewModalStore } from '@/store/useReviewModalStore';
 import { FormEvent } from 'react';
 import Button from '../../common/Button';
@@ -14,27 +15,37 @@ type ModalProps = {
 };
 
 export default function AddReviewModal({ isOpen, onClick }: ModalProps) {
-  const { rating, content, tasteValues, selectedTags, wineId, resetReview } =
-    useReviewModalStore();
+  const {
+    rating,
+    content,
+    tasteValues,
+    selectedTags: aroma, // aroma를 selectedTags로 사용
+    wineId,
+    resetReview,
+  } = useReviewModalStore();
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const formData = {
+    const reviewData = {
       rating,
       wineId,
       content,
-      selectedTags,
-      tasteValues,
+      aroma, // selectedTags 대신 aroma로 수정
+      lightBold: tasteValues[0],
+      smoothTannic: tasteValues[1],
+      drySweet: tasteValues[2],
+      softAcidic: tasteValues[3],
     };
 
-    // API POST 요청 대신 임시로 넣은 값
-    console.log(formData);
+    await postWineReview(reviewData);
 
     // 제출 후 초기화
     resetReview();
     onClick(); // 모달 닫기
   };
+
+  const isButtonDisabled = !rating || !content || aroma.length === 0;
 
   return (
     <Modal isOpen={isOpen} onClose={onClick}>
@@ -71,7 +82,7 @@ export default function AddReviewModal({ isOpen, onClick }: ModalProps) {
               buttonColor="purple"
               textColor="white"
               style={{ flexGrow: '2', marginTop: '20px' }}
-              disabled={!content}
+              disabled={isButtonDisabled}
             >
               리뷰 남기기
             </Button>
