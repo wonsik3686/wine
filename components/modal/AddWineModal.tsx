@@ -133,7 +133,10 @@ function AddWineModal({ isOpen, onClick, initialFormValue, mode }: ModalProps) {
           X
         </button>
       </section>
-      <form className="mb-[32px] w-[412px] mob:w-full" onSubmit={handleSubmit}>
+      <form
+        className="mb-[32px] flex w-[412px] flex-col gap-[32px] mob:w-full"
+        onSubmit={handleSubmit}
+      >
         {postError && <p className="text-red-500">{postError}</p>}{' '}
         {/* 에러 메시지 표시 */}
         <Input
@@ -141,7 +144,7 @@ function AddWineModal({ isOpen, onClick, initialFormValue, mode }: ModalProps) {
           id="name"
           name="name"
           placeholder="와인 이름 입력"
-          style={{ marginBottom: '32px', width: '100%', height: '48px' }}
+          style={{ width: '100%', height: '48px' }}
           onChange={handleInputChange}
           value={formValue.name}
         />
@@ -151,7 +154,7 @@ function AddWineModal({ isOpen, onClick, initialFormValue, mode }: ModalProps) {
           name="price"
           type="number"
           placeholder="가격 입력"
-          style={{ marginBottom: '32px', width: '100%', height: '48px' }}
+          style={{ width: '100%', height: '48px' }}
           onChange={handleInputChange}
           value={formValue.price}
         />
@@ -160,26 +163,33 @@ function AddWineModal({ isOpen, onClick, initialFormValue, mode }: ModalProps) {
           id="region"
           name="region"
           placeholder="원산지 입력"
-          style={{ marginBottom: '32px', width: '100%', height: '48px' }}
+          style={{ width: '100%', height: '48px' }}
           onChange={handleInputChange}
           value={formValue.region}
         />
-        <h2 className="mb-[10px] font-sans text-lg font-medium text-gray-800">
-          타입
-        </h2>
-        <Dropdown
-          options={wineOption}
-          onSelect={handleSelect}
-          type="select"
-          initialLabel={formValue.type}
-        />
-        <br />
-        <br />
-        <WineImageInput
-          name="image"
-          value={formValue.image}
-          onChange={handleFormChange}
-        />
+        <div>
+          <h2 className="mb-[10px] font-sans text-lg font-medium text-gray-800">
+            타입
+          </h2>
+
+          <Dropdown
+            options={wineOption}
+            onSelect={handleSelect}
+            type="select"
+            initialLabel={formValue.type}
+          />
+        </div>
+        <div>
+          <h2 className="mb-[10px] font-sans text-lg font-medium text-gray-800">
+            와인 사진
+          </h2>
+
+          <WineImageInput
+            name="image"
+            value={formValue.image}
+            onChange={handleFormChange}
+          />
+        </div>
         <div className="mt-[32px] flex gap-[5px]">
           <Button
             buttonStyle="box"

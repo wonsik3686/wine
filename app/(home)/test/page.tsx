@@ -12,8 +12,8 @@ import { useState } from 'react';
 
 function Test() {
   const [isOpen, setIsOpen] = useState(false);
-  const [deleteIsOpen, setDeleteIsOpen] = useState(false);
-  const [editIsOpen, setEditIsOpen] = useState(false);
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+  const [isEditOpen, setIsEditOpen] = useState(false);
   const [isReviewOpen, setIsReviewOpen] = useState(false);
 
   const handleClick = () => {
@@ -23,21 +23,21 @@ function Test() {
   };
 
   const handleCancelClick = () => {
-    if (!deleteIsOpen) {
-      setDeleteIsOpen(true);
-    } else setDeleteIsOpen(false);
+    if (!isDeleteOpen) {
+      setIsDeleteOpen(true);
+    } else setIsDeleteOpen(false);
   };
 
   const handleEditClick = () => {
-    if (!editIsOpen) {
-      setEditIsOpen(true);
-    } else setEditIsOpen(false);
+    if (!isEditOpen) {
+      setIsEditOpen(true);
+    } else setIsEditOpen(false);
   };
 
   const handleDeleteClick = () => {
     // DELETE요청 대신 넣은 값
     console.log('삭제되었습니다!');
-    setDeleteIsOpen(false);
+    setIsDeleteOpen(false);
   };
 
   const handleReviewClick = () => {
@@ -82,7 +82,7 @@ function Test() {
         와인수정모달열기
       </button>
       <AddWineModal
-        isOpen={editIsOpen}
+        isOpen={isEditOpen}
         onClick={handleEditClick}
         initialFormValue={existingWineValue}
         mode="edit"
@@ -91,7 +91,7 @@ function Test() {
         삭제모달열기
       </button>
       <DeleteModal
-        isOpen={deleteIsOpen}
+        isOpen={isDeleteOpen}
         onClick={handleCancelClick}
         onCancel={handleDeleteClick}
       />
