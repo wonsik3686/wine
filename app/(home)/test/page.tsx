@@ -1,6 +1,5 @@
 'use client';
 
-import { uploadWineImage } from '@/api/wines.api';
 import { PriceBox, RatingBox } from '@/components/common/Boxes';
 import Button from '@/components/common/Button';
 import Chip from '@/components/common/Chip';
@@ -13,16 +12,6 @@ import { useState } from 'react';
 function Test() {
   const [isOpen, setIsOpen] = useState(false);
   const [isReviewOpen, setIsReviewOpen] = useState(false);
-
-  const handleTestUpload = async () => {
-    try {
-      const testFile = new File(['test'], 'test.jpg', { type: 'image/jpeg' });
-      const url = await uploadWineImage(testFile);
-      console.log('Upload successful, file URL:', url);
-    } catch (error) {
-      console.error('Upload failed:', error);
-    }
-  };
 
   const handleClick = () => {
     if (!isOpen) {
@@ -142,11 +131,6 @@ function Test() {
       />
       <Chip label="체리" selected isDisabled={false} />
       <Chip label="오크" isDisabled />
-      <div>
-        <button type="button" onClick={handleTestUpload}>
-          Test Upload
-        </button>
-      </div>
     </main>
   );
 }
