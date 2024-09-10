@@ -2,7 +2,7 @@
 
 import Button from '@/components/common/Button';
 import Input from '@/components/common/Input';
-import { useAuthStore } from '@/store/useAuthStore';
+import { useAuthStore } from '@/providers/auth';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -16,8 +16,8 @@ type FormValues = {
 export default function SingInPage() {
   const login = useAuthStore((state) => state.login);
   const [values, setValues] = useState<FormValues>({
-    email: '',
-    password: '',
+    email: 'main@email.com',
+    password: '11111111',
   });
 
   const [formErrors, setFormErrors] = useState({
@@ -66,17 +66,15 @@ export default function SingInPage() {
       if (!valResult) {
         return;
       }
-
       try {
         await login(email, password);
         router.push('/');
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      } catch (_) {
-        // TODO: 실패한 이유 사용자에게 노티
+      } catch (e) {
         setFormErrors({
           email: '이메일 혹은 비밀번호를 확인해주세요.',
           password: '   ',
         });
+        throw e;
       }
     },
     [login, router, validateForm, values]

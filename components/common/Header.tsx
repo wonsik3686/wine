@@ -1,13 +1,35 @@
 'use client';
 
-import { useAuthStore } from '@/store/useAuthStore';
+import { useAuthStore } from '@/providers/auth';
 import Image from 'next/image';
 import Link from 'next/link';
 
-export default function Header() {
+function DropDown() {
   const logout = useAuthStore((state) => state.logout);
   const user = useAuthStore((state) => state.user);
 
+  if (!user)
+    return (
+      <Link href="/login" className="text-[16px] font-medium text-white">
+        로그인
+      </Link>
+    );
+
+  console.log(user.image);
+  return (
+    <Link
+      href="/"
+      className="text-[16px] font-medium text-white"
+      onClick={() => {
+        logout();
+      }}
+    >
+      로그아웃
+    </Link>
+  );
+}
+
+export default function Header() {
   return (
     <div className="sticky top-0 z-30 flex w-full justify-center">
       <header
@@ -25,23 +47,7 @@ export default function Header() {
           />
         </Link>
 
-        <div>
-          {user ? (
-            <Link
-              href="/"
-              className="text-[16px] font-medium text-white"
-              onClick={() => {
-                logout();
-              }}
-            >
-              로그아웃
-            </Link>
-          ) : (
-            <Link href="/login" className="text-[16px] font-medium text-white">
-              로그인
-            </Link>
-          )}
-        </div>
+        <DropDown />
       </header>
     </div>
   );

@@ -2,7 +2,7 @@
 
 import Button from '@/components/common/Button';
 import Input from '@/components/common/Input';
-import { useAuthStore } from '@/store/useAuthStore';
+import { useAuthStore } from '@/providers/auth';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
