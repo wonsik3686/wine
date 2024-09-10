@@ -1,7 +1,7 @@
 /* eslint-disable import/no-cycle */
 import { loginAPI, registerAPI } from '@/api/auth.api';
 import { User } from '@/types/user.types';
-import { create } from 'zustand';
+import { createStore } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 
 export type AuthState = {
@@ -27,45 +27,58 @@ export type AuthActions = {
   setAccessToken: (accessToken: string) => void;
 };
 
+export const initialAuthState: AuthState = {
+  user: null,
+  accessToken: null,
+  refreshToken: null,
+};
+
 export type AuthStore = AuthState & AuthActions;
 
-export const useAuthStore = create(
-  persist<AuthStore>(
-    (setState) => ({
-      user: null,
-      accessToken: null,
-      refreshToken: null,
+export const createAuthStore = (initState: AuthState = initialAuthState) => {
+  return createStore<AuthStore>()(
+    persist<AuthStore>(
+      (setState) => {
+        return {
+          ...initState,
 
-      login: async (email, password) => {
-        const userInfo = await loginAPI({ email, password });
-        setState(() => ({ ...userInfo }));
+          login: async (email, password) => {
+            const userInfo = await loginAPI({ email, password });
+            setState(() => ({ ...userInfo }));
+          },
+          logout: () => {
+            setState(() => ({
+              user: null,
+              accessToken: null,
+              refreshToken: null,
+            }));
+          },
+          register: async ({
+            email,
+            nickname,
+            password,
+            passwordConfirmation,
+          }) => {
+            const userInfo = await registerAPI({
+              email,
+              nickname,
+              password,
+              passwordConfirmation,
+            });
+            setState(() => ({ ...userInfo }));
+          },
+          setAccessToken: (pAccessToken) => {
+            setState((state) => ({
+              ...state,
+              accessToken: pAccessToken,
+            }));
+          },
+        };
       },
-      logout: () => {
-        setState(() => ({
-          user: null,
-          accessToken: null,
-          refreshToken: null,
-        }));
-      },
-      register: async ({ email, nickname, password, passwordConfirmation }) => {
-        const userInfo = await registerAPI({
-          email,
-          nickname,
-          password,
-          passwordConfirmation,
-        });
-        setState(() => ({ ...userInfo }));
-      },
-      setAccessToken: (pAccessToken) => {
-        setState((state) => ({
-          ...state,
-          accessToken: pAccessToken,
-        }));
-      },
-    }),
-    {
-      name: 'auth-storage',
-      storage: createJSONStorage(() => localStorage),
-    }
-  )
-);
+      {
+        name: 'auth-storage',
+        storage: createJSONStorage(() => localStorage),
+      }
+    )
+  );
+};
