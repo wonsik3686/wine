@@ -51,6 +51,9 @@ function WineImageInput({ name, value, onChange }: Props) {
         />
       </div>
       <div className="relative h-[150px] w-[150px]">
+        <div className="relative h-[150px] w-[150px] rounded-lg object-cover">
+          {preview && <Image fill src={preview} alt="이미지 미리보기" />}
+        </div>
         {value && (
           <button
             type="button"
@@ -60,9 +63,6 @@ function WineImageInput({ name, value, onChange }: Props) {
             X
           </button>
         )}
-        <div className="relative h-[150px] w-[150px] rounded-lg object-cover">
-          {preview && <Image fill src={preview} alt="이미지 미리보기" />}
-        </div>
       </div>
     </div>
   );

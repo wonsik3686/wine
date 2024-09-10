@@ -53,7 +53,10 @@ function AddWineModal({ isOpen, onClick, initialFormValue }: ModalProps) {
 
   const checkAllInputsFilled = () => {
     return (
-      formValue.name !== '' && formValue.price !== 0 && formValue.region !== ''
+      formValue.name !== '' &&
+      formValue.price !== 0 &&
+      formValue.region !== '' &&
+      formValue.imgFile !== null
     );
   };
 
@@ -61,6 +64,7 @@ function AddWineModal({ isOpen, onClick, initialFormValue }: ModalProps) {
     e.preventDefault();
 
     let imageUrl = '';
+    console.log(formValue);
 
     try {
       // 이미지 파일이 있을 때 업로드 진행
