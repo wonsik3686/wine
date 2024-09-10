@@ -6,13 +6,10 @@ import WineReviewList from '@/components/wines/WineReviewList';
 import WineReviewsRating from '@/components/wines/WineReviewsRating';
 import useReviewModal from '@/hooks/modal/useReviewModal';
 import { useWineDetail } from '@/queries/wines.queries';
-import { useEffect } from 'react';
 
 export default function WineDetail({ params }: { params: { id: number } }) {
   const { wineDetail } = useWineDetail({ id: params.id });
   const { isReviewOpen, handleOpenAddReview } = useReviewModal();
-
-  useEffect(() => {}, [wineDetail]);
 
   return (
     <>

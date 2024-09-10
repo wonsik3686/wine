@@ -18,7 +18,6 @@ import WineTasteSlider from './WineTasteSlider';
 type WineReviewListProps = Pick<WineDetailType, 'reviews'>;
 
 export default function WineReviewList({ reviews }: WineReviewListProps) {
-  const [reviewsData] = useState<WineReviewListProps['reviews']>(reviews);
   const [expandedReviewIndexes, setExpandedReviewIndexes] = useState<number[]>(
     []
   );
@@ -51,14 +50,14 @@ export default function WineReviewList({ reviews }: WineReviewListProps) {
     handleDeleteReview(selectedReviewId);
   };
 
-  useEffect(() => {}, [reviewsData]);
+  useEffect(() => {}, [reviews]);
 
   return (
     <div className="flex flex-col pc:mt-[3.75rem] pc:w-[50rem]">
       <h3 className="font-sans text-xl font-bold text-gray-800 tab:hidden mob:hidden pc:mb-[1.38rem]">
         리뷰 목록
       </h3>
-      {reviewsData.map((review, index) => (
+      {reviews.map((review, index) => (
         <article
           className="mb-5 mt-2 flex flex-col items-center justify-center
 												gap-[0.625rem] self-stretch rounded-2xl border-[1px] border-gray-300 px-10 pb-6 pt-8
