@@ -12,7 +12,7 @@ export default function WineDetail({ params }: { params: { id: number } }) {
     <>
       <section className="hidden">{params.id}</section>
       {wineDetail && <WineDetailCard wineDetail={wineDetail} />}
-      <section className="flex pc:flex-row pc:gap-[3.75rem] tab:flex-col-reverse tab:gap-[2.25rem] mob:gap-[1.25rem]">
+      <section className="flex tab:flex-col-reverse tab:gap-[2.25rem] mob:gap-[1.25rem] pc:flex-row pc:gap-[3.75rem]">
         {wineDetail && <WineRevieList reviews={wineDetail.reviews} />}
         {wineDetail && (
           <WineReviewsRating
