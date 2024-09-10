@@ -77,9 +77,10 @@ export default function Signup() {
   }
 
   return (
-    <>
+    <div className="flex min-h-screen flex-col items-center justify-center bg-white p-24">
       <Link href="/">
         <Image
+          className="mb-16"
           src="/icons/wineBlackLogo-l.svg"
           alt="로고"
           width={104}
@@ -99,6 +100,7 @@ export default function Signup() {
         />
 
         <Input
+          labelClassNames="pt-[20px]"
           label="닉네임"
           errorMessage={
             formErrors.nickname ? '닉네임을 입력해주세요' : undefined
@@ -111,6 +113,7 @@ export default function Signup() {
         />
 
         <Input
+          labelClassNames="pt-[20px]"
           label="비밀번호"
           errorMessage={
             formErrors.password ? '비밀번호를 입력해주세요' : undefined
@@ -123,6 +126,7 @@ export default function Signup() {
         />
 
         <Input
+          labelClassNames="pt-[20px]"
           label="비밀번호 확인"
           errorMessage={
             error ||
@@ -138,15 +142,17 @@ export default function Signup() {
           onChange={handleChange}
         />
 
-        <Button
-          buttonStyle="box"
-          buttonWidth="fitToParent"
-          buttonColor="purple"
-          textColor="white"
-          type="submit"
-        >
-          가입하기
-        </Button>
+        <div className="mb-[15px] mt-[56px] flex w-full flex-col gap-[0.94rem] mob:gap-4">
+          <Button
+            buttonStyle="box"
+            buttonWidth="fitToParent"
+            buttonColor="purple"
+            textColor="white"
+            type="submit"
+          >
+            가입하기
+          </Button>
+        </div>
       </form>
       {/* TODO:띄어쓰기 다시보기 */}
       <div className="mt-10 text-gray-500">
@@ -157,6 +163,6 @@ export default function Signup() {
         </Link>
       </div>
       {/* </form> */}
-    </>
+    </div>
   );
 }
