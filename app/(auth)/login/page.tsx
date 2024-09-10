@@ -167,7 +167,7 @@ export default function SingInPage() {
       <div className="flex flex-row items-center gap-2">
         계정이 없으신가요?
         {/* Link href 재설정 필요, 임시로 "/" 페이지 설정 */}
-        <Link href="/">
+        <Link href="/register">
           <div>회원가입하기</div>
         </Link>
       </div>

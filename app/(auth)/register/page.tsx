@@ -6,7 +6,7 @@ import { useAuthStore } from '@/providers/auth';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { ChangeEvent, FormEvent, useCallback, useState } from 'react';
+import { FormEvent, useCallback, useState } from 'react';
 
 type FormValues = {
   email: string;
@@ -24,15 +24,45 @@ export default function Signup() {
     passwordConfirmation: '',
   });
 
-  const [error, setError] = useState<string | null>(null);
+  // const [error, setError] = useState<string | null>(null);
   const [formErrors, setFormErrors] = useState({
-    email: false,
-    nickname: false,
-    password: false,
-    passwordConfirmation: false,
+    email: '',
+    nickname: '',
+    password: '',
+    passwordConfirmation: '',
   });
 
-  const handleChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+  const validateEmail = (email: string) => {
+    if (!email) return '이메일은 필수 입력입니다.';
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
+      return '이메일 형식으로 작성해 주세요.';
+    return '';
+  };
+
+  const validateNickname = (nickname: string) => {
+    if (!nickname) return '닉네임은 필수 입력입니다.';
+    if (nickname.length > 20) return '닉네임은 최대 20자까지 가능합니다.';
+    return '';
+  };
+
+  const validatePassword = (password: string) => {
+    if (!password) return '비밀번호는 필수 입력입니다.';
+    if (password.length < 8) return '비밀번호는 최소 8자 이상입니다.';
+    if (!/^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$/.test(password))
+      return '비밀번호는 숫자, 영문, 특수문자로만 가능합니다.';
+    return '';
+  };
+
+  const validatePasswordConfirmation = (
+    password: string,
+    confirmation: string
+  ) => {
+    if (!confirmation) return '비밀번호 확인을 입력해주세요.';
+    if (password !== confirmation) return '비밀번호가 일치하지 않습니다.';
+    return '';
+  };
+
+  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
     setValues((prevValues) => ({
@@ -42,29 +72,79 @@ export default function Signup() {
 
     setFormErrors((prevErrors) => ({
       ...prevErrors,
-      [name]: !value,
+      [name]: '',
     }));
   }, []);
+
+  const handleBlur = useCallback(
+    (e: React.FocusEvent<HTMLInputElement>) => {
+      const { name, value } = e.target;
+
+      let errorMessage = '';
+
+      switch (name) {
+        case 'email':
+          errorMessage = validateEmail(value);
+          break;
+        case 'nickname':
+          errorMessage = validateNickname(value);
+          break;
+        case 'password':
+          errorMessage = validatePassword(value);
+          break;
+        case 'passwordConfirmation':
+          errorMessage = validatePasswordConfirmation(values.password, value);
+          break;
+        default:
+          break;
+      }
+
+      // setValues((prevValues) => ({
+      //   ...prevValues,
+      //   [name]: value,
+      // }));
+
+      setFormErrors((prevErrors) => ({
+        ...prevErrors,
+        [name]: errorMessage,
+      }));
+    },
+    [values.password]
+  );
+
   const router = useRouter();
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const { email, nickname, password, passwordConfirmation } = values;
 
-    if (!email || !nickname || !password || !passwordConfirmation) {
+    const emailError = validateEmail(email);
+    const nicknameError = validateNickname(nickname);
+    const passwordError = validatePassword(password);
+    const passwordConfirmationError = validatePasswordConfirmation(
+      password,
+      passwordConfirmation
+    );
+
+    if (
+      emailError ||
+      nicknameError ||
+      passwordError ||
+      passwordConfirmationError
+    ) {
       setFormErrors({
-        email: !email,
-        nickname: !nickname,
-        password: !password,
-        passwordConfirmation: !passwordConfirmation,
+        email: emailError,
+        nickname: nicknameError,
+        password: passwordError,
+        passwordConfirmation: passwordConfirmationError,
       });
       return;
     }
 
-    if (values.password !== values.passwordConfirmation) {
-      setError('비밀번호가 일치하지 않습니다.');
-      return;
-    }
+    // if (values.password !== values.passwordConfirmation) {
+    //   setError('비밀번호가 일치하지 않습니다.');
+    //   return;
+    // }
     // console.log(axiosInstance.defaults.baseURL);
     register({ email, nickname, password, passwordConfirmation })
       .then(() => {
@@ -85,61 +165,54 @@ export default function Signup() {
           alt="로고"
           width={104}
           height={30}
-          // className="mb-16"
         />
       </Link>
       <form onSubmit={handleSubmit}>
         <Input
           label="이메일"
-          errorMessage={formErrors.email ? '이메일을 입력해주세요' : undefined}
+          errorMessage={formErrors.email || undefined}
           placeholder="whyne@email.com"
           type="email"
           name="email"
           value={values.email}
           onChange={handleChange}
+          onBlur={handleBlur}
         />
 
         <Input
           labelClassNames="pt-[20px]"
           label="닉네임"
-          errorMessage={
-            formErrors.nickname ? '닉네임을 입력해주세요' : undefined
-          }
+          errorMessage={formErrors.nickname || undefined}
           placeholder="whyne"
           type="text"
           name="nickname"
           value={values.nickname}
           onChange={handleChange}
+          onBlur={handleBlur}
         />
 
         <Input
           labelClassNames="pt-[20px]"
           label="비밀번호"
-          errorMessage={
-            formErrors.password ? '비밀번호를 입력해주세요' : undefined
-          }
+          errorMessage={formErrors.password || undefined}
           placeholder="영문, 숫자 포함 8자 이상"
           type="password"
           name="password"
           value={values.password}
           onChange={handleChange}
+          onBlur={handleBlur}
         />
 
         <Input
           labelClassNames="pt-[20px]"
           label="비밀번호 확인"
-          errorMessage={
-            error ||
-            (formErrors.passwordConfirmation
-              ? '비밀번호를 입력해주세요'
-              : undefined)
-          }
-          // errorMessage={error || '비밀번호를 입력해주세요'}
+          errorMessage={formErrors.passwordConfirmation || undefined}
           placeholder="비밀번호 확인"
           type="password"
           name="passwordConfirmation"
           value={values.passwordConfirmation}
           onChange={handleChange}
+          onBlur={handleBlur}
         />
 
         <div className="mb-[15px] mt-[56px] flex w-full flex-col gap-[0.94rem] mob:gap-4">
