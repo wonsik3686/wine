@@ -23,3 +23,6 @@ export type WineListResponse = {
 
 /** 와인 상세 정보 응답 타입 정의 */
 export type WineDetailResponse = WineDetailType;
+
+/** 추천 와인 응답 타입 정의 */
+export type RecommendedWineResponse = WineListType[];
