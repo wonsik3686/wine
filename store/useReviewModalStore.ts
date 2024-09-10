@@ -1,9 +1,10 @@
 import { create } from 'zustand';
 
+// 수정된 useReviewModalStore
 type ReviewState = {
   content: string;
   selectedTags: string[];
-  tasteValues: number[];
+  tasteValues: number[]; // 배열로 유지
   wineId: number;
   wineName: string;
   rating: number;
@@ -15,7 +16,7 @@ type ReviewState = {
   resetReview: () => void;
 };
 
-// API로 받을 정보를 대신해서 테스트
+// 테스트를 위한 더미 데이터
 const TestWineDetail = {
   id: 3,
   name: 'Sentinel Carbernet Sauvignon 2016',
@@ -24,7 +25,7 @@ const TestWineDetail = {
 export const useReviewModalStore = create<ReviewState>((set) => ({
   content: '',
   selectedTags: [],
-  tasteValues: [50, 50, 50, 50], // 4개의 슬라이더 값 초기화
+  tasteValues: [5, 5, 5, 5], // 4개의 슬라이더 값 초기화
   wineId: TestWineDetail.id,
   wineName: TestWineDetail.name,
   rating: 0,
@@ -37,6 +38,6 @@ export const useReviewModalStore = create<ReviewState>((set) => ({
     set({
       content: '',
       selectedTags: [],
-      tasteValues: [50, 50, 50, 50],
+      tasteValues: [5, 5, 5, 5],
     }),
 }));

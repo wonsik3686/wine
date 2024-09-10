@@ -41,10 +41,10 @@ function Test() {
 
   const initialWineValue = {
     name: '',
-    price: '',
-    origin: '',
-    type: 'Red',
-    imgFile: null,
+    price: 0,
+    region: '',
+    type: 'RED',
+    image: null,
   };
 
   return (
