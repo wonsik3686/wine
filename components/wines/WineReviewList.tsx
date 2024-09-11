@@ -2,7 +2,7 @@
 
 import useDeleteReview from '@/hooks/reviews/useDeleteReview';
 import useLikeReview from '@/hooks/wines/useLikeReview';
-import { useAuthStore } from '@/store/useAuthStore';
+import { useAuthStore } from '@/providers/auth';
 import { WineDetailType } from '@/types/wine.types';
 import formatDistanceToNowKor from '@/utils/dateTimeUtils/FormatDistanceToNow';
 import translateAromaToKorean from '@/utils/translate/TranslateAromaToKorean';
@@ -29,7 +29,7 @@ export default function WineReviewList({ reviews }: WineReviewListProps) {
     handleDeleteReview,
     handleDeleteReviewCancel,
   } = useDeleteReview();
-  const { user } = useAuthStore();
+  const user = useAuthStore((state) => state.user);
   const dropdownOptionValues = { EDIT_REVIEW: 'edit', DELETE_REVIEW: 'delete' };
   const dropdwonOptions = [
     { label: '수정하기', value: dropdownOptionValues.EDIT_REVIEW },
