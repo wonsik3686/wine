@@ -1,14 +1,20 @@
 'use client';
 
+<<<<<<< HEAD
 import clsx from 'clsx';
 import Image from 'next/image';
+=======
+>>>>>>> parent of eae76c0 (remove: 회원가입 페이지 미사용 파일 제거 #56)
 import { useState } from 'react';
 
 type StarRatingProps = {
   rating?: number;
   isInteractive?: boolean;
   onRatingChange?: (rating: number) => void;
+<<<<<<< HEAD
   size?: 'default' | 'small';
+=======
+>>>>>>> parent of eae76c0 (remove: 회원가입 페이지 미사용 파일 제거 #56)
 };
 
 /**
@@ -48,7 +54,10 @@ function StarRating({
   rating = 0,
   isInteractive = false,
   onRatingChange,
+<<<<<<< HEAD
   size,
+=======
+>>>>>>> parent of eae76c0 (remove: 회원가입 페이지 미사용 파일 제거 #56)
 }: StarRatingProps) {
   const [hoverRating, setHoverRating] = useState<number | null>(null);
   const [currentRating, setCurrentRating] = useState<number>(rating);
@@ -120,6 +129,7 @@ function StarRating({
       stars.push(
         <button
           key={i}
+<<<<<<< HEAD
           className={clsx(
             'relative flex',
             isInteractive ? 'cursor-pointer' : 'cursor-default',
@@ -128,19 +138,30 @@ function StarRating({
               'h-[17px] w-[17px] mob:h-[14px] mob:w-[14px]': size === 'small',
             }
           )}
+=======
+          className={`relative mr-[8px] inline-block h-[17px] w-[17px] sm:h-[22px] sm:w-[22px] ${isInteractive ? 'cursor-pointer' : 'cursor-default'}`}
+>>>>>>> parent of eae76c0 (remove: 회원가입 페이지 미사용 파일 제거 #56)
           onMouseEnter={() => handleMouseEnter(i)}
           onMouseLeave={handleMouseLeave}
           onClick={() => handleStarClick(i)}
           type="button"
         >
+<<<<<<< HEAD
           <Image
             fill
+=======
+          <img
+>>>>>>> parent of eae76c0 (remove: 회원가입 페이지 미사용 파일 제거 #56)
             src="/images/star_inactive.svg"
             alt="비어있는 별"
             className="absolute left-0 top-0 h-full w-full"
           />
+<<<<<<< HEAD
           <Image
             fill
+=======
+          <img
+>>>>>>> parent of eae76c0 (remove: 회원가입 페이지 미사용 파일 제거 #56)
             src="/images/star_active.svg"
             alt="채워진 별"
             className="absolute left-0 top-0 h-full w-full"
@@ -152,7 +173,11 @@ function StarRating({
     return stars;
   };
 
+<<<<<<< HEAD
   return <div className="flex gap-[5px] mob:gap-[px]">{renderStars()}</div>;
+=======
+  return <div className="flex">{renderStars()}</div>;
+>>>>>>> parent of eae76c0 (remove: 회원가입 페이지 미사용 파일 제거 #56)
 }
 
 export default StarRating;

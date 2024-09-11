@@ -16,7 +16,11 @@ import ReactSlider from 'react-slider';
  * - setSliderValue(value); };
  */
 export default function Slider({
+<<<<<<< HEAD
   value = 5,
+=======
+  value = 50,
+>>>>>>> parent of eae76c0 (remove: 회원가입 페이지 미사용 파일 제거 #56)
   mode = 'interactive',
   onChange,
   width = '200px',
@@ -41,7 +45,11 @@ export default function Slider({
         disabled={mode === 'readonly'}
         renderThumb={(props) => <div {...props} />}
         min={0}
+<<<<<<< HEAD
         max={10}
+=======
+        max={100}
+>>>>>>> parent of eae76c0 (remove: 회원가입 페이지 미사용 파일 제거 #56)
       />
     </div>
   );

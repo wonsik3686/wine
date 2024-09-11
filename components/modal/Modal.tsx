@@ -1,7 +1,10 @@
 'use client';
 
 import { useEffect } from 'react';
+<<<<<<< HEAD
 import styles from './Modal.module.css';
+=======
+>>>>>>> parent of eae76c0 (remove: 회원가입 페이지 미사용 파일 제거 #56)
 
 type ModalProps = {
   /**
@@ -84,10 +87,17 @@ function Modal({ isOpen, onClose, children, className }: ModalProps) {
   if (!isOpen) return null;
 
   return (
+<<<<<<< HEAD
     <div className="fixed inset-0 z-50 flex max-h-screen items-center justify-center overflow-y-auto">
       <div className="fixed inset-0 bg-black opacity-50 " onClick={onClose} />
       <div
         className={`${className} ${styles.customScrollbar} fixed inset-x-0 bottom-0 top-20 z-20 w-full overflow-y-auto rounded-lg bg-white p-8 shadow-lg sm:relative sm:w-fit`}
+=======
+    <div className="fixed inset-0 z-50 flex items-center justify-center">
+      <div className="fixed inset-0 bg-black opacity-50" onClick={onClose} />
+      <div
+        className={`${className} relative z-10 w-full max-w-lg rounded-lg bg-white p-8 shadow-lg`}
+>>>>>>> parent of eae76c0 (remove: 회원가입 페이지 미사용 파일 제거 #56)
       >
         {children}
       </div>
