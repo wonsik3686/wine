@@ -1,35 +1,61 @@
 'use client';
 
+import Dropdown from '@/components/common/dropdown/Dropdown';
+// import Profile from '@/components/common/profile/Profile';
 import { useAuthStore } from '@/providers/auth';
 import profileIcon from '@/public/img/empty_profill.png';
 import Image from 'next/image';
 import Link from 'next/link';
 import Profile from './Profile';
 
-function DropDown() {
+function ProfileDropDown() {
   const logout = useAuthStore((state) => state.logout);
   const user = useAuthStore((state) => state.user);
-
   if (!user)
     return (
       <Link href="/login" className="text-[16px] font-medium text-white">
         로그인
       </Link>
     );
+  const profileImage = user.image || profileIcon.src;
 
-  const profileImage = user.image || profileIcon;
-
+  const options = [
+    {
+      label: '마이페이지',
+      value: 'mypage',
+      onClick: () => {
+        // TODO: 마이페이지 이동경로 설정
+      },
+    },
+    {
+      label: '로그아웃',
+      value: 'logout',
+      onClick: () => {
+        logout();
+      },
+    },
+  ];
   return (
     <div>
-      <Link
-        href="/"
-        className="text-[16px] font-medium text-white"
-        onClick={() => logout()}
-      >
-        <div className="h-[45px] w-[45px]">
-          <Profile src={profileImage.toString()} />
-        </div>
-      </Link>
+      <Dropdown
+        type="action"
+        options={options}
+        trigger={
+          <div className="h-[45px] w-[45px]">
+            <Profile src={profileImage.toString()} />
+          </div>
+        }
+        onSelect={(value: string | number) => {
+          const selectedOption = options.find(
+            (option) => option.value === value
+          );
+          if (selectedOption && selectedOption.onClick) {
+            selectedOption.onClick();
+          }
+        }}
+        dropdownClassName="mt-2 bg-white"
+        optionClassName="text-gray-800 hover:bg-purple-10 hover:text-purple-100"
+      />
     </div>
   );
 }
@@ -52,7 +78,7 @@ export default function Header() {
           />
         </Link>
 
-        <DropDown />
+        <ProfileDropDown />
       </header>
     </div>
   );
