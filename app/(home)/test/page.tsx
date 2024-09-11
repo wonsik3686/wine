@@ -42,7 +42,7 @@ function Test() {
   };
 
   const TestWineDetail = {
-    id: 941,
+    id: 279,
     name: 'Sentinel Carbernet Sauvignon 2016',
   };
 
@@ -192,6 +192,7 @@ function Test() {
         onClick={handleReviewEditClick}
         mode="edit"
         wineDetail={TestWineDetail}
+        reviewId={981}
       />
       <StarRating isInteractive />
       <StarRating rating={3.8} size="small" />
