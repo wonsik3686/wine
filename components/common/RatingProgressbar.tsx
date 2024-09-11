@@ -1,5 +1,9 @@
 function Progressbar({ min, max }: { min: number; max: number }) {
-  const percent = ((min / max) * 100).toFixed(2);
+  // const percent = ((min / max) * 100).toFixed(2);
+  const percent =
+    min !== null && max !== null && max !== 0
+      ? ((min / max) * 100).toFixed(2)
+      : '0.00';
 
   return (
     <div className="h-1.5 w-full rounded-full bg-gray-100">

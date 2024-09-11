@@ -28,7 +28,7 @@ export default function WineReviewsRating({
       <div className="flex tab:flex-col mob:mb-4 mob:flex-row mob:justify-between">
         <div className="flex justify-center tab:mb-5 tab:mr-20 mob:mb-0 mob:mr-0 pc:mb-5">
           <b className="font-font-sans text-7xl font-extrabold text-gray-800">
-            {avgRating.toFixed(1)}
+            {avgRating ? avgRating.toFixed(1) : '0.0'}
           </b>
           <div className="ml-5 flex flex-col justify-center">
             <StarRating isInteractive={false} rating={avgRating} size="small" />
