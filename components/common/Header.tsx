@@ -4,6 +4,7 @@ import { useAuthStore } from '@/providers/auth';
 import profileIcon from '@/public/img/empty_profill.png';
 import Image from 'next/image';
 import Link from 'next/link';
+import Profile from './Profile';
 
 function DropDown() {
   const logout = useAuthStore((state) => state.logout);
@@ -25,22 +26,9 @@ function DropDown() {
         className="text-[16px] font-medium text-white"
         onClick={() => logout()}
       >
-        <Image
-          src={profileImage}
-          alt="Profile"
-          width={50}
-          height={50}
-          className="rounded-full" // 원형 이미지로 설정
-        />
-        {/* </Link>
-      <Link
-        href="/"
-        className="text-[16px] font-medium text-white"
-        onClick={() => {
-          logout();
-        }}
-      > */}
-        로그아웃
+        <div className="h-[45px] w-[45px]">
+          <Profile src={profileImage.toString()} />
+        </div>
       </Link>
     </div>
   );
@@ -51,9 +39,9 @@ export default function Header() {
     <div className="sticky top-0 z-30 flex w-full justify-center">
       <header
         className="flex w-full items-center justify-between bg-black
-                    pc:mx-5 pc:mt-6 pc:w-[71.25rem] pc:rounded-2xl pc:px-16 pc:py-4
-                    tab:mx-5 tab:mt-6 tab:rounded-2xl tab:px-14 tab:py-4
-                    mob:mx-4 mob:mt-4 mob:rounded-xl mob:px-5 mob:py-4"
+                    tab:mx-5 tab:mt-6 tab:rounded-2xl tab:px-14 tab:py-4 mob:mx-4
+                    mob:mt-4 mob:rounded-xl mob:px-5 mob:py-4 pc:mx-5
+                    pc:mt-6 pc:w-[71.25rem] pc:rounded-2xl pc:px-16 pc:py-4"
       >
         <Link href="/">
           <Image
