@@ -5,8 +5,8 @@ import TextArea from '@/components/common/TextArea';
 import { useReviewModalStore } from '@/store/useReviewModalStore';
 import Image from 'next/image';
 
-export default function ReviewInput() {
-  const { setContent, setRating, wineName } = useReviewModalStore();
+export default function ReviewInput({ wineName }: any) {
+  const { content, rating, setContent, setRating } = useReviewModalStore();
 
   return (
     <>
@@ -22,6 +22,7 @@ export default function ReviewInput() {
           <StarRating
             isInteractive
             onRatingChange={(newRating) => setRating(newRating)}
+            rating={rating}
           />
         </div>
       </section>
@@ -35,6 +36,7 @@ export default function ReviewInput() {
           height: '200px',
         }}
         onChange={(e) => setContent(e.target.value)} // store에서 관리
+        value={content}
       />
     </>
   );

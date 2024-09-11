@@ -6,17 +6,44 @@ import Chip from '@/components/common/Chip';
 import RatingProgressbar from '@/components/common/RatingProgressbar';
 import StarRating from '@/components/common/StarRating';
 import AddWineModal from '@/components/modal/AddWineModal';
+import DeleteModal from '@/components/modal/DeleteModal';
 import AddReviewModal from '@/components/modal/reviewmodal/AddReviewModal';
 import { useState } from 'react';
 
 function Test() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+  const [isEditOpen, setIsEditOpen] = useState(false);
   const [isReviewOpen, setIsReviewOpen] = useState(false);
+  const [isReviewEditOpen, setIsReviewEditOpen] = useState(false);
 
   const handleClick = () => {
     if (!isOpen) {
       setIsOpen(true);
     } else setIsOpen(false);
+  };
+
+  const handleCancelClick = () => {
+    if (!isDeleteOpen) {
+      setIsDeleteOpen(true);
+    } else setIsDeleteOpen(false);
+  };
+
+  const handleEditClick = () => {
+    if (!isEditOpen) {
+      setIsEditOpen(true);
+    } else setIsEditOpen(false);
+  };
+
+  const handleDeleteClick = () => {
+    // DELETE요청 대신 넣은 값
+    console.log('삭제되었습니다!');
+    setIsDeleteOpen(false);
+  };
+
+  const TestWineDetail = {
+    id: 279,
+    name: 'Sentinel Carbernet Sauvignon 2016',
   };
 
   const handleReviewClick = () => {
@@ -25,12 +52,29 @@ function Test() {
     } else setIsReviewOpen(false);
   };
 
+  const handleReviewEditClick = () => {
+    if (!isReviewEditOpen) {
+      setIsReviewEditOpen(true);
+    } else setIsReviewEditOpen(false);
+  };
+
   const initialWineValue = {
+    id: 0,
     name: '',
-    price: '',
-    origin: '',
-    type: 'Red',
-    imgFile: null,
+    price: 0,
+    region: '',
+    type: 'RED',
+    image: null,
+  };
+
+  const existingWineValue = {
+    id: 279,
+    name: '수정할 와인 이름',
+    price: 999999,
+    region: '수정할 원산지',
+    type: 'WHITE',
+    image:
+      'https://sprint-fe-project.s3.ap-northeast-2.amazonaws.com/Wine/user/284/1725959926821/NGRjMmFiYjk4NTU5Yy5qcGc=',
   };
 
   return (
@@ -38,12 +82,30 @@ function Test() {
       <PriceBox price={50000} />
       <RatingBox rating={3} />
       <button type="button" onClick={handleClick}>
-        모달열기
+        와인등록모달열기
       </button>
       <AddWineModal
         isOpen={isOpen}
         onClick={handleClick}
         initialFormValue={initialWineValue}
+        mode="add"
+      />
+      <button type="button" onClick={handleEditClick}>
+        와인수정모달열기
+      </button>
+      <AddWineModal
+        isOpen={isEditOpen}
+        onClick={handleEditClick}
+        initialFormValue={existingWineValue}
+        mode="edit"
+      />
+      <button type="button" onClick={handleCancelClick}>
+        삭제모달열기
+      </button>
+      <DeleteModal
+        isOpen={isDeleteOpen}
+        onClick={handleCancelClick}
+        onCancel={handleDeleteClick}
       />
       <Button
         buttonColor="purple"
@@ -116,7 +178,22 @@ function Test() {
       <button type="button" onClick={handleReviewClick}>
         리뷰모달열기
       </button>
-      <AddReviewModal isOpen={isReviewOpen} onClick={handleReviewClick} />
+      <AddReviewModal
+        isOpen={isReviewOpen}
+        onClick={handleReviewClick}
+        mode="add"
+        wineDetail={TestWineDetail}
+      />
+      <button type="button" onClick={handleReviewEditClick}>
+        리뷰수정모달열기
+      </button>
+      <AddReviewModal
+        isOpen={isReviewEditOpen}
+        onClick={handleReviewEditClick}
+        mode="edit"
+        wineDetail={TestWineDetail}
+        reviewId={981}
+      />
       <StarRating isInteractive />
       <StarRating rating={3.8} size="small" />
       <RatingProgressbar
@@ -134,5 +211,4 @@ function Test() {
     </main>
   );
 }
-
 export default Test;

@@ -1,25 +1,39 @@
 'use client';
 
+import useDeleteReview from '@/hooks/reviews/useDeleteReview';
+import useLikeReview from '@/hooks/wines/useLikeReview';
+import { useAuthStore } from '@/store/useAuthStore';
 import { WineDetailType } from '@/types/wine.types';
 import formatDistanceToNowKor from '@/utils/dateTimeUtils/FormatDistanceToNow';
 import translateAromaToKorean from '@/utils/translate/TranslateAromaToKorean';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { RatingBox } from '../common/Boxes';
 import ChipSwiper from '../common/ChipSwiper';
 import Dropdown from '../common/dropdown/Dropdown';
 import Profile from '../common/Profile';
+import DeleteModal from '../modal/DeleteModal';
 import WineTasteSlider from './WineTasteSlider';
 
-type WineRevieListProps = Pick<WineDetailType, 'reviews'>;
+type WineReviewListProps = Pick<WineDetailType, 'reviews'>;
 
-export default function WineRevieList({ reviews }: WineRevieListProps) {
+export default function WineReviewList({ reviews }: WineReviewListProps) {
   const [expandedReviewIndexes, setExpandedReviewIndexes] = useState<number[]>(
     []
   );
+  const [selectedReviewId, setSelectedReviewId] = useState<number>(0);
+  const { isReviewLiked, likeReview } = useLikeReview();
+  const {
+    isDeleteReviewModalOpen,
+    setIsDeleteReviewModalOpen,
+    handleDeleteReview,
+    handleDeleteReviewCancel,
+  } = useDeleteReview();
+  const { user } = useAuthStore();
+  const dropdownOptionValues = { EDIT_REVIEW: 'edit', DELETE_REVIEW: 'delete' };
   const dropdwonOptions = [
-    { label: '수정하기', value: 'edit' },
-    { label: '삭제하기', value: 'delete' },
+    { label: '수정하기', value: dropdownOptionValues.EDIT_REVIEW },
+    { label: '삭제하기', value: dropdownOptionValues.DELETE_REVIEW },
   ];
 
   const toggleReview = (index: number) => {
@@ -31,6 +45,12 @@ export default function WineRevieList({ reviews }: WineRevieListProps) {
       setExpandedReviewIndexes([...expandedReviewIndexes, index]);
     }
   };
+
+  const handleModalDeleteReview = () => {
+    handleDeleteReview(selectedReviewId);
+  };
+
+  useEffect(() => {}, [reviews]);
 
   return (
     <div className="flex flex-col pc:mt-[3.75rem] pc:w-[50rem]">
@@ -59,37 +79,62 @@ export default function WineRevieList({ reviews }: WineRevieListProps) {
               </div>
             </div>
             <div className="flex items-start gap-7 mob:gap-[1.12rem]">
-              <div className="relative h-[2.375rem] w-[2.375rem] mob:h-8 mob:w-8">
-                <button type="button">
+              <div>
+                <button
+                  type="button"
+                  className="relative h-[2.375rem] w-[2.375rem] mob:h-8 mob:w-8"
+                  onClick={() => {
+                    likeReview(review.id);
+                  }}
+                >
                   <Image
-                    src="/icons/iconHeart.png"
+                    src={
+                      isReviewLiked(review.id)
+                        ? '/icons/iconHeartFilled.svg'
+                        : '/icons/iconHeart.svg'
+                    }
                     alt="하트 아이콘"
                     fill
                     className="object-contain"
                   />
                 </button>
               </div>
-              <Dropdown
-                type="action"
-                options={dropdwonOptions}
-                onSelect={(value: string | number) => {
-                  alert(value);
-                }}
-                optionClassName="text-center"
-                trigger={
-                  <button
-                    type="button"
-                    className="relative h-[2.375rem] w-[2.375rem] cursor-pointer mob:h-8 mob:w-8"
-                  >
-                    <Image
-                      src="/icons/iconDot.png"
-                      alt="더보기 아이콘"
-                      fill
-                      className="object-contain"
-                    />
-                  </button>
-                }
-              />
+              {review.id}
+              {review.user.id === user?.id && (
+                <>
+                  <Dropdown
+                    type="action"
+                    options={dropdwonOptions}
+                    onSelect={(value: string | number) => {
+                      if (value === dropdownOptionValues.EDIT_REVIEW) {
+                        setSelectedReviewId(review.id);
+                      } else if (value === dropdownOptionValues.DELETE_REVIEW) {
+                        setSelectedReviewId(review.id);
+                        setIsDeleteReviewModalOpen(true);
+                      }
+                    }}
+                    optionClassName="text-center"
+                    trigger={
+                      <button
+                        type="button"
+                        className="relative h-[2.375rem] w-[2.375rem] cursor-pointer mob:h-8 mob:w-8"
+                      >
+                        <Image
+                          src="/icons/iconDot.png"
+                          alt="더보기 아이콘"
+                          fill
+                          className="object-contain"
+                        />
+                      </button>
+                    }
+                  />
+                  <DeleteModal
+                    isOpen={isDeleteReviewModalOpen}
+                    onClick={handleModalDeleteReview}
+                    onCancel={handleDeleteReviewCancel}
+                  />
+                </>
+              )}
             </div>
           </div>
           <div className="mt-5 flex w-full justify-between">
