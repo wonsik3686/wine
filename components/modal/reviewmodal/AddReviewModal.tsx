@@ -1,47 +1,131 @@
 'use client';
 
+import { postWineReview } from '@/api/reviews.api';
+import { useReview, useUpdateReview } from '@/queries/reviews.queries';
 import { useReviewModalStore } from '@/store/useReviewModalStore';
-import { FormEvent } from 'react';
+import { convertToAroma } from '@/utils/convert/convertToAroma';
+import { FormEvent, useEffect } from 'react';
 import Button from '../../common/Button';
 import Modal from '../Modal';
 import ReviewInput from './ReviewInput';
 import TagSelector from './TagSelector';
 import TasteSlider from './TasteSlider';
 
-type ModalProps = {
-  isOpen: boolean;
-  onClick: () => void;
+type WineDetailProps = {
+  id: number;
+  name: string;
 };
 
-export default function AddReviewModal({ isOpen, onClick }: ModalProps) {
-  const { rating, content, tasteValues, selectedTags, wineId, resetReview } =
-    useReviewModalStore();
+type ReviewModalProps = {
+  isOpen: boolean;
+  onClick: () => void;
+  mode: 'add' | 'edit';
+  wineDetail: WineDetailProps;
+  reviewId?: number;
+};
+
+export default function AddReviewModal({
+  isOpen,
+  onClick,
+  mode,
+  wineDetail,
+  reviewId,
+}: ReviewModalProps) {
+  const {
+    data: serverReviewData,
+    isLoading: isReviewLoading,
+    refetch: refetchReview,
+  } = useReview({
+    id: reviewId || 0,
+  });
+  const { mutate: updateReview } = useUpdateReview();
+
+  const {
+    rating,
+    content,
+    tasteValues,
+    selectedTags: aroma, // aroma를 selectedTags로 사용
+    resetReview,
+    setId,
+    setContent,
+    setRating,
+    setTasteValues,
+    setSelectedTags,
+  } = useReviewModalStore();
+
+  useEffect(() => {
+    if (isOpen && mode === 'edit' && reviewId && refetchReview) {
+      refetchReview(); // 모달이 열릴 때 데이터를 다시 불러옴
+    } else {
+      resetReview();
+    }
+
+    if (mode === 'edit' && serverReviewData && !isReviewLoading) {
+      setId(serverReviewData.id);
+      setContent(serverReviewData.content);
+      setRating(serverReviewData.rating);
+      setTasteValues([
+        serverReviewData.lightBold,
+        serverReviewData.smoothTannic,
+        serverReviewData.drySweet,
+        serverReviewData.softAcidic,
+      ]);
+      setSelectedTags(serverReviewData.aroma);
+    }
+  }, [
+    mode,
+    setId,
+    setContent,
+    setRating,
+    setTasteValues,
+    setSelectedTags,
+    resetReview,
+    serverReviewData,
+    isOpen,
+  ]);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const formData = {
-      rating,
-      wineId,
-      content,
-      selectedTags,
-      tasteValues,
-    };
-
-    // API POST 요청 대신 임시로 넣은 값
-    console.log(formData);
+    if (mode === 'edit' && serverReviewData) {
+      await updateReview({
+        reviewId: serverReviewData.id,
+        data: {
+          rating,
+          content,
+          aroma: convertToAroma(aroma),
+          lightBold: tasteValues[0],
+          smoothTannic: tasteValues[1],
+          drySweet: tasteValues[2],
+          softAcidic: tasteValues[3],
+        },
+      }); // PATCH 요청으로 수정
+    } else if (mode === 'add') {
+      await postWineReview({
+        wineId: wineDetail.id,
+        rating,
+        content,
+        aroma: convertToAroma(aroma),
+        lightBold: tasteValues[0],
+        smoothTannic: tasteValues[1],
+        drySweet: tasteValues[2],
+        softAcidic: tasteValues[3],
+      }); // POST 요청으로 추가
+    }
 
     // 제출 후 초기화
     resetReview();
     onClick(); // 모달 닫기
   };
 
+  const isButtonDisabled = !rating || !content || aroma.length === 0;
+
   return (
     <Modal isOpen={isOpen} onClose={onClick}>
       <div className="sm:w-[528px]">
         <section className="mb-[40px] flex items-center justify-between mob:mb-[30px]">
           <h1 className="font-sans text-2xl font-bold text-gray-800 mob:text-xl">
-            리뷰 등록
+            {mode === 'add' ? '리뷰 등록' : '리뷰 수정'}
           </h1>
           <button
             type="button"
@@ -55,7 +139,7 @@ export default function AddReviewModal({ isOpen, onClick }: ModalProps) {
           style={{ marginBottom: '32px', width: '100%' }}
           onSubmit={handleSubmit}
         >
-          <ReviewInput />
+          <ReviewInput wineName={wineDetail.name} />
           <p className="mb-[24px] font-sans text-xl font-bold text-gray-800 mob:mb-[20px] mob:text-lg">
             와인의 맛은 어땠나요?
           </p>
@@ -71,9 +155,9 @@ export default function AddReviewModal({ isOpen, onClick }: ModalProps) {
               buttonColor="purple"
               textColor="white"
               style={{ flexGrow: '2', marginTop: '20px' }}
-              disabled={!content}
+              disabled={isButtonDisabled}
             >
-              리뷰 남기기
+              {mode === 'add' ? '리뷰 남기기' : '리뷰 수정하기'}
             </Button>
           </div>
         </form>
