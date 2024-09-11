@@ -1,7 +1,6 @@
 'use client';
 
 import Dropdown from '@/components/common/dropdown/Dropdown';
-// import Profile from '@/components/common/profile/Profile';
 import { useAuthStore } from '@/providers/auth';
 import profileIcon from '@/public/img/empty_profill.png';
 import Image from 'next/image';
@@ -13,9 +12,15 @@ function ProfileDropDown() {
   const user = useAuthStore((state) => state.user);
   if (!user)
     return (
-      <Link href="/login" className="text-[16px] font-medium text-white">
-        로그인
-      </Link>
+      <div className="flex gap-[2.5rem]">
+        <Link href="/login" className="text-[16px] font-medium text-white">
+          로그인
+        </Link>
+
+        <Link href="/register" className="text-[16px] font-medium text-white">
+          회원가입
+        </Link>
+      </div>
     );
   const profileImage = user.image || profileIcon.src;
 
