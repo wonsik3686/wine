@@ -21,6 +21,7 @@ type ReviewModalProps = {
   onClick: () => void;
   mode: 'add' | 'edit';
   wineDetail: WineDetailProps;
+  reviewId?: number;
 };
 
 export default function AddReviewModal({
@@ -28,9 +29,14 @@ export default function AddReviewModal({
   onClick,
   mode,
   wineDetail,
+  reviewId,
 }: ReviewModalProps) {
-  const { data: serverReviewData, isLoading: isReviewLoading } = useReview({
-    id: wineDetail.id,
+  const {
+    data: serverReviewData,
+    isLoading: isReviewLoading,
+    refetch: refetchReview,
+  } = useReview({
+    id: reviewId || 0,
   });
   const { mutate: updateReview } = useUpdateReview();
 
@@ -48,6 +54,12 @@ export default function AddReviewModal({
   } = useReviewModalStore();
 
   useEffect(() => {
+    if (isOpen && mode === 'edit' && reviewId && refetchReview) {
+      refetchReview(); // 모달이 열릴 때 데이터를 다시 불러옴
+    } else {
+      resetReview();
+    }
+
     if (mode === 'edit' && serverReviewData && !isReviewLoading) {
       setId(serverReviewData.id);
       setContent(serverReviewData.content);
@@ -69,6 +81,7 @@ export default function AddReviewModal({
     setSelectedTags,
     resetReview,
     serverReviewData,
+    isOpen,
   ]);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
