@@ -50,11 +50,7 @@ type DropdownProps = {
    * 기본값은 짧은 버전의 너비
    * @example 200
    */
-<<<<<<< HEAD
   width?: string;
-=======
-  width?: number;
->>>>>>> parent of eae76c0 (remove: 회원가입 페이지 미사용 파일 제거 #56)
 
   /**
    * 드롭다운 컴포넌트 전체에 적용할 커스텀 스타일
@@ -121,11 +117,7 @@ function Dropdown({
   type,
   trigger,
   initialLabel,
-<<<<<<< HEAD
   width = '100%',
-=======
-  width = 126,
->>>>>>> parent of eae76c0 (remove: 회원가입 페이지 미사용 파일 제거 #56)
   dropdownClassName,
   optionClassName,
 }: DropdownProps) {
@@ -163,7 +155,6 @@ function Dropdown({
 
   return (
     <button
-<<<<<<< HEAD
       className="relative block text-left"
       ref={dropdownRef}
       type="button"
@@ -176,19 +167,6 @@ function Dropdown({
         <div
           className={`flex cursor-pointer items-center rounded-[16px] border px-4 py-2 ${dropdownClassName} bg-white font-medium text-gray-700 ring-1 ring-gray-300`}
           style={{ width }}
-=======
-      className="relative inline-block text-left"
-      ref={dropdownRef}
-      type="button"
-      onClick={() => setIsOpen(!isOpen)}
-    >
-      {type === 'action' ? (
-        <div>{trigger}</div>
-      ) : (
-        <div
-          className={`flex cursor-pointer items-center rounded-[16px] border px-4 py-2 ${dropdownClassName} bg-white font-medium text-gray-700 ring-1 ring-gray-300`}
-          style={{ width: `${width}px` }}
->>>>>>> parent of eae76c0 (remove: 회원가입 페이지 미사용 파일 제거 #56)
         >
           <span className={`flex-1 ${isOpen ? 'text-gray-300' : ''}`}>
             {selectedLabel || 'Select'}
@@ -215,14 +193,9 @@ function Dropdown({
 
       {isOpen && (
         <div
-<<<<<<< HEAD
           className={`absolute z-10 mt-2 ${
             type === 'select' ? 'w-full' : 'right-[7px]'
           } whitespace-nowrap rounded-[16px] bg-white px-2 ring-1 ring-gray-300 ${dropdownClassName} ${styles.fadeInDown}`}
-=======
-          className={`absolute mt-2 rounded-[16px] bg-white ring-1 ring-gray-300 ${dropdownClassName} ${styles.fadeInDown}`}
-          style={{ width: `${width}px` }}
->>>>>>> parent of eae76c0 (remove: 회원가입 페이지 미사용 파일 제거 #56)
         >
           <div className="py-1">
             {options.map((option) => (
@@ -230,12 +203,7 @@ function Dropdown({
                 key={option.label}
                 type="button"
                 onClick={() => handleSelect(option)}
-<<<<<<< HEAD
                 className={`block w-full px-6 py-2 text-left text-lg font-medium text-gray-800 hover:bg-purple-10 hover:text-purple-100 ${optionClassName}`}
-=======
-                className={`mx-auto my-[4px] block rounded-[10px] px-4 py-2 text-left text-lg font-medium text-gray-800 hover:bg-purple-10 hover:text-purple-100 ${optionClassName}`}
-                style={{ width: `calc(${width}px - 8px)` }}
->>>>>>> parent of eae76c0 (remove: 회원가입 페이지 미사용 파일 제거 #56)
               >
                 {option.label}
               </button>
