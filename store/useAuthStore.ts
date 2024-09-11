@@ -34,61 +34,67 @@ export const initialAuthState: AuthState = {
   user: null,
   accessToken: null,
   refreshToken: null,
+  reviewLikedList: [],
 };
 
 export type AuthStore = AuthState & AuthActions;
 
-<<<<<<< HEAD
 export const createAuthStore = (initState: AuthState = initialAuthState) => {
   return createStore<AuthStore>()(
-    persist<AuthStore>(
-      (setState) => {
-        return {
-          ...initState,
-=======
-export const useAuthStore = create(
-  persist<AuthStore>(
-    (setState) => ({
-      user: null,
-      accessToken: null,
-      refreshToken: null,
-      reviewLikedList: [],
->>>>>>> a40629aa84aca581de61d30c3c04cc08169507fc
+    persist(
+      (set) => ({
+        ...initState,
 
-          login: async (email, password) => {
-            const userInfo = await loginAPI({ email, password });
-            setState(() => ({ ...userInfo }));
-          },
-          logout: () => {
-            setState(() => ({
-              user: null,
-              accessToken: null,
-              refreshToken: null,
-            }));
-          },
-          register: async ({
+        login: async (email, password) => {
+          const userInfo = await loginAPI({ email, password });
+          set(() => ({ ...userInfo }));
+        },
+        logout: () => {
+          set(() => ({
+            user: null,
+            accessToken: null,
+            refreshToken: null,
+          }));
+        },
+        register: async ({
+          email,
+          nickname,
+          password,
+          passwordConfirmation,
+        }) => {
+          const userInfo = await registerAPI({
             email,
             nickname,
             password,
             passwordConfirmation,
-          }) => {
-            const userInfo = await registerAPI({
-              email,
-              nickname,
-              password,
-              passwordConfirmation,
-            });
-            setState(() => ({ ...userInfo }));
-          },
-          setAccessToken: (pAccessToken) => {
-            setState((state) => ({
-              ...state,
-              accessToken: pAccessToken,
-            }));
-          },
-        };
-      },
-<<<<<<< HEAD
+          });
+          set(() => ({ ...userInfo }));
+        },
+
+        setAccessToken: (accessToken) => {
+          set((state) => ({
+            ...state,
+            accessToken,
+          }));
+        },
+        setReviewLiked: (reviewId) => {
+          set((state) => ({
+            ...state,
+            reviewLikedList: state.reviewLikedList.includes(reviewId)
+              ? state.reviewLikedList
+              : [...state.reviewLikedList, reviewId],
+          }));
+        },
+        setReviewUnlike: (reviewId) => {
+          set((state) => ({
+            ...state,
+            reviewLikedList: state.reviewLikedList.filter(
+              (id) => id !== reviewId
+            ),
+          }));
+        },
+      }),
+
       {
         name: 'auth-storage',
         storage: createJSONStorage(() => localStorage),
@@ -96,42 +102,44 @@ export const useAuthStore = create(
     )
   );
 };
-=======
-      logout: () => {
-        setState(() => ({
-          user: null,
-          accessToken: null,
-          refreshToken: null,
-          reviewLikedList: [],
-        }));
-      },
-      setAccessToken: (pAccessToken) => {
-        setState((state) => ({
-          ...state,
-          accessToken: pAccessToken,
-        }));
-      },
-      setReviewLiked: (reviewId) => {
-        setState((state) => ({
-          ...state,
-          reviewLikedList: state.reviewLikedList.includes(reviewId)
-            ? state.reviewLikedList
-            : [...state.reviewLikedList, reviewId],
-        }));
-      },
-      setReviewUnlike: (reviewId) => {
-        setState((state) => ({
-          ...state,
-          reviewLikedList: state.reviewLikedList.filter(
-            (id) => id !== reviewId
-          ),
-        }));
-      },
-    }),
-    {
-      name: 'auth-storage',
-      storage: createJSONStorage(() => localStorage),
-    }
-  )
-);
->>>>>>> a40629aa84aca581de61d30c3c04cc08169507fc
+
+//       setAccessToken: (pAccessToken) => {
+//         set((state) => ({
+//           ...state,
+//           accessToken: pAccessToken,
+//         }));
+//       },
+//     };
+//   },
+
+//   logout: () => {
+//     setState(() => ({
+//       user: null,
+//       accessToken: null,
+//       refreshToken: null,
+//       reviewLikedList: [],
+//     }));
+//   },
+//   setAccessToken: (pAccessToken) => {
+//     setState((state) => ({
+//       ...state,
+//       accessToken: pAccessToken,
+//     }));
+//   },
+//   setReviewLiked: (reviewId) => {
+//     setState((state) => ({
+//       ...state,
+//       reviewLikedList: state.reviewLikedList.includes(reviewId)
+//         ? state.reviewLikedList
+//         : [...state.reviewLikedList, reviewId],
+//     }));
+//   },
+//   setReviewUnlike: (reviewId) => {
+//     setState((state) => ({
+//       ...state,
+//       reviewLikedList: state.reviewLikedList.filter(
+//         (id) => id !== reviewId
+//       ),
+//     }));
+//   },
+// }),
