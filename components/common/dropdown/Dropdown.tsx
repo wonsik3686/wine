@@ -203,7 +203,7 @@ function Dropdown({
                 key={option.label}
                 type="button"
                 onClick={() => handleSelect(option)}
-                className={`block w-full px-6 py-2 text-left text-lg font-medium text-gray-800 hover:bg-purple-10 hover:text-purple-100 ${optionClassName}`}
+                className={`block w-full rounded-xl px-6 py-2 text-left text-lg font-medium text-gray-800 hover:bg-purple-10 hover:text-purple-100 ${optionClassName}`}
               >
                 {option.label}
               </button>
