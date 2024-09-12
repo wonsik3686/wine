@@ -23,10 +23,6 @@ export async function generateMetadata(
       next: { revalidate: 0 },
     }
   );
-
-  if (!AuthRes.ok) {
-    throw new Error('Authentication failed');
-  }
   const authData = await AuthRes.json();
   const token = authData.accessToken;
 
@@ -38,10 +34,6 @@ export async function generateMetadata(
       },
     }
   );
-
-  if (!wineDetailRes.ok) {
-    throw new Error(`Failed to fetch wine details: ${wineDetailRes.status}`);
-  }
   const wineDetail = await wineDetailRes.json();
 
   return {
