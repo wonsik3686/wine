@@ -72,3 +72,15 @@ export const postWineDetail = async (wineData: {
 
   return response;
 };
+
+export async function deleteWine({ id }: { id: number }) {
+  const response = await axiosInstance<{
+    id?: number;
+    message?: string;
+  }>({
+    method: 'DELETE',
+    url: `/wines/${id}`,
+  });
+
+  return response;
+}
