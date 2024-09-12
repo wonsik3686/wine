@@ -1,6 +1,7 @@
 'use client';
 
 import Button from '@/components/common/Button';
+import Link from 'next/link';
 
 export default function Error({
   error,
@@ -19,16 +20,26 @@ export default function Error({
           <p className="mb-4 break-keep font-sans text-base font-regular text-gray-500">
             {error.message}
           </p>
-          <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-5">
             <Button
               buttonColor="purple"
-              buttonStyle="floating"
+              buttonStyle="box"
               buttonWidth="fitToChildren"
               textColor="white"
               onClick={() => reset()}
             >
               재시도
             </Button>
+            <Link href="/">
+              <Button
+                buttonColor="purple"
+                buttonStyle="box"
+                buttonWidth="fitToParent"
+                textColor="white"
+              >
+                메인 페이지로 이동
+              </Button>
+            </Link>
           </div>
         </div>
       </div>

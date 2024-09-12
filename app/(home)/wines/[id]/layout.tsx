@@ -15,7 +15,7 @@ export async function generateMetadata(
   parent: ResolvingMetadata
 ): Promise<Metadata> {
   const au: authParams = { email: 'main@email.com', password: '11111111' };
-  const AuthRes = await fetch(
+  const authRes = await fetch(
     'https://winereview-api.vercel.app/8-4/auth/signIn',
     {
       body: JSON.stringify(au),
@@ -24,7 +24,10 @@ export async function generateMetadata(
       next: { revalidate: 0 },
     }
   );
-  const authData = await AuthRes.json();
+  const authData = await authRes.json();
+  if (!authRes.ok) {
+    throw new Error(authData.message);
+  }
   const token = authData.accessToken;
 
   const wineDetailRes = await fetch(
