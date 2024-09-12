@@ -157,71 +157,71 @@ export default function Signup() {
           height={30}
         />
       </Link>
-      <form onSubmit={handleSubmit}>
-        <Input
-          label="이메일"
-          errorMessage={formErrors.email || undefined}
-          placeholder="whyne@email.com"
-          type="email"
-          name="email"
-          value={values.email}
-          onChange={handleChange}
-          onBlur={handleBlur}
-        />
+      <div className="w-full max-w-md">
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <Input
+            label="이메일"
+            errorMessage={formErrors.email || undefined}
+            placeholder="whyne@email.com"
+            type="email"
+            name="email"
+            value={values.email}
+            onChange={handleChange}
+            onBlur={handleBlur}
+          />
 
-        <Input
-          labelClassNames="pt-[20px]"
-          label="닉네임"
-          errorMessage={formErrors.nickname || undefined}
-          placeholder="whyne"
-          type="text"
-          name="nickname"
-          value={values.nickname}
-          onChange={handleChange}
-          onBlur={handleBlur}
-        />
+          <Input
+            label="닉네임"
+            errorMessage={formErrors.nickname || undefined}
+            placeholder="whyne"
+            type="text"
+            name="nickname"
+            value={values.nickname}
+            onChange={handleChange}
+            onBlur={handleBlur}
+          />
 
-        <Input
-          labelClassNames="pt-[20px]"
-          label="비밀번호"
-          errorMessage={formErrors.password || undefined}
-          placeholder="영문, 숫자 포함 8자 이상"
-          type="password"
-          name="password"
-          value={values.password}
-          onChange={handleChange}
-          onBlur={handleBlur}
-        />
+          <Input
+            label="비밀번호"
+            errorMessage={formErrors.password || undefined}
+            placeholder="영문, 숫자 포함 8자 이상"
+            type="password"
+            name="password"
+            value={values.password}
+            onChange={handleChange}
+            onBlur={handleBlur}
+          />
 
-        <Input
-          labelClassNames="pt-[20px]"
-          label="비밀번호 확인"
-          errorMessage={formErrors.passwordConfirmation || undefined}
-          placeholder="비밀번호 확인"
-          type="password"
-          name="passwordConfirmation"
-          value={values.passwordConfirmation}
-          onChange={handleChange}
-          onBlur={handleBlur}
-        />
+          <Input
+            label="비밀번호 확인"
+            errorMessage={formErrors.passwordConfirmation || undefined}
+            placeholder="비밀번호 확인"
+            type="password"
+            name="passwordConfirmation"
+            value={values.passwordConfirmation}
+            onChange={handleChange}
+            onBlur={handleBlur}
+          />
 
-        <div className="mb-[15px] mt-[56px] flex w-full flex-col gap-[0.94rem] mob:gap-4">
-          <Button
-            buttonStyle="box"
-            buttonWidth="fitToParent"
-            buttonColor="purple"
-            textColor="white"
-            type="submit"
-          >
-            가입하기
-          </Button>
-        </div>
-      </form>
-      {/* TODO:띄어쓰기 다시보기 */}
-      <div className="mt-10 text-gray-500">
-        계정이 이미 있으신가요?{' '}
-        {/* Link href 재설정 필요, 임시로 "/" 페이지 설정 */}
-        <Link className="font-medium text-purple-700 underline " href="/">
+          <div className="pt-4">
+            <Button
+              buttonStyle="box"
+              buttonWidth="fitToParent"
+              buttonColor="purple"
+              textColor="white"
+              type="submit"
+            >
+              가입하기
+            </Button>
+          </div>
+        </form>
+      </div>
+      <div className="mt-6 flex flex-row items-center justify-center gap-3">
+        <span className="text-gray-500">계정이 이미 있으신가요?</span>
+        <Link
+          href="/login"
+          className="font-medium text-purple-500 underline underline-offset-2"
+        >
           로그인하기
         </Link>
       </div>

@@ -112,7 +112,7 @@ export default function SingInPage() {
           onBlur={() => validateForm()}
         />
 
-        <div className="pt-[10px] text-[14px] text-purple-700">
+        <div className="pt-[10px] text-[14px] text-purple-500">
           {/* Link href 재설정 필요, 임시로 "/" 페이지 설정 */}
           <Link href="/">비밀번호를 잊으셨나요?</Link>
         </div>
@@ -140,7 +140,7 @@ export default function SingInPage() {
               width={24}
               height={24}
             />
-            Google로 시작하기
+            <span className="font-medium">Google로 시작하기</span>
           </Button>
 
           <Button
@@ -155,7 +155,7 @@ export default function SingInPage() {
               width={24}
               height={24}
             />
-            kakao로 시작하기
+            <span className="font-medium"> kakao로 시작하기 </span>
           </Button>
         </div>
       </form>
@@ -163,7 +163,7 @@ export default function SingInPage() {
         <span className=" text-gray-500">계정이 없으신가요?</span>
         <Link
           href="/register"
-          className="font-medium text-purple-100 underline underline-offset-2"
+          className="font-medium text-purple-500 underline underline-offset-2"
         >
           회원가입하기
         </Link>
