@@ -14,10 +14,10 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
   (
     {
       label,
-      errorMessage,
       wrapClassName,
       labelClassName,
       inputClassName,
+      errorMessage,
       ...props
     },
     ref
@@ -33,7 +33,18 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
           </label>
         )}
         <input
-          className={`rounded-2xl ${errorMessage ? 'border-2 border-purple-100' : 'border border-gray-300'} bg-white px-5 py-[0.875rem] text-gray-800 focus:outline-none focus:ring-2 focus:ring-purple-100 ${inputClassName}`}
+          className={`
+            rounded-2xl
+            ${errorMessage ? 'border-2 border-purple-100' : 'border-[1px] border-gray-300'}
+            bg-white
+            px-5
+            py-[0.875rem]
+            text-gray-800
+            focus:outline-none
+            focus:ring-2
+            focus:ring-purple-100
+            ${inputClassName}
+            `}
           ref={ref}
           {...props}
         />
