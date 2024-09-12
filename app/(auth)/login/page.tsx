@@ -16,8 +16,8 @@ type FormValues = {
 export default function SingInPage() {
   const login = useAuthStore((state) => state.login);
   const [values, setValues] = useState<FormValues>({
-    email: 'main@email.com',
-    password: '11111111',
+    email: '',
+    password: '',
   });
 
   const [formErrors, setFormErrors] = useState({
