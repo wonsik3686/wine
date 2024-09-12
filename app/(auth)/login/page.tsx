@@ -159,10 +159,10 @@ export default function SingInPage() {
           </Button>
         </div>
       </form>
-      <div className="flex flex-row items-center gap-2">
-        계정이 없으신가요?
-        <Link href="/register">
-          <div>회원가입하기</div>
+      <div className="mt-4 flex flex-row items-center gap-3.5">
+        <span className=" text-gray-500">계정이 없으신가요?</span>
+        <Link href="/register" className="text-purple-100">
+          회원가입하기
         </Link>
       </div>
     </div>
