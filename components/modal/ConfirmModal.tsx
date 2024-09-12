@@ -5,7 +5,7 @@ import Button from '../common/Button';
 
 type ConfirmModalProps = {
   isOpen: boolean;
-  onClick: () => void;
+  onConfirm: () => void;
   onCancel: () => void;
   confirmMessage?: string;
   label?: string;
@@ -13,7 +13,7 @@ type ConfirmModalProps = {
 
 export default function ConfirmModal({
   isOpen,
-  onClick,
+  onConfirm,
   onCancel,
   confirmMessage = '정말 삭제하시겠습니까?',
   label = '삭제',
@@ -62,7 +62,7 @@ export default function ConfirmModal({
             buttonColor="purple"
             textColor="white"
             style={{ flexGrow: '1' }}
-            onClick={onClick}
+            onClick={onConfirm}
           >
             {label}
           </Button>
