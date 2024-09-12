@@ -1,6 +1,6 @@
 'use client';
 
-import { CommonTypes } from '@/types/common.types';
+import { useReviewModalStore } from '@/store/useReviewModalStore';
 import { WineDetailType } from '@/types/wine.types';
 import Button from '../common/Button';
 import RatingProgressbar from '../common/RatingProgressbar';
@@ -9,7 +9,7 @@ import StarRating from '../common/StarRating';
 type WineReviewsRatingProps = Pick<
   WineDetailType,
   'avgRatings' | 'reviewCount' | 'avgRating'
-> & { onOpenReviewModal?: CommonTypes['onClick'] };
+> & { onOpenReviewModal?: () => void };
 
 export default function WineReviewsRating({
   avgRatings,
@@ -17,11 +17,19 @@ export default function WineReviewsRating({
   avgRating,
   onOpenReviewModal,
 }: WineReviewsRatingProps) {
+  const { setReviewModalMode } = useReviewModalStore();
   // Ratings에 넣기 위한 변환
   const ratingsArray = Object.entries(avgRatings).map(([key, value]) => ({
     key: Number(key),
     value,
   }));
+
+  const handleOpenReviewModal = () => {
+    if (onOpenReviewModal) {
+      setReviewModalMode('add');
+      onOpenReviewModal();
+    }
+  };
 
   return (
     <div className="mt-14 flex tab:justify-center mob:mt-10 mob:flex-col pc:flex-col">
@@ -43,7 +51,7 @@ export default function WineReviewsRating({
             buttonStyle="box"
             buttonWidth="fitToChildren"
             textColor="white"
-            onClick={onOpenReviewModal}
+            onClick={handleOpenReviewModal}
           >
             리뷰 남기기
           </Button>
@@ -58,7 +66,7 @@ export default function WineReviewsRating({
           buttonStyle="box"
           buttonWidth="fitToChildren"
           textColor="white"
-          onClick={onOpenReviewModal}
+          onClick={handleOpenReviewModal}
         >
           리뷰 남기기
         </Button>
