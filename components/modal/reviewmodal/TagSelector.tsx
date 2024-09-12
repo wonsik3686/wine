@@ -1,3 +1,5 @@
+/* eslint-disable import/no-cycle */
+
 import { useReviewModalStore } from '@/store/useReviewModalStore';
 import { Aroma } from '@/types/wine.types';
 import translateAromaToKorean from '@/utils/translate/TranslateAromaToKorean';

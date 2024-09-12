@@ -24,7 +24,7 @@ function RatingProgressbar({
 }) {
   return (
     <section className="flex w-full flex-col gap-y-2 md:w-[280px]">
-      {Ratings.map((Rating) => (
+      {[...Ratings].reverse().map((Rating) => (
         <div key={`${Rating.key}점`} className="flex items-center gap-x-4">
           <span className="w-7 shrink-0 text-right text-lg font-medium text-gray-500">
             {`${Rating.key}점`}
