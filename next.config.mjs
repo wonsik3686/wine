@@ -1,5 +1,17 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // 외부 이미지 도메인 허용
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'sprint-fe-project.s3.ap-northeast-2.amazonaws.com',
+        port: '',
+        pathname: '/**',
+      },
+    ],
+  },
+
   webpack(config) {
     const fileLoaderRule = config.module.rules.find((rule) =>
       rule.test?.test?.('.svg')
