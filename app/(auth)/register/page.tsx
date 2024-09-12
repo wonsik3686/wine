@@ -99,11 +99,6 @@ export default function Signup() {
           break;
       }
 
-      // setValues((prevValues) => ({
-      //   ...prevValues,
-      //   [name]: value,
-      // }));
-
       setFormErrors((prevErrors) => ({
         ...prevErrors,
         [name]: errorMessage,
@@ -141,11 +136,6 @@ export default function Signup() {
       return;
     }
 
-    // if (values.password !== values.passwordConfirmation) {
-    //   setError('비밀번호가 일치하지 않습니다.');
-    //   return;
-    // }
-    // console.log(axiosInstance.defaults.baseURL);
     register({ email, nickname, password, passwordConfirmation })
       .then(() => {
         router.push('/');
@@ -235,7 +225,6 @@ export default function Signup() {
           로그인하기
         </Link>
       </div>
-      {/* </form> */}
     </div>
   );
 }

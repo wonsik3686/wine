@@ -33,11 +33,6 @@ export default function SingInPage() {
       ...prevValues,
       [name]: value,
     }));
-
-    // setFormErrors((prevErrors) => ({
-    //   ...prevErrors,
-    //   [name]: !value,
-    // }));
   }, []);
 
   const validateForm = useCallback(() => {
@@ -166,7 +161,6 @@ export default function SingInPage() {
       </form>
       <div className="flex flex-row items-center gap-2">
         계정이 없으신가요?
-        {/* Link href 재설정 필요, 임시로 "/" 페이지 설정 */}
         <Link href="/register">
           <div>회원가입하기</div>
         </Link>
