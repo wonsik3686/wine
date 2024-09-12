@@ -147,7 +147,7 @@ export default function Signup() {
   }
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-white tab:px-12 mob:px-5 pc:px-14">
+    <div className="flex min-h-screen flex-col items-center justify-center bg-white tab:px-12 tab:py-16 mob:px-5 mob:py-14 pc:px-14 pc:py-20">
       <Link href="/">
         <Image
           className="mb-16"
