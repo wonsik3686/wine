@@ -117,7 +117,7 @@ function Test() {
       </button>
       <ConfirmModal
         isOpen={isDeleteOpen}
-        onClick={handleDeleteClick}
+        onConfirm={handleDeleteClick}
         onCancel={handleCancelClick}
       />
       <button type="button" onClick={handleConfirmOpenClick}>
@@ -125,7 +125,7 @@ function Test() {
       </button>
       <ConfirmModal
         isOpen={isConfirmOpen}
-        onClick={handleConfirmClick}
+        onConfirm={handleConfirmClick}
         onCancel={handleConfirmOpenClick}
         confirmMessage="로그인이 필요한 서비스입니다. 로그인 페이지로 이동하시겠습니까?"
         label="확인"
