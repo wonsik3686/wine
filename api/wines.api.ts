@@ -24,7 +24,7 @@ export const getWine = async ({ ...params }: WineListRequest) => {
     url: '/wines',
     params,
   });
-  return response.data;
+  return response;
 };
 
 export const getRecommendedWines = async (limit: number) => {
@@ -33,5 +33,5 @@ export const getRecommendedWines = async (limit: number) => {
     url: '/wines/recommended',
     params: { limit },
   });
-  return response.data;
+  return response;
 };
