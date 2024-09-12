@@ -1,4 +1,5 @@
 import type { Metadata, ResolvingMetadata } from 'next';
+import { notFound } from 'next/navigation';
 
 type WineDetailPageParams = {
   params: { id: number };
@@ -34,6 +35,9 @@ export async function generateMetadata(
       },
     }
   );
+  if (!wineDetailRes.ok) {
+    notFound();
+  }
   const wineDetail = await wineDetailRes.json();
 
   return {
