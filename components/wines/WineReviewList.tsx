@@ -15,9 +15,14 @@ import Profile from '../common/Profile';
 import DeleteModal from '../modal/DeleteModal';
 import WineTasteSlider from './WineTasteSlider';
 
-type WineReviewListProps = Pick<WineDetailType, 'reviews'>;
+type WineReviewListProps = {
+  onOpenReviewModal: () => void;
+} & Pick<WineDetailType, 'reviews'>;
 
-export default function WineReviewList({ reviews }: WineReviewListProps) {
+export default function WineReviewList({
+  onOpenReviewModal,
+  reviews,
+}: WineReviewListProps) {
   const [expandedReviewIndexes, setExpandedReviewIndexes] = useState<number[]>(
     []
   );
@@ -99,7 +104,6 @@ export default function WineReviewList({ reviews }: WineReviewListProps) {
                   />
                 </button>
               </div>
-              {review.id}
               {review.user.id === user?.id && (
                 <>
                   <Dropdown
@@ -107,7 +111,9 @@ export default function WineReviewList({ reviews }: WineReviewListProps) {
                     options={dropdwonOptions}
                     onSelect={(value: string | number) => {
                       if (value === dropdownOptionValues.EDIT_REVIEW) {
-                        setSelectedReviewId(review.id);
+                        setSelectedReviewToUpdateId(review.id);
+                        setReviewModalMode('edit');
+                        onOpenReviewModal();
                       } else if (value === dropdownOptionValues.DELETE_REVIEW) {
                         setSelectedReviewId(review.id);
                         setIsDeleteReviewModalOpen(true);
@@ -140,7 +146,7 @@ export default function WineReviewList({ reviews }: WineReviewListProps) {
           <div className="mt-5 flex w-full justify-between">
             <div className="relative overflow-hidden">
               <div
-                className="pointer-events-none absolute z-10 h-full w-full
+                className="z-5 pointer-events-none absolute h-full w-full
 															bg-gradient-to-l from-white via-white/0 via-5% to-transparent"
               />
               <ChipSwiper slideData={translateAromaToKorean(review.aroma)} />
@@ -150,7 +156,7 @@ export default function WineReviewList({ reviews }: WineReviewListProps) {
             </div>
           </div>
           <div
-            className={`mt-6 ${expandedReviewIndexes.includes(index) ? '' : 'hidden'}`}
+            className={`mt-6 w-full ${expandedReviewIndexes.includes(index) ? '' : 'hidden'}`}
           >
             <p className="font-sans text-lg font-normal text-gray-800">
               {review.content}
