@@ -1,37 +1,21 @@
 'use client';
 
-import { getRecommendedWines } from '@/api/wines.api';
-import { RecommendedWineResponse } from '@/types/dto/response/wine.response.types';
-import { useEffect, useState } from 'react';
+import { useRecommendedWines } from '@/queries/wines.queries';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import MonthlyWineCard from './MonthlyWineCard';
-import MonthlyWineTestCard from './MonthlyWineTestCard';
 
 export default function MonthlyWineSection() {
-  const [recommendedWines, setRecommendedWines] =
-    useState<RecommendedWineResponse>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+  // useRecommendedWines 훅 사용
+  const { recommendedWines, isLoading, error } = useRecommendedWines(10);
 
-  useEffect(() => {
-    const fetchRecommendedWines = async () => {
-      setLoading(true);
-      try {
-        const response = await getRecommendedWines(5);
-        setRecommendedWines(response);
-      } catch (error) {
-        console.error('Error fetchRecommendedWines:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchRecommendedWines();
-  }, []);
-
-  if (loading) {
+  if (isLoading) {
     return <div>LOADING!</div>;
+  }
+
+  if (error) {
+    return <div>와인 데이터를 불러오는 중 오류가 발생했습니다.</div>;
   }
 
   return (
@@ -49,36 +33,16 @@ export default function MonthlyWineSection() {
         spaceBetween={15}
         slidesPerView="auto"
       >
-        {recommendedWines.map((wine) => (
+        {recommendedWines?.map((wine) => (
           <SwiperSlide key={wine.id} className="!w-auto">
             <MonthlyWineCard
+              wineId={wine.id}
               wineName={wine.name}
               wineImageUrl={wine.image}
               wineRating={wine.avgRating}
             />
           </SwiperSlide>
         ))}
-        <SwiperSlide className="!w-auto">
-          <MonthlyWineTestCard />
-        </SwiperSlide>
-        <SwiperSlide className="!w-auto">
-          <MonthlyWineTestCard />
-        </SwiperSlide>
-        <SwiperSlide className="!w-auto">
-          <MonthlyWineTestCard />
-        </SwiperSlide>
-        <SwiperSlide className="!w-auto">
-          <MonthlyWineTestCard />
-        </SwiperSlide>
-        <SwiperSlide className="!w-auto">
-          <MonthlyWineTestCard />
-        </SwiperSlide>
-        <SwiperSlide className="!w-auto">
-          <MonthlyWineTestCard />
-        </SwiperSlide>
-        <SwiperSlide className="!w-auto">
-          <MonthlyWineTestCard />
-        </SwiperSlide>
       </Swiper>
     </section>
   );

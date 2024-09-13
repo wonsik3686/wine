@@ -1,22 +1,34 @@
+'use client';
+
 import StarRating from '@/components/common/StarRating';
+import { useRouter } from 'next/navigation';
 
 type MonthlyWineCardProps = {
+  wineId: number;
   wineName: string;
   wineImageUrl: string;
   wineRating: number;
 };
 
 export default function MonthlyWineCard({
+  wineId,
   wineName,
   wineImageUrl,
   wineRating,
 }: MonthlyWineCardProps) {
+  const router = useRouter();
+
+  const handleCardClick = () => {
+    router.push(`/wines/${wineId}`);
+  };
+
   return (
     <div
-      className="relative h-[185px] w-[232px] overflow-hidden rounded-xl
-    bg-white px-[30px] pt-[24px]
-    shadow mob:h-[153px] mob:w-[193px]
-    mob:px-[25px]"
+      className="relative h-[185px] w-[232px] cursor-pointer overflow-hidden
+    rounded-xl bg-white px-[30px]
+    pt-[24px] shadow mob:h-[153px]
+    mob:w-[193px] mob:px-[25px]"
+      onClick={handleCardClick}
     >
       <div className="flex h-full w-full items-start justify-start gap-[28px]">
         <div
