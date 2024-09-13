@@ -68,7 +68,6 @@ function UserTapMenu() {
         };
 
         setReviewItem(getReview);
-        console.log(getReview);
       } else {
         const [item]: WineList[] = wines.list.filter(
           ({ id }: { id: number }) => id === i
@@ -84,11 +83,35 @@ function UserTapMenu() {
         };
 
         setWineItem(getWine);
-        console.log(getWine);
       }
     }
 
     setModal(copy);
+  };
+
+  const handleUpdateItem = (e: any) => {
+    const getMenu: {
+      [index: string]: [any, Dispatch<SetStateAction<any>>];
+    } = {
+      review: [reviews, setReviews],
+      wine: [wines, setWines],
+    };
+    const [isMenu, setItems] = getMenu[menu];
+
+    const copy = { ...isMenu };
+
+    if (menu === 'review') {
+      const [item] = reviews.list.filter(
+        ({ id }: { id: number }) => id === itemId
+      );
+      e.wine = item.wine;
+      delete e.wineId;
+    }
+
+    copy.list = copy.list.map((item: any) => (item.id === itemId ? e : item));
+    setItems(copy);
+
+    handleActiveModal('edit', 0);
   };
 
   const handleDeleteItem = () => {
@@ -220,6 +243,7 @@ function UserTapMenu() {
             onClick={() => handleActiveModal('edit', 0)}
             wineDetail={reviewItem}
             reviewId={itemId}
+            onUpdate={handleUpdateItem}
           />
         </>
       )}
@@ -281,6 +305,7 @@ function UserTapMenu() {
             mode="edit"
             onClick={() => handleActiveModal('edit', 0)}
             initialFormValue={wineItem}
+            onUpdate={handleUpdateItem}
           />
         </>
       )}
