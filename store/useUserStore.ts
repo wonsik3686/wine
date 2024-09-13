@@ -1,4 +1,5 @@
 /* eslint-disable import/no-cycle */
+/* eslint-disable react-hooks/rules-of-hooks */
 import { patchUser } from '@/api/users.api';
 import { useAuthStore } from '@/providers/auth';
 import { User } from '@/types/user.types';
