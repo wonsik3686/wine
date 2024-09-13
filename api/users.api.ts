@@ -1,86 +1,43 @@
 import { Params, Reviews, User, Wines } from '@/types/user.types';
+import { axiosInstance } from './_axiosInstance';
 
-const BASE_URL = 'https://winereview-api.vercel.app/8-4/users/me';
-
-export async function getUser(): Promise<User> {
-  const accessToken = `Bearer ${localStorage.getItem('accessToken')}`;
-
-  const response = await fetch(BASE_URL, {
+export async function getUser() {
+  const response = await axiosInstance<User>({
     method: 'GET',
-    headers: {
-      Authorization: accessToken,
-    },
+    url: '/users/me',
   });
 
-  if (!response.ok) {
-    throw new Error('getUser 리스폰스 에러');
-  }
-
-  return response.json();
+  return response.data;
 }
 
-export async function patchUser(data: {
-  image: string;
-  nickname: string;
-}): Promise<User> {
-  const accessToken = `Bearer ${localStorage.getItem('accessToken')}`;
-
-  const response = await fetch(BASE_URL, {
+export async function patchUser(Data: { image?: string; nickname?: string }) {
+  const response = await axiosInstance<User>({
     method: 'PATCH',
-    headers: {
-      'Content-Type': 'application/json; charset=UTF-8',
-      Authorization: accessToken,
-    },
-    body: JSON.stringify(data),
+    url: '/users/me',
+    data: Data,
   });
 
-  if (!response.ok) {
-    throw new Error('patchUser 리스폰스 에러');
-  }
-
-  return response.json();
+  return response.data;
 }
 
-export async function getUserReviews(data: Params): Promise<Reviews> {
-  const accessToken = `Bearer ${localStorage.getItem('accessToken')}`;
+export async function getUserReviews(data: Params) {
+  const query = new URLSearchParams(data as string).toString();
 
-  const params: any = !data.cursor ? data.limit : data;
-
-  const query = new URLSearchParams(params).toString();
-
-  const response = await fetch(`${BASE_URL}/reviews?${query}`, {
+  const response = await axiosInstance<Reviews>({
     method: 'GET',
-    headers: {
-      'Content-Type': 'application/json; charset=UTF-8',
-      Authorization: accessToken,
-    },
+    url: `/users/me/reviews?${query}`,
   });
 
-  if (!response.ok) {
-    throw new Error('getUserReviews 리스폰스 에러');
-  }
-
-  return response.json();
+  return response.data;
 }
 
 export async function getUserWines(data: Params): Promise<Wines> {
-  const accessToken = `Bearer ${localStorage.getItem('accessToken')}`;
+  const query = new URLSearchParams(data as string).toString();
 
-  const params: any = !data.cursor ? data.limit : data;
-
-  const query = new URLSearchParams(params).toString();
-
-  const response = await fetch(`${BASE_URL}/wines?${query}`, {
+  const response = await axiosInstance<Wines>({
     method: 'GET',
-    headers: {
-      'Content-Type': 'application/json; charset=UTF-8',
-      Authorization: accessToken,
-    },
+    url: `/users/me/wines?${query}`,
   });
 
-  if (!response.ok) {
-    throw new Error('getUserWines 리스폰스 에러');
-  }
-
-  return response.json();
+  return response.data;
 }
