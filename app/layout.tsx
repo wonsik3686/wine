@@ -25,7 +25,6 @@ export default function RootLayout({
       </head>
       <body>
         <QueryProvider>
-          {/* {children} */}
           <AuthStoreProvider>{children}</AuthStoreProvider>
         </QueryProvider>
       </body>
