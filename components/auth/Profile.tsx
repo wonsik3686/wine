@@ -1,7 +1,8 @@
 'use client';
 
+import { useAuthStore } from '@/providers/auth';
 import defaultProfill from '@/public/icons/defaultProfile.svg?url';
-import useUserStore from '@/store/useUserStore';
+import { useUpdateUser } from '@/queries/users.queries';
 import Image from 'next/image';
 import { useRef } from 'react';
 import Button from '../common/Button';
@@ -9,7 +10,8 @@ import Input from '../common/Input';
 import ProfileUpload from './ProfileUpload';
 
 function Profile() {
-  const { user, updateUser } = useUserStore();
+  const user = useAuthStore((state: any) => state.user);
+  const { mutate: updateUser } = useUpdateUser();
   const NicknameInput = useRef<HTMLInputElement>(null);
 
   const handelChangeNickname = () => {

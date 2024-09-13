@@ -136,13 +136,9 @@ export default function Signup() {
       return;
     }
 
-    register({ email, nickname, password, passwordConfirmation })
-      .then(() => {
-        router.push('/');
-      })
-      .catch((responseError) => {
-        console.error(responseError);
-      });
+    register({ email, nickname, password, passwordConfirmation }).then(() => {
+      router.push('/');
+    });
   }
 
   return (

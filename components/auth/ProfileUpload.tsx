@@ -2,7 +2,7 @@
 
 import postImageUpload from '@/api/imageUpload.api';
 import Photo from '@/public/icons/photo.svg';
-import useUserStore from '@/store/useUserStore';
+import { useUpdateUser } from '@/queries/users.queries';
 import { ChangeEvent, useRef, useState } from 'react';
 
 function ProfileUpload({
@@ -12,7 +12,7 @@ function ProfileUpload({
   className?: string;
   children: JSX.Element;
 }) {
-  const { updateUser } = useUserStore();
+  const { mutate: updateUser } = useUpdateUser();
   const [isHover, setIsHover] = useState(false);
   const fileInput = useRef<HTMLInputElement>(null);
 
