@@ -17,7 +17,7 @@ export async function patchUser(Data: { image?: string; nickname?: string }) {
     data: Data,
   });
 
-  return response.data;
+  return response;
 }
 
 export async function getUserReviews(data: Params) {
