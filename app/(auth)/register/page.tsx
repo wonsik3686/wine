@@ -141,7 +141,6 @@ export default function Signup() {
         router.push('/');
       })
       .catch((responseError) => {
-        // TODO: 어떤 이유로 생성 안된건지 사용자에게 알림 보내기
         console.error(responseError);
       });
   }
