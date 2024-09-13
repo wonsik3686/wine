@@ -18,12 +18,20 @@ type UpdateWineRequest = {
 };
 
 export const getWineDetail = async ({ ...params }: WineDetailRequest) => {
-  const response = await axiosInstance<WineDetailResponse>({
-    method: 'GET',
-    url: `/wines/${params.id}`,
-    params,
-  });
-  return response;
+  try {
+    const response = await axiosInstance<WineDetailResponse>({
+      method: 'GET',
+      url: `/wines/${params.id}`,
+      params,
+    });
+
+    if (!response || !response.data) {
+      throw new Error('와인 정보가 없습니다.');
+    }
+    return response.data;
+  } catch {
+    throw new Error('와인 정보를 불러오는데 실패했습니다');
+  }
 };
 
 export const getWine = async ({ ...params }: WineListRequest) => {

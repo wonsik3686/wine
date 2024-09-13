@@ -1,5 +1,7 @@
 'use client';
 
+/* eslint-disable react-hooks/rules-of-hooks */
+
 import ConfirmModal from '@/components/modal/ConfirmModal';
 import AddReviewModal from '@/components/modal/reviewmodal/AddReviewModal';
 import NoReviewContent from '@/components/wines/NoReviewContent';
@@ -13,11 +15,15 @@ import { useWineDetail } from '@/queries/wines.queries';
 import { useReviewModalStore } from '@/store/useReviewModalStore';
 import { Suspense, useEffect } from 'react';
 import WineDetailCardSkeleton from './skeletons/WineDetailCardSkeleton';
+import WineReviewsSkeleton from './skeletons/WineReviewsSkeleton';
 
 type WineDetailProps = { wineId: number };
 
 export default function WineDetail({ wineId }: WineDetailProps) {
-  const { wineDetail } = useWineDetail({ id: wineId });
+  const user = useAuthStore((set) => set.user);
+  const { wineDetail } = user
+    ? useWineDetail({ id: wineId })
+    : { wineDetail: null };
   const { isReviewOpen, handleOpenAddReview } = useReviewModal();
   const { reviewModalMode, selectedReviewToUpdateId } = useReviewModalStore();
   const {
@@ -26,7 +32,6 @@ export default function WineDetail({ wineId }: WineDetailProps) {
     handleConfirmOpenClick,
     handleConfirmClick,
   } = useLoginConfrimModal();
-  const user = useAuthStore((set) => set.user);
 
   useEffect(() => {
     if (!user) {
@@ -40,26 +45,31 @@ export default function WineDetail({ wineId }: WineDetailProps) {
     <>
       <Suspense fallback={<WineDetailCardSkeleton />}>
         {wineDetail && <WineDetailCard wineDetail={wineDetail} />}
+        {!user && <WineDetailCardSkeleton />}
       </Suspense>
-      <Suspense>
-        <section className="flex tab:flex-col-reverse tab:gap-[2.25rem] mob:gap-[1.25rem] pc:flex-row pc:gap-[3.75rem] ">
-          {wineDetail?.reviews && wineDetail.reviews.length > 0 ? (
-            <>
-              <WineReviewList
-                reviews={wineDetail.reviews}
-                onOpenReviewModal={handleOpenAddReview}
-              />
-              <WineReviewsRating
-                avgRating={wineDetail.avgRating}
-                avgRatings={wineDetail.avgRatings}
-                reviewCount={wineDetail.reviewCount}
-                onOpenReviewModal={handleOpenAddReview}
-              />
-            </>
-          ) : (
-            <NoReviewContent />
-          )}
-        </section>
+      <Suspense fallback={<WineReviewsSkeleton />}>
+        {user ? (
+          <section className="flex tab:flex-col-reverse tab:gap-[2.25rem] mob:gap-[1.25rem] pc:flex-row pc:gap-[3.75rem] ">
+            {wineDetail?.reviews && wineDetail.reviews.length > 0 ? (
+              <>
+                <WineReviewList
+                  reviews={wineDetail.reviews}
+                  onOpenReviewModal={handleOpenAddReview}
+                />
+                <WineReviewsRating
+                  avgRating={wineDetail.avgRating}
+                  avgRatings={wineDetail.avgRatings}
+                  reviewCount={wineDetail.reviewCount}
+                  onOpenReviewModal={handleOpenAddReview}
+                />
+              </>
+            ) : (
+              <NoReviewContent />
+            )}
+          </section>
+        ) : (
+          <WineReviewsSkeleton />
+        )}
       </Suspense>
       {wineDetail && (
         <AddReviewModal

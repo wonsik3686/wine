@@ -5,7 +5,7 @@ import Input from '@/components/common/Input';
 import { useAuthStore } from '@/providers/auth';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { ChangeEvent, FormEvent, useCallback, useState } from 'react';
 
 type FormValues = {
@@ -25,6 +25,7 @@ export default function SingInPage() {
     password: '',
   });
   const router = useRouter();
+  const searchParams = useSearchParams();
 
   const handleChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -72,7 +73,9 @@ export default function SingInPage() {
       }
       try {
         await login(email, password);
-        router.push('/');
+        // 로그인 성공 후 원래 페이지 혹은 메인 페이지로 리다이렉트
+        const redirectUrl = searchParams.get('redirect') || '/';
+        router.push(redirectUrl);
       } catch (err) {
         setFormErrors({
           email: '이메일 혹은 비밀번호를 확인해주세요.',
@@ -81,7 +84,7 @@ export default function SingInPage() {
         throw err;
       }
     },
-    [login, router, validateForm, values]
+    [login, router, validateForm, values, searchParams]
   );
 
   return (
