@@ -1,5 +1,4 @@
 import { QueryProvider } from '@/providers/query';
-import RootHeader from '@/providers/RootHeader';
 import type { Metadata } from 'next';
 import './globals.css';
 
@@ -15,10 +14,16 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ko">
-      <body className="font-sans">
-        <QueryProvider>
-          <RootHeader>{children}</RootHeader>
-        </QueryProvider>
+      <head>
+        <link
+          rel="stylesheet"
+          as="style"
+          crossOrigin="anonymous"
+          href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"
+        />
+      </head>
+      <body>
+        <QueryProvider>{children}</QueryProvider>
       </body>
     </html>
   );

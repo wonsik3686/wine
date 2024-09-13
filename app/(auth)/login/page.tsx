@@ -111,7 +111,7 @@ export default function SingInPage() {
         />
 
         <Input
-          labelClassNames="pt-[20px]"
+          labelClassName="pt-[20px]"
           label="비밀번호"
           errorMessage={formErrors.password}
           placeholder="비밀번호 입력"

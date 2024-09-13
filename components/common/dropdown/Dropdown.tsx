@@ -162,10 +162,10 @@ function Dropdown({
       style={{ width }}
     >
       {type === 'action' ? (
-        <div>{trigger}</div>
+        trigger
       ) : (
         <div
-          className={`flex w-full cursor-pointer items-center rounded-[16px] border px-4 py-2 ${dropdownClassName} bg-white font-medium text-gray-700 ring-1 ring-gray-300`}
+          className={`flex cursor-pointer items-center rounded-[16px] border px-4 py-2 ${dropdownClassName} bg-white font-medium text-gray-700 ring-1 ring-gray-300`}
           style={{ width }}
         >
           <span className={`flex-1 ${isOpen ? 'text-gray-300' : ''}`}>
@@ -193,8 +193,9 @@ function Dropdown({
 
       {isOpen && (
         <div
-          className={`absolute z-10 mt-2 w-full rounded-[16px] bg-white px-2 ring-1 ring-gray-300 ${dropdownClassName} ${styles.fadeInDown}`}
-          style={{ width }}
+          className={`absolute z-10 mt-2 ${
+            type === 'select' ? 'w-full' : 'right-[7px]'
+          } whitespace-nowrap rounded-[16px] bg-white px-2 ring-1 ring-gray-300 ${dropdownClassName} ${styles.fadeInDown}`}
         >
           <div className="py-1">
             {options.map((option) => (
@@ -202,7 +203,7 @@ function Dropdown({
                 key={option.label}
                 type="button"
                 onClick={() => handleSelect(option)}
-                className={`block w-full px-6 py-2 text-left text-lg font-medium text-gray-800 hover:bg-purple-10 hover:text-purple-100 ${optionClassName}`}
+                className={`block w-full rounded-xl px-6 py-2 text-left text-lg font-medium text-gray-800 hover:bg-purple-10 hover:text-purple-100 ${optionClassName}`}
               >
                 {option.label}
               </button>
