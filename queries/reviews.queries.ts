@@ -10,6 +10,7 @@ export function useReview({ ...params }: GetReviewRequest) {
       const response = await getReview(params);
       return response.data;
     },
+    enabled: params.id !== 0,
   });
   return { data, error, isLoading, refetch };
 }
