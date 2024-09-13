@@ -26,9 +26,16 @@ type ModalProps = {
   onClick: () => void;
   initialFormValue: FormValues | (() => FormValues);
   mode: 'add' | 'edit';
+  onUpdate?: (e: any) => void;
 };
 
-function AddWineModal({ isOpen, onClick, initialFormValue, mode }: ModalProps) {
+function AddWineModal({
+  isOpen,
+  onClick,
+  initialFormValue,
+  mode,
+  onUpdate,
+}: ModalProps) {
   const [formValue, setFormValue] = useState<FormValues>(initialFormValue);
   const [postError, setPostError] = useState('');
 
@@ -74,7 +81,7 @@ function AddWineModal({ isOpen, onClick, initialFormValue, mode }: ModalProps) {
     e.preventDefault();
 
     let imageUrl = '';
-    console.log(formValue);
+    let data = {}; // updateWineDetail response 받아오는 용도 삭제하지 마세요.
 
     try {
       if (typeof formValue.image === 'string') {
@@ -98,20 +105,20 @@ function AddWineModal({ isOpen, onClick, initialFormValue, mode }: ModalProps) {
         await postWineDetail(wineData);
       } else if (mode === 'edit') {
         // 와인 정보 PATCH 요청
-        await updateWineDetail(formValue.id, wineData);
+        data = await updateWineDetail(formValue.id, wineData);
+        onUpdate!(data);
       }
 
       setFormValue(initialFormValue); // 폼 값을 초기 상태로 되돌리기
       setPostError(''); // 에러 초기화
     } catch (error) {
-      console.error('와인 등록/수정에 실패했습니다:', error);
-
-      if (mode === 'add') {
+      if (mode === 'add' && error) {
         setPostError('와인 등록에 실패했습니다. 다시 시도해 주세요.');
       } else if (mode === 'edit') {
         setPostError('와인 수정에 실패했습니다. 다시 시도해 주세요.');
       }
     }
+    onClick();
   };
 
   return (
