@@ -59,15 +59,14 @@ axiosInstance.interceptors.response.use(
             JSON.stringify({ state: response.data, version: 0 })
           );
 
-            // 새로운 accessToken으로 요청 재시도
-            originalRequest._retry = true;
-            originalRequest.headers.Authorization = `Bearer ${accessToken}`;
-            return axiosInstance(originalRequest);
-          } catch (refreshError) {
-            // 토큰 갱신 실패 시 로그아웃 처리
-            localStorage.clear();
-            return Promise.reject(refreshError);
-          }
+          // 새로운 accessToken으로 요청 재시도
+          originalRequest._retry = true;
+          originalRequest.headers.Authorization = `Bearer ${accessToken}`;
+          return axiosInstance(originalRequest);
+        } catch (refreshError) {
+          // 토큰 갱신 실패 시 로그아웃 처리
+          localStorage.clear();
+          return Promise.reject(refreshError);
         }
       }
     }
