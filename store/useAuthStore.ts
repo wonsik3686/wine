@@ -28,6 +28,7 @@ export type AuthActions = {
   setAccessToken: (accessToken: string) => void;
   setReviewLiked: (reviewId: number) => void;
   setReviewUnlike: (reviewId: number) => void;
+  setUser: (user: User | null) => void;
 };
 
 export const initialAuthState: AuthState = {
@@ -91,6 +92,12 @@ export const createAuthStore = (initState: AuthState = initialAuthState) => {
             reviewLikedList: state.reviewLikedList.filter(
               (id) => id !== reviewId
             ),
+          }));
+        },
+        setUser: (user) => {
+          set((state) => ({
+            ...state,
+            user,
           }));
         },
       }),

@@ -1,8 +1,8 @@
 /* eslint-disable import/no-cycle */
 import { patchUser } from '@/api/users.api';
+import { useAuthStore } from '@/providers/auth';
 import { User } from '@/types/user.types';
 import { create } from 'zustand';
-import { useAuthStore } from './useAuthStore';
 
 type UserState = {
   user: User | null;
@@ -16,9 +16,9 @@ type UserAction = {
 type UserStore = UserState & UserAction;
 
 const useUserStore = create<UserStore>((set, get) => ({
-  user: useAuthStore.getState().user,
+  user: useAuthStore((state) => state.user),
   setUser: (user) => {
-    useAuthStore.setState({ user });
+    useAuthStore((state) => state.setUser(user));
   },
   updateUser: async (data) => {
     const result = await patchUser(data);
