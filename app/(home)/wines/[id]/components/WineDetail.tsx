@@ -1,13 +1,17 @@
 'use client';
 
+import ConfirmModal from '@/components/modal/ConfirmModal';
 import AddReviewModal from '@/components/modal/reviewmodal/AddReviewModal';
 import NoReviewContent from '@/components/wines/NoReviewContent';
 import WineDetailCard from '@/components/wines/WineDetailCard';
 import WineReviewList from '@/components/wines/WineReviewList';
 import WineReviewsRating from '@/components/wines/WineReviewsRating';
+import useLoginConfrimModal from '@/hooks/modal/useLoginConfirmModal';
 import useReviewModal from '@/hooks/modal/useReviewModal';
+import { useAuthStore } from '@/providers/auth';
 import { useWineDetail } from '@/queries/wines.queries';
 import { useReviewModalStore } from '@/store/useReviewModalStore';
+import { useEffect } from 'react';
 
 type WineDetailProps = { wineId: number };
 
@@ -15,6 +19,22 @@ export default function WineDetail({ wineId }: WineDetailProps) {
   const { wineDetail } = useWineDetail({ id: wineId });
   const { isReviewOpen, handleOpenAddReview } = useReviewModal();
   const { reviewModalMode, selectedReviewToUpdateId } = useReviewModalStore();
+  const {
+    isConfirmOpen,
+    setIsConfirmOpen,
+    handleConfirmOpenClick,
+    handleConfirmClick,
+  } = useLoginConfrimModal();
+  const user = useAuthStore((set) => set.user);
+
+  useEffect(() => {
+    if (!user) {
+      console.log(`user: ${user}`);
+      setIsConfirmOpen(true);
+    } else {
+      setIsConfirmOpen(false);
+    }
+  }, [user]);
 
   return (
     <>
@@ -46,6 +66,14 @@ export default function WineDetail({ wineId }: WineDetailProps) {
           reviewId={selectedReviewToUpdateId}
         />
       )}
+      <ConfirmModal
+        isOpen={isConfirmOpen}
+        confirmMessage="로그인이 필요한 서비스입니다"
+        label="로그인"
+        onConfirm={handleConfirmClick}
+        onCancel={handleConfirmOpenClick}
+        onlyConfirm={true}
+      />
     </>
   );
 }
