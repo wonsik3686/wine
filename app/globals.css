@@ -1,8 +1,9 @@
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css');
+@import 'aos/dist/aos.css';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 body {
-  @apply bg-white font-sans text-[#2c2f34];
-  font-family: 'Pretendard', sans-serif;
+  @apply bg-white font-sans text-gray-800;
 }
