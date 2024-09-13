@@ -6,13 +6,14 @@ import Chip from '@/components/common/Chip';
 import RatingProgressbar from '@/components/common/RatingProgressbar';
 import StarRating from '@/components/common/StarRating';
 import AddWineModal from '@/components/modal/AddWineModal';
-import DeleteModal from '@/components/modal/DeleteModal';
+import ConfirmModal from '@/components/modal/ConfirmModal';
 import AddReviewModal from '@/components/modal/reviewmodal/AddReviewModal';
 import { useState } from 'react';
 
 function Test() {
   const [isOpen, setIsOpen] = useState(false);
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+  const [isConfirmOpen, setIsConfirmOpen] = useState(false);
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [isReviewOpen, setIsReviewOpen] = useState(false);
   const [isReviewEditOpen, setIsReviewEditOpen] = useState(false);
@@ -37,8 +38,18 @@ function Test() {
 
   const handleDeleteClick = () => {
     // DELETE요청 대신 넣은 값
-    console.log('삭제되었습니다!');
     setIsDeleteOpen(false);
+  };
+
+  const handleConfirmOpenClick = () => {
+    if (!isConfirmOpen) {
+      setIsConfirmOpen(true);
+    } else setIsConfirmOpen(false);
+  };
+
+  const handleConfirmClick = () => {
+    // DELETE요청 대신 넣은 값
+    setIsConfirmOpen(false);
   };
 
   const TestWineDetail = {
@@ -102,10 +113,20 @@ function Test() {
       <button type="button" onClick={handleCancelClick}>
         삭제모달열기
       </button>
-      <DeleteModal
+      <ConfirmModal
         isOpen={isDeleteOpen}
-        onClick={handleCancelClick}
-        onCancel={handleDeleteClick}
+        onConfirm={handleDeleteClick}
+        onCancel={handleCancelClick}
+      />
+      <button type="button" onClick={handleConfirmOpenClick}>
+        로그인확인모달
+      </button>
+      <ConfirmModal
+        isOpen={isConfirmOpen}
+        onConfirm={handleConfirmClick}
+        onCancel={handleConfirmOpenClick}
+        confirmMessage="로그인이 필요한 서비스입니다. 로그인 페이지로 이동하시겠습니까?"
+        label="확인"
       />
       <Button
         buttonColor="purple"

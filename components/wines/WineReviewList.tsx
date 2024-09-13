@@ -2,7 +2,7 @@
 
 import useDeleteReview from '@/hooks/reviews/useDeleteReview';
 import useLikeReview from '@/hooks/wines/useLikeReview';
-import { useAuthStore } from '@/store/useAuthStore';
+import { useAuthStore } from '@/providers/auth';
 import { useReviewModalStore } from '@/store/useReviewModalStore';
 import { WineDetailType } from '@/types/wine.types';
 import formatDistanceToNowKor from '@/utils/dateTimeUtils/FormatDistanceToNow';
@@ -35,7 +35,8 @@ export default function WineReviewList({
     handleDeleteReview,
     handleDeleteReviewCancel,
   } = useDeleteReview();
-  const { user } = useAuthStore();
+  const user = useAuthStore((state) => state.user);
+  // const { user } = useAuthStore();
   const { setSelectedReviewToUpdateId, setReviewModalMode } =
     useReviewModalStore();
   const dropdownOptionValues = { EDIT_REVIEW: 'edit', DELETE_REVIEW: 'delete' };

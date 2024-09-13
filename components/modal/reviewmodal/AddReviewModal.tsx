@@ -2,7 +2,7 @@
 
 'use client';
 
-import { postWineReview } from '@/api/reviews.api';
+import { postWineReview, updateReview as update } from '@/api/reviews.api';
 import { useReview, useUpdateReview } from '@/queries/reviews.queries';
 import { useReviewModalStore } from '@/store/useReviewModalStore';
 import { convertToAroma } from '@/utils/convert/convertToAroma';
@@ -24,6 +24,7 @@ export type ReviewModalProps = {
   mode: 'add' | 'edit';
   wineDetail: WineDetailProps;
   reviewId?: number;
+  onUpdate?: (e: any) => void;
 };
 
 export default function AddReviewModal({
@@ -32,6 +33,7 @@ export default function AddReviewModal({
   mode,
   wineDetail,
   reviewId,
+  onUpdate,
 }: ReviewModalProps) {
   const {
     data: serverReviewData,
@@ -91,6 +93,7 @@ export default function AddReviewModal({
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    let data = {}; // updateWineDetail response 받아오는 용도 삭제하지 마세요.
 
     if (mode === 'edit' && serverReviewData) {
       await updateReview({
@@ -105,6 +108,19 @@ export default function AddReviewModal({
           softAcidic: tasteValues[3],
         },
       }); // PATCH 요청으로 수정
+      data = await update({
+        reviewId: serverReviewData.id,
+        data: {
+          rating,
+          content,
+          aroma: convertToAroma(aroma),
+          lightBold: tasteValues[0],
+          smoothTannic: tasteValues[1],
+          drySweet: tasteValues[2],
+          softAcidic: tasteValues[3],
+        },
+      });
+      onUpdate!(data);
     } else if (mode === 'add') {
       await postWineReview({
         wineId: wineDetail.id,
