@@ -1,24 +1,28 @@
-const BASE_URL = 'https://winereview-api.vercel.app/8-4/images/upload';
+import { axiosInstance } from './_axiosInstance';
 
-async function postImageUpload(file: File): Promise<{ url: string }> {
-  const accessToken = `Bearer ${localStorage.getItem('accessToken')}`;
+function encoding(data: File['name']) {
+  const index = data.lastIndexOf('.');
+  const filename = data.substring(0, index);
+  const extension = data.substring(index);
+  const encode = btoa(encodeURI(filename));
+  const result = encode + extension;
 
+  return result;
+}
+
+async function postImageUpload(file: File) {
   const formData = new FormData();
-  formData.set('image', file, btoa(encodeURI(file.name)));
+  const filename = encoding(file.name);
 
-  const response = await fetch(BASE_URL, {
+  formData.append('image', file, filename);
+
+  const response = await axiosInstance<{ url: string }>({
     method: 'POST',
-    headers: {
-      Authorization: accessToken,
-    },
-    body: formData,
+    url: '/images/upload',
+    data: formData,
   });
 
-  if (!response.ok) {
-    throw new Error('postImageUpload 리스폰스 에러');
-  }
-
-  return response.json();
+  return response.data;
 }
 
 export default postImageUpload;
