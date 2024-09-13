@@ -22,8 +22,8 @@ function Button({
   return (
     // eslint-disable-next-line react/button-has-type
     <button
-      className={`${clsx(
-        'break-keep  disabled:bg-gray-200 disabled:text-gray-500',
+      className={clsx(
+        'break-keep disabled:bg-gray-200 disabled:text-gray-500',
         {
           // buttonStyle
           'inline-flex items-center justify-center gap-3 rounded-2xl px-5 py-4 font-sans text-lg font-semibold':
@@ -44,8 +44,9 @@ function Button({
           'text-gray-500': textColor === 'gray',
           'text-gray-800': textColor === 'black',
           'text-purple-100': textColor === 'purple',
-        }
-      )} ${className}`}
+        },
+        className
+      )}
       {...buttonAttributes}
     />
   );

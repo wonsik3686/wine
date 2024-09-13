@@ -1,34 +1,22 @@
-'use client';
-
 import StarRating from '@/components/common/StarRating';
-import { useRouter } from 'next/navigation';
 
 type MonthlyWineCardProps = {
-  wineId: number;
-  wineName: string;
-  wineImageUrl: string;
-  wineRating: number;
+  wineName?: string;
+  wineImageUrl?: string;
+  wineRating?: number;
 };
 
-export default function MonthlyWineCard({
-  wineId,
-  wineName,
-  wineImageUrl,
-  wineRating,
+export default function MonthlyWineTestCard({
+  wineName = 'Sentinel Carbernet Sauvignon 2016',
+  wineImageUrl = 'https://www.winenara.com/uploads/product/550/ff4dd11a946671d88fd904590b1488fc.png',
+  wineRating = 4.5,
 }: MonthlyWineCardProps) {
-  const router = useRouter();
-
-  const handleCardClick = () => {
-    router.push(`/wines/${wineId}`);
-  };
-
   return (
     <div
-      className="relative h-[185px] w-[232px] cursor-pointer overflow-hidden
-    rounded-xl bg-white px-[30px]
-    pt-[24px] shadow mob:h-[153px]
-    mob:w-[193px] mob:px-[25px]"
-      onClick={handleCardClick}
+      className="relative h-[185px] w-[232px] overflow-hidden rounded-xl
+    bg-white px-[30px] pt-[24px]
+    shadow mob:h-[153px] mob:w-[193px]
+    mob:px-[25px]"
     >
       <div className="flex h-full w-full items-start justify-start gap-[28px]">
         <div

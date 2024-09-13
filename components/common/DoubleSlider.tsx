@@ -21,12 +21,14 @@ export default function DoubleSlider({
   width = '200px',
   min = 0,
   max = 100,
+  ...rest
 }: {
   values: [number, number];
-  min?: number;
-  max?: number;
   onChange?: (sliderValue: [number, number]) => void;
   width?: string;
+  min?: number;
+  max?: number;
+  [key: string]: any;
 }): JSX.Element {
   return (
     <div style={{ width }}>
@@ -37,6 +39,7 @@ export default function DoubleSlider({
         onChange={onChange}
         min={min}
         max={max}
+        {...rest}
         renderThumb={(props) => (
           <div
             {...props}
