@@ -48,7 +48,7 @@ export default function DoubleSlider({
             {...props}
             className={`${
               state.index === 1 ? 'bg-purple-100' : 'bg-gray-100'
-            } h-[6px] rounded-full`}
+            } h-[6px] cursor-pointer rounded-full hover:cursor-pointer`}
           />
         )}
       />
