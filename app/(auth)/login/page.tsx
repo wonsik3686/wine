@@ -64,12 +64,12 @@ export default function SingInPage() {
       try {
         await login(email, password);
         router.push('/');
-      } catch (e) {
+      } catch (err) {
         setFormErrors({
           email: '이메일 혹은 비밀번호를 확인해주세요.',
           password: '   ',
         });
-        throw e;
+        throw err;
       }
     },
     [login, router, validateForm, values]
