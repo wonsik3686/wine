@@ -8,16 +8,21 @@ import {
   WineDetailResponse,
   WineListResponse,
 } from '@/types/dto/response/wine.response.types';
-import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
+import {
+  useInfiniteQuery,
+  useQuery,
+  useSuspenseQuery,
+} from '@tanstack/react-query';
 
 export function useWineDetail({ ...params }: WineDetailRequest) {
-  const { data, error, isLoading, refetch } = useQuery<WineDetailResponse>({
-    queryKey: ['wineDetail', params.id],
-    queryFn: async () => {
-      const response = await getWineDetail(params);
-      return response.data;
-    },
-  });
+  const { data, error, isLoading, refetch } =
+    useSuspenseQuery<WineDetailResponse>({
+      queryKey: ['wineDetail', params.id],
+      queryFn: async () => {
+        const response = await getWineDetail(params);
+        return response.data;
+      },
+    });
 
   return {
     wineDetail: data,

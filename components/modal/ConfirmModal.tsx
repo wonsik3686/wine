@@ -9,7 +9,7 @@ type ConfirmModalProps = {
   onCancel: () => void;
   confirmMessage?: string;
   label?: string;
-  onlyConfirm?: boolean;
+  isOnlyConfirm?: boolean;
 };
 
 export default function ConfirmModal({
@@ -18,7 +18,7 @@ export default function ConfirmModal({
   onCancel,
   confirmMessage = '정말 삭제하시겠습니까?',
   label = '삭제',
-  onlyConfirm = false,
+  isOnlyConfirm = false,
 }: ConfirmModalProps) {
   useEffect(() => {
     if (isOpen) {
@@ -48,7 +48,7 @@ export default function ConfirmModal({
           {confirmMessage}
         </h1>
         <div className="flex justify-between gap-[9px] mob:gap-[6px]">
-          {!onlyConfirm && (
+          {!isOnlyConfirm && (
             <Button
               buttonStyle="box"
               buttonWidth="fitToChildren"

@@ -11,7 +11,8 @@ import useReviewModal from '@/hooks/modal/useReviewModal';
 import { useAuthStore } from '@/providers/auth';
 import { useWineDetail } from '@/queries/wines.queries';
 import { useReviewModalStore } from '@/store/useReviewModalStore';
-import { useEffect } from 'react';
+import { Suspense, useEffect } from 'react';
+import WineDetailCardSkeleton from './skeletons/WineDetailCardSkeleton';
 
 type WineDetailProps = { wineId: number };
 
@@ -29,34 +30,37 @@ export default function WineDetail({ wineId }: WineDetailProps) {
 
   useEffect(() => {
     if (!user) {
-      console.log(`user: ${user}`);
       setIsConfirmOpen(true);
     } else {
       setIsConfirmOpen(false);
     }
-  }, [user]);
+  }, [user, setIsConfirmOpen]);
 
   return (
     <>
-      {wineDetail && <WineDetailCard wineDetail={wineDetail} />}
-      <section className="flex tab:flex-col-reverse tab:gap-[2.25rem] mob:gap-[1.25rem] pc:flex-row pc:gap-[3.75rem] ">
-        {wineDetail?.reviews && wineDetail.reviews.length > 0 ? (
-          <>
-            <WineReviewList
-              reviews={wineDetail.reviews}
-              onOpenReviewModal={handleOpenAddReview}
-            />
-            <WineReviewsRating
-              avgRating={wineDetail.avgRating}
-              avgRatings={wineDetail.avgRatings}
-              reviewCount={wineDetail.reviewCount}
-              onOpenReviewModal={handleOpenAddReview}
-            />
-          </>
-        ) : (
-          <NoReviewContent />
-        )}
-      </section>
+      <Suspense fallback={<WineDetailCardSkeleton />}>
+        {wineDetail && <WineDetailCard wineDetail={wineDetail} />}
+      </Suspense>
+      <Suspense>
+        <section className="flex tab:flex-col-reverse tab:gap-[2.25rem] mob:gap-[1.25rem] pc:flex-row pc:gap-[3.75rem] ">
+          {wineDetail?.reviews && wineDetail.reviews.length > 0 ? (
+            <>
+              <WineReviewList
+                reviews={wineDetail.reviews}
+                onOpenReviewModal={handleOpenAddReview}
+              />
+              <WineReviewsRating
+                avgRating={wineDetail.avgRating}
+                avgRatings={wineDetail.avgRatings}
+                reviewCount={wineDetail.reviewCount}
+                onOpenReviewModal={handleOpenAddReview}
+              />
+            </>
+          ) : (
+            <NoReviewContent />
+          )}
+        </section>
+      </Suspense>
       {wineDetail && (
         <AddReviewModal
           isOpen={isReviewOpen}
@@ -72,7 +76,7 @@ export default function WineDetail({ wineId }: WineDetailProps) {
         label="로그인"
         onConfirm={handleConfirmClick}
         onCancel={handleConfirmOpenClick}
-        onlyConfirm={true}
+        isOnlyConfirm
       />
     </>
   );
