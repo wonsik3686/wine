@@ -38,7 +38,6 @@ function Test() {
 
   const handleDeleteClick = () => {
     // DELETE요청 대신 넣은 값
-    console.log('삭제되었습니다!');
     setIsDeleteOpen(false);
   };
 
@@ -50,7 +49,6 @@ function Test() {
 
   const handleConfirmClick = () => {
     // DELETE요청 대신 넣은 값
-    console.log('로그인 페이지로 이동!');
     setIsConfirmOpen(false);
   };
 

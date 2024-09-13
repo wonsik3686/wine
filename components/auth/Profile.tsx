@@ -27,7 +27,7 @@ function Profile() {
       <div className="flex items-center gap-8 mob:gap-x-4 pc:flex-col">
         <ProfileUpload className="size-[3.75rem] tab2:size-20 pc:size-[10.25rem]">
           <Image
-            src={user!.image || defaultProfill}
+            src={user?.image || defaultProfill}
             alt="프로필 이미지"
             width={164}
             height={164}
@@ -38,11 +38,11 @@ function Profile() {
 
         <div className="flex flex-col gap-y-1 tab2:gap-y-2 pc:gap-y-4 pc:text-center">
           <p className="text-xl font-bold text-gray-800 tab2:text-2xl">
-            {user!.nickname}
+            {user?.nickname}
           </p>
 
           <p className="text-md font-normal text-gray-500 tab2:text-lg">
-            {user!.email}
+            {user?.email}
           </p>
         </div>
       </div>
@@ -53,7 +53,7 @@ function Profile() {
           labelClassName="mob:text-md"
           inputClassName="placeholder:text-gray-500 mob:py-[0.5625rem] tab2:py-[0.6875rem]"
           label="닉네임"
-          placeholder={user!.nickname}
+          placeholder={user?.nickname}
           ref={NicknameInput}
         />
 

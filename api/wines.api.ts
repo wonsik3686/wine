@@ -23,17 +23,12 @@ export const updateWineDetail = async (
   id: number,
   updateData: UpdateWineRequest
 ) => {
-  try {
-    const response = await axiosInstance<WineDetailResponse>({
-      method: 'PATCH',
-      url: `/wines/${id}`,
-      data: updateData,
-    });
-    return response.data;
-  } catch (error) {
-    console.error('와인 정보를 수정하는 데 실패했습니다:', error);
-    throw error; // 에러를 호출자에게 전달합니다.
-  }
+  const response = await axiosInstance<WineDetailResponse>({
+    method: 'PATCH',
+    url: `/wines/${id}`,
+    data: updateData,
+  });
+  return response.data;
 };
 // 이미지 업로드
 export const uploadWineImage = async (imgFile: File): Promise<string> => {
