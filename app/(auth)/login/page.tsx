@@ -33,23 +33,27 @@ export default function SingInPage() {
       ...prevValues,
       [name]: value,
     }));
-
-    // setFormErrors((prevErrors) => ({
-    //   ...prevErrors,
-    //   [name]: !value,
-    // }));
   }, []);
+
+  const validateEmail = (email: string): string => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email) ? '' : '이메일 형식으로 작성해 주세요.';
+  };
 
   const validateForm = useCallback(() => {
     const { email, password } = values;
-    if (!email || !password) {
+    const emailError = !email
+      ? '이메일은 필수 입력입니다.'
+      : validateEmail(email);
+    const passwordError = !password ? '비밀번호는 필수 입력입니다.' : '';
+
+    if (emailError || passwordError) {
       setFormErrors({
-        email: !email ? '이메일이 입력되지 않았습니다.' : '',
-        password: !password ? '비밀번호가 입력되지 않았습니다.' : '',
+        email: emailError,
+        password: passwordError,
       });
       return false;
     }
-
     setFormErrors({
       email: '',
       password: '',
