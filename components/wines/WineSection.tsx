@@ -12,11 +12,14 @@ import { throttle } from '@/utils/throttle';
 import { useCallback, useEffect, useState } from 'react';
 
 const initialFormValue = {
+  id: 0,
   name: '',
-  price: '',
+  price: 0,
   origin: '',
+  region: '',
   type: 'undefined',
   imgFile: null,
+  image: '',
 };
 
 export default function WineSection() {
@@ -177,6 +180,7 @@ export default function WineSection() {
           isOpen={isAddWineModalOpen}
           onClick={() => setIsAddWineModalOpen(false)}
           initialFormValue={initialFormValue}
+          mode="add"
         />
       )}
 
