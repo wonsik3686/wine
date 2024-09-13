@@ -10,15 +10,17 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
-    const accessToken = localStorage.getItem('accessToken');
-
-    if (accessToken) {
-      const modifiedConfig = { ...config }; // 새로운 객체를 생성하여 수정
-      // eslint-disable-next-line dot-notation
-      modifiedConfig.headers['Authorization'] = `Bearer ${accessToken}`;
-      return modifiedConfig;
+    const authStorage = localStorage.getItem('auth-storage');
+    if (authStorage) {
+      const parsedData = JSON.parse(authStorage);
+      const { accessToken } = parsedData.state;
+      if (accessToken) {
+        const modifiedConfig = { ...config }; // 새로운 객체를 생성하여 수정
+        // eslint-disable-next-line dot-notation
+        modifiedConfig.headers['Authorization'] = `Bearer ${accessToken}`;
+        return modifiedConfig;
+      }
     }
-    // throw new Error('로그인이 필요합니다.');
     return config;
   },
   (error) => {
@@ -32,27 +34,29 @@ axiosInstance.interceptors.response.use(
   async (responseError) => {
     const originalRequest = responseError.config;
     if (responseError.response?.status === 401 && !originalRequest._retry) {
-      const refreshToken = localStorage.getState('refreshToken');
+      const authStorage = localStorage.getItem('auth-storage');
+      if (authStorage) {
+        const parsedData = JSON.parse(authStorage);
+        const { refreshToken } = parsedData.state;
+        if (refreshToken) {
+          try {
+            // refreshToken으로 새로운 토큰 요청
+            const response = await axiosInstance.post('/auth/refresh-token', {
+              refreshToken,
+            });
+            const { accessToken } = response.data;
+            parsedData.state.accessToken = accessToken;
+            localStorage.setItem('auth-storage', JSON.stringify(parsedData));
 
-      if (refreshToken) {
-        try {
-          // refreshToken으로 새로운 토큰 요청
-          const response = await axiosInstance.post('/auth/refresh-token', {
-            refreshToken,
-          });
-          const { accessToken } = response.data;
-
-          // Zustand store에 새로운 토큰 저장
-          localStorage.setItem('accessToken', accessToken);
-
-          // 새로운 accessToken으로 요청 재시도
-          originalRequest._retry = true;
-          originalRequest.headers.Authorization = `Bearer ${accessToken}`;
-          return axiosInstance(originalRequest);
-        } catch (refreshError) {
-          // 토큰 갱신 실패 시 로그아웃 처리
-          localStorage.clear();
-          return Promise.reject(refreshError);
+            // 새로운 accessToken으로 요청 재시도
+            originalRequest._retry = true;
+            originalRequest.headers.Authorization = `Bearer ${accessToken}`;
+            return axiosInstance(originalRequest);
+          } catch (refreshError) {
+            // 토큰 갱신 실패 시 로그아웃 처리
+            localStorage.clear();
+            return Promise.reject(refreshError);
+          }
         }
       }
     }
