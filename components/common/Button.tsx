@@ -23,7 +23,7 @@ function Button({
     // eslint-disable-next-line react/button-has-type
     <button
       className={clsx(
-        'disabled:bg-gray-200 disabled:text-gray-500',
+        'break-keep disabled:bg-gray-200 disabled:text-gray-500',
         {
           // buttonStyle
           'inline-flex items-center justify-center gap-3 rounded-2xl px-5 py-4 font-sans text-lg font-semibold':

@@ -1,5 +1,5 @@
+import { AuthStoreProvider } from '@/providers/auth';
 import { QueryProvider } from '@/providers/query';
-import RootHeader from '@/providers/RootHeader';
 import type { Metadata } from 'next';
 import './globals.css';
 
@@ -15,9 +15,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ko">
-      <body className="font-sans">
+      <body>
         <QueryProvider>
-          <RootHeader>{children}</RootHeader>
+          <AuthStoreProvider>{children}</AuthStoreProvider>
         </QueryProvider>
       </body>
     </html>

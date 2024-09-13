@@ -10,7 +10,7 @@ import {
 } from '@/types/dto/response/wine.response.types';
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 
-export default function useWineDetail({ ...params }: WineDetailRequest) {
+export function useWineDetail({ ...params }: WineDetailRequest) {
   const { data, error, isLoading, refetch } = useQuery<WineDetailResponse>({
     queryKey: ['wineDetail', params.id],
     queryFn: async () => {

@@ -9,9 +9,10 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Pretendard', 'sans-serif'],
+        sans: ['Pretendard Variable', 'sans-serif'],
       },
       fontSize: {
+        '7xl': ['3.375rem', '4.5rem'],
         '3xl': ['2rem', '2.625rem'],
         h2xl: ['1.875rem', ''],
         '2xl': ['1.5rem', '2rem'],
@@ -21,6 +22,7 @@ const config: Config = {
         md: ['0.875rem', '1.5rem'],
         sm: ['0.813rem', '1.375rem'],
         xs: ['0.75rem', '1.25rem'],
+        xs2: ['0.75rem', '1.125rem'],
       },
       fontWeight: {
         bold: '700',
@@ -54,9 +56,10 @@ const config: Config = {
         },
       },
       screens: {
-        pc: { min: '1200px' },
         tab: { max: '1199px' },
         mob: { max: '743px' },
+        tab2: { min: '744px' },
+        pc: { min: '1200px' },
       },
     },
   },
