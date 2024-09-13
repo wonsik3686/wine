@@ -1,3 +1,5 @@
+/* eslint-disable import/no-cycle */
+
 'use client';
 
 import { postWineReview } from '@/api/reviews.api';
@@ -16,7 +18,7 @@ type WineDetailProps = {
   name: string;
 };
 
-type ReviewModalProps = {
+export type ReviewModalProps = {
   isOpen: boolean;
   onClick: () => void;
   mode: 'add' | 'edit';
@@ -82,6 +84,9 @@ export default function AddReviewModal({
     resetReview,
     serverReviewData,
     isOpen,
+    isReviewLoading,
+    refetchReview,
+    reviewId,
   ]);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {

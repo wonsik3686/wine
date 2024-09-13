@@ -21,6 +21,7 @@ export function useUpdateReview() {
     mutationFn: updateReview,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['reviewDetail'] });
+      queryClient.invalidateQueries({ queryKey: ['wineDetail'] });
     },
   });
   return { mutate, data, error, isError, isPending };

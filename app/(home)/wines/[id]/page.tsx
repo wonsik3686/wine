@@ -1,39 +1,24 @@
-'use client';
+import WineDetail from './components/WineDetail';
 
-import AddReviewModal from '@/components/modal/reviewmodal/AddReviewModal';
-import WineDetailCard from '@/components/wines/WineDetailCard';
-import WineReviewList from '@/components/wines/WineReviewList';
-import WineReviewsRating from '@/components/wines/WineReviewsRating';
-import useReviewModal from '@/hooks/modal/useReviewModal';
-import { useWineDetail } from '@/queries/wines.queries';
+type WineDetailPageParams = {
+  params: { id: number };
+};
 
-export default function WineDetail({ params }: { params: { id: number } }) {
-  const { wineDetail } = useWineDetail({ id: params.id });
-  const { isReviewOpen, handleOpenAddReview } = useReviewModal();
+// export async function generateMetadata(
+//   { params }: WineDetailPageParams,
+//   parent: ResolvingMetadata
+// ): Promise<Metadata> {
+//   // const wineDetail = await fetch(
+//   //   `https://winereview-api.vercel.app/8-4/wines/${params.id}`
+//   // ).then<WineDetailResponse>((res) => res.json());
+//   const wineDetail = (await getWineDetail({ id: params.id })).data;
+//   const prevMeta = await parent;
 
-  return (
-    <>
-      <section className="hidden">{params.id}</section>
-      {wineDetail && <WineDetailCard wineDetail={wineDetail} />}
-      <section className="flex tab:flex-col-reverse tab:gap-[2.25rem] mob:gap-[1.25rem] pc:flex-row pc:gap-[3.75rem] ">
-        {wineDetail && <WineReviewList reviews={wineDetail.reviews} />}
-        {wineDetail && (
-          <WineReviewsRating
-            avgRating={wineDetail.avgRating}
-            avgRatings={wineDetail.avgRatings}
-            reviewCount={wineDetail.reviewCount}
-            onOpenReviewModal={handleOpenAddReview}
-          />
-        )}
-      </section>
-      {wineDetail && (
-        <AddReviewModal
-          isOpen={isReviewOpen}
-          onClick={handleOpenAddReview}
-          mode="add"
-          wineDetail={{ id: wineDetail.id, name: wineDetail.name }}
-        />
-      )}
-    </>
-  );
+//   return {
+//     title: `${prevMeta.title?.absolute} | ${wineDetail.name}`,
+//   };
+// }
+
+export default function WineDetailPage({ params }: WineDetailPageParams) {
+  return <WineDetail wineId={params.id} />;
 }
