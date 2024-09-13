@@ -14,6 +14,7 @@ export default function WineDetailCard({ wineDetail }: WineDetailProps) {
           src={wineDetail.image}
           alt="와인 이미지"
           fill
+          sizes="13.0625rem"
           className="object-contain"
         />
       </div>

@@ -20,7 +20,24 @@ export function useWineDetail({ ...params }: WineDetailRequest) {
       queryKey: ['wineDetail', params.id],
       queryFn: async () => {
         const response = await getWineDetail(params);
-        return response.data;
+        if (response?.data) {
+          return response.data;
+        }
+        const empty: WineDetailResponse = {
+          id: 0,
+          name: '',
+          avgRating: 0,
+          avgRatings: {},
+          image: '/icons/defaultWine.png',
+          price: 0,
+          recentReview: null,
+          region: '',
+          reviewCount: 0,
+          reviews: [],
+          type: '',
+          userId: 0,
+        };
+        return empty;
       },
     });
 

@@ -6,9 +6,8 @@ export default function useLoginConfrimModal() {
   const router = useRouter();
 
   const handleConfirmOpenClick = () => {
-    if (!isConfirmOpen) {
-      setIsConfirmOpen(true);
-    } else setIsConfirmOpen(false);
+    setIsConfirmOpen(false);
+    router.push('/login');
   };
 
   const handleConfirmClick = () => {
