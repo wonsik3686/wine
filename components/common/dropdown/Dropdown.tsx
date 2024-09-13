@@ -125,7 +125,7 @@ function Dropdown({
   const [selectedLabel, setSelectedLabel] = useState<string | undefined>(
     initialLabel
   );
-  const dropdownRef = useRef<HTMLButtonElement | null>(null);
+  const dropdownRef = useRef<HTMLDivElement | null>(null);
 
   // 클릭 외부 감지
   useEffect(() => {
@@ -154,10 +154,10 @@ function Dropdown({
   };
 
   return (
-    <button
+    <div
+      // <button
       className="relative block text-left"
       ref={dropdownRef}
-      type="button"
       onClick={() => setIsOpen(!isOpen)}
       style={{ width }}
     >
@@ -211,7 +211,8 @@ function Dropdown({
           </div>
         </div>
       )}
-    </button>
+      {/* </button> */}
+    </div>
   );
 }
 

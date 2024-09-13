@@ -1,3 +1,4 @@
+import { AuthStoreProvider } from '@/providers/auth';
 import { QueryProvider } from '@/providers/query';
 import type { Metadata } from 'next';
 import './globals.css';
@@ -15,7 +16,9 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body>
-        <QueryProvider>{children}</QueryProvider>
+        <QueryProvider>
+          <AuthStoreProvider>{children}</AuthStoreProvider>
+        </QueryProvider>
       </body>
     </html>
   );

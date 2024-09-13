@@ -1,7 +1,7 @@
 /* eslint-disable import/no-cycle */
-import { axiosInstance } from '@/api/_axiosInstance';
+import { loginAPI, registerAPI } from '@/api/auth.api';
 import { User } from '@/types/user.types';
-import { create } from 'zustand';
+import { createStore } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 
 export type AuthState = {
@@ -14,68 +14,91 @@ export type AuthState = {
 export type AuthActions = {
   login: (email: string, password: string) => Promise<void>;
   logout: () => void;
+  register: ({
+    email,
+    nickname,
+    password,
+    passwordConfirmation,
+  }: {
+    email: string;
+    nickname: string;
+    password: string;
+    passwordConfirmation: string;
+  }) => Promise<void>;
   setAccessToken: (accessToken: string) => void;
   setReviewLiked: (reviewId: number) => void;
   setReviewUnlike: (reviewId: number) => void;
 };
 
+export const initialAuthState: AuthState = {
+  user: null,
+  accessToken: null,
+  refreshToken: null,
+  reviewLikedList: [],
+};
+
 export type AuthStore = AuthState & AuthActions;
 
-export const useAuthStore = create(
-  persist<AuthStore>(
-    (setState) => ({
-      user: null,
-      accessToken: null,
-      refreshToken: null,
-      reviewLikedList: [],
+export const createAuthStore = (initState: AuthState = initialAuthState) => {
+  return createStore<AuthStore>()(
+    persist(
+      (set) => ({
+        ...initState,
 
-      login: async (email, password) => {
-        const response = await axiosInstance.post<AuthState>(
-          '/auth/signIn',
-          {
+        login: async (email, password) => {
+          const userInfo = await loginAPI({ email, password });
+          set(() => ({ ...userInfo }));
+        },
+        logout: () => {
+          set(() => ({
+            user: null,
+            accessToken: null,
+            refreshToken: null,
+          }));
+        },
+        register: async ({
+          email,
+          nickname,
+          password,
+          passwordConfirmation,
+        }) => {
+          const userInfo = await registerAPI({
             email,
+            nickname,
             password,
-          },
-          {
-            headers: { 'Content-Type': 'application/json' },
-          }
-        );
-        setState(() => ({ ...response.data }));
-      },
-      logout: () => {
-        setState(() => ({
-          user: null,
-          accessToken: null,
-          refreshToken: null,
-          reviewLikedList: [],
-        }));
-      },
-      setAccessToken: (pAccessToken) => {
-        setState((state) => ({
-          ...state,
-          accessToken: pAccessToken,
-        }));
-      },
-      setReviewLiked: (reviewId) => {
-        setState((state) => ({
-          ...state,
-          reviewLikedList: state.reviewLikedList.includes(reviewId)
-            ? state.reviewLikedList
-            : [...state.reviewLikedList, reviewId],
-        }));
-      },
-      setReviewUnlike: (reviewId) => {
-        setState((state) => ({
-          ...state,
-          reviewLikedList: state.reviewLikedList.filter(
-            (id) => id !== reviewId
-          ),
-        }));
-      },
-    }),
-    {
-      name: 'auth-storage',
-      storage: createJSONStorage(() => localStorage),
-    }
-  )
-);
+            passwordConfirmation,
+          });
+          set(() => ({ ...userInfo }));
+        },
+
+        setAccessToken: (accessToken) => {
+          set((state) => ({
+            ...state,
+            accessToken,
+          }));
+        },
+        setReviewLiked: (reviewId) => {
+          set((state) => ({
+            ...state,
+            reviewLikedList: state.reviewLikedList.includes(reviewId)
+              ? state.reviewLikedList
+              : [...state.reviewLikedList, reviewId],
+          }));
+        },
+        setReviewUnlike: (reviewId) => {
+          set((state) => ({
+            ...state,
+            reviewLikedList: state.reviewLikedList.filter(
+              (id) => id !== reviewId
+            ),
+          }));
+        },
+      }),
+
+      {
+        name: 'auth-storage',
+        storage: createJSONStorage(() => localStorage),
+      }
+    )
+  );
+};
