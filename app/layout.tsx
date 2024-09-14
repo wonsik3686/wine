@@ -26,6 +26,19 @@ export const metadata: Metadata = {
       url: '/icons/icon.svg',
     },
   },
+
+  openGraph: {
+    title: 'Wine',
+    description:
+      '와인을 추천해드립니다. 와인 전문가들이 제공하는 리뷰와 시음 노트, 와인 추천 정보를 한눈에 확인하세요.',
+    url: 'https://wine-cdi.vercel.app/',
+    images: [
+      {
+        url: '/thumbnail.png',
+        alt: '와인 썸네일',
+      },
+    ],
+  },
 };
 
 export default function RootLayout({
@@ -35,7 +48,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ko">
-      <body>
+      <body className="max-w-full overflow-x-hidden">
         <QueryProvider>
           <AuthStoreProvider>{children}</AuthStoreProvider>
         </QueryProvider>
