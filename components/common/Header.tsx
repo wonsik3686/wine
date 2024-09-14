@@ -3,6 +3,7 @@
 import Dropdown from '@/components/common/dropdown/Dropdown';
 import { useAuthStore } from '@/providers/auth';
 import profileIcon from '@/public/img/empty_profill.png';
+import { signOut } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import Profile from './Profile';
@@ -36,6 +37,7 @@ function ProfileDropDown() {
       label: '로그아웃',
       value: 'logout',
       onClick: () => {
+        signOut();
         logout();
       },
     },

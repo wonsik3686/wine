@@ -1,4 +1,4 @@
-import { AuthStoreProvider } from '@/providers/auth';
+import { AuthStoreProvider, SessionProviderWrapper } from '@/providers/auth';
 import { QueryProvider } from '@/providers/query';
 import type { Metadata } from 'next';
 import './globals.css';
@@ -36,9 +36,11 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body>
-        <QueryProvider>
-          <AuthStoreProvider>{children}</AuthStoreProvider>
-        </QueryProvider>
+        <SessionProviderWrapper>
+          <QueryProvider>
+            <AuthStoreProvider>{children}</AuthStoreProvider>
+          </QueryProvider>
+        </SessionProviderWrapper>
       </body>
     </html>
   );

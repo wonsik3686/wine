@@ -1,5 +1,7 @@
 'use client';
 
+import { SessionProvider } from 'next-auth/react';
+
 import { type ReactNode, createContext, useContext, useRef } from 'react';
 import { useStore } from 'zustand';
 
@@ -37,3 +39,11 @@ export const useAuthStore = <T,>(selector: (store: AuthStore) => T): T => {
 
   return useStore(authStoreContext, selector);
 };
+
+export function SessionProviderWrapper({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return <SessionProvider>{children}</SessionProvider>;
+}

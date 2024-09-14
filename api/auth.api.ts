@@ -7,6 +7,20 @@ export type LoginResponse = {
   refreshToken: string | null;
 };
 
+export const oAuthLoginAPI = async ({
+  provider,
+  data,
+}: {
+  provider: string;
+  data: Record<string, string>;
+}): Promise<LoginResponse> => {
+  const response = await axiosInstance.post<LoginResponse>(
+    `/auth/signIn/${provider}`,
+    data
+  );
+  return response.data;
+};
+
 export const loginAPI = async ({
   email,
   password,

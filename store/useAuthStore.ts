@@ -1,5 +1,5 @@
 /* eslint-disable import/no-cycle */
-import { loginAPI, registerAPI } from '@/api/auth.api';
+import { loginAPI, oAuthLoginAPI, registerAPI } from '@/api/auth.api';
 import { User } from '@/types/user.types';
 import { createStore } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
@@ -29,6 +29,12 @@ export type AuthActions = {
   setReviewLiked: (reviewId: number) => void;
   setReviewUnlike: (reviewId: number) => void;
   setUser: (user: User | null) => void;
+  oAuthLogin: (
+    provider: 'GOOGLE' | 'KAKAO',
+    data: {
+      [key: string]: string;
+    }
+  ) => void;
 };
 
 export const initialAuthState: AuthState = {
@@ -99,6 +105,10 @@ export const createAuthStore = (initState: AuthState = initialAuthState) => {
             ...state,
             user,
           }));
+        },
+        oAuthLogin: async (provider, data) => {
+          const userInfo = await oAuthLoginAPI({ provider, data });
+          set(() => ({ ...userInfo }));
         },
       }),
 
