@@ -3,6 +3,7 @@
 import Button from '@/components/common/Button';
 import Input from '@/components/common/Input';
 import { useAuthStore } from '@/providers/auth';
+import { useQueryClient } from '@tanstack/react-query';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -14,6 +15,7 @@ type FormValues = {
 };
 
 export default function SingInPage() {
+  const queryClient = useQueryClient();
   const login = useAuthStore((state) => state.login);
   const [values, setValues] = useState<FormValues>({
     email: '',
@@ -74,8 +76,9 @@ export default function SingInPage() {
       try {
         await login(email, password);
         // 로그인 성공 후 원래 페이지 혹은 메인 페이지로 리다이렉트
+        queryClient.invalidateQueries({ queryKey: ['wineDetail'] });
         const redirectUrl = searchParams.get('redirect') || '/';
-        router.push(redirectUrl);
+        router.replace(redirectUrl);
       } catch (err) {
         setFormErrors({
           email: '이메일 혹은 비밀번호를 확인해주세요.',
@@ -84,7 +87,7 @@ export default function SingInPage() {
         throw err;
       }
     },
-    [login, router, validateForm, values, searchParams]
+    [login, router, validateForm, values, searchParams, queryClient]
   );
 
   return (
