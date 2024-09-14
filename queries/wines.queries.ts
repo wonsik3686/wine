@@ -16,11 +16,20 @@ import {
 
 export function useWineDetail({ ...params }: WineDetailRequest) {
   const { data, error, isLoading, refetch } =
-    useSuspenseQuery<WineDetailResponse>({
+    useSuspenseQuery<WineDetailResponse | null>({
       queryKey: ['wineDetail', params.id],
       queryFn: async () => {
-        const response = await getWineDetail(params);
-        return response;
+        try {
+          const response = await getWineDetail(params);
+          if (response) return response.data;
+          return null;
+        } catch (err: any) {
+          // 401 에러 감지 및 처리
+          if (err.response && err.response.status === 401) {
+            return null;
+          }
+          throw err; // 다른 에러는 그대로 throw
+        }
       },
     });
 

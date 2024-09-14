@@ -173,7 +173,6 @@ export default function SingInPage() {
           </div>
         </form>
       </div>
-
       <div className="mt-4 flex flex-row items-center gap-3.5">
         <span className=" text-gray-500">계정이 없으신가요?</span>
         <Link

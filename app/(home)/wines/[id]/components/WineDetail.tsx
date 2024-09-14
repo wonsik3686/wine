@@ -21,9 +21,7 @@ type WineDetailProps = { wineId: number };
 
 export default function WineDetail({ wineId }: WineDetailProps) {
   const user = useAuthStore((set) => set.user);
-  const { wineDetail } = user
-    ? useWineDetail({ id: wineId })
-    : { wineDetail: null };
+  const { wineDetail } = useWineDetail({ id: wineId });
   const { isReviewOpen, handleOpenAddReview } = useReviewModal();
   const { reviewModalMode, selectedReviewToUpdateId } = useReviewModalStore();
   const {
