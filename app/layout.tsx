@@ -35,7 +35,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ko">
-      <body>
+      <body className="max-w-full overflow-x-hidden">
         <QueryProvider>
           <AuthStoreProvider>{children}</AuthStoreProvider>
         </QueryProvider>
