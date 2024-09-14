@@ -21,8 +21,7 @@ export function useWineDetail({ ...params }: WineDetailRequest) {
       queryFn: async () => {
         try {
           const response = await getWineDetail(params);
-          if (response) return response.data;
-          return null;
+          return response.data;
         } catch (err: any) {
           // 401 에러 감지 및 처리
           if (err.response && err.response.status === 401) {
