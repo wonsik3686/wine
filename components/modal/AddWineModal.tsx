@@ -109,7 +109,15 @@ function AddWineModal({
         onUpdate!(data);
       }
 
-      setFormValue(initialFormValue); // 폼 값을 초기 상태로 되돌리기
+      setFormValue({
+        id: 0,
+        name: '',
+        price: 0,
+        region: '',
+        type: 'RED',
+        image: null,
+      });
+
       setPostError(''); // 에러 초기화
     } catch (error) {
       if (mode === 'add' && error) {

@@ -17,7 +17,7 @@ const initialFormValue = {
   price: 0,
   origin: '',
   region: '',
-  type: 'undefined',
+  type: 'RED',
   imgFile: null,
   image: '',
 };
