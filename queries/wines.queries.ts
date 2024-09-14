@@ -16,19 +16,25 @@ import {
 
 export function useWineDetail({ ...params }: WineDetailRequest) {
   const { data, error, isLoading, refetch } =
-    useSuspenseQuery<WineDetailResponse | null>({
+    useSuspenseQuery<WineDetailResponse>({
       queryKey: ['wineDetail', params.id],
       queryFn: async () => {
-        try {
-          const response = await getWineDetail(params);
-          return response.data;
-        } catch (err: any) {
-          // 401 에러 감지 및 처리
-          if (err.response && err.response.status === 401) {
-            return null;
-          }
-          throw err; // 다른 에러는 그대로 throw
-        }
+        const response = await getWineDetail(params);
+        return response.data;
+      },
+      initialData: {
+        id: 0,
+        name: 'Loading...',
+        price: 0,
+        region: 'Loading...',
+        type: 'Loading...',
+        image: '/icons/defaultWine.png',
+        reviews: [],
+        avgRating: 0,
+        avgRatings: {},
+        reviewCount: 0,
+        recentReview: null,
+        userId: 0,
       },
     });
 

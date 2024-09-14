@@ -21,7 +21,9 @@ type WineDetailProps = { wineId: number };
 
 export default function WineDetail({ wineId }: WineDetailProps) {
   const user = useAuthStore((set) => set.user);
-  const { wineDetail } = useWineDetail({ id: wineId });
+  const { wineDetail, refetchWineDetail } = useWineDetail({
+    id: wineId,
+  });
   const { isReviewOpen, handleOpenAddReview } = useReviewModal();
   const { reviewModalMode, selectedReviewToUpdateId } = useReviewModalStore();
   const {
@@ -36,14 +38,20 @@ export default function WineDetail({ wineId }: WineDetailProps) {
       setIsConfirmOpen(true);
     } else {
       setIsConfirmOpen(false);
+      refetchWineDetail();
     }
-  }, [user, setIsConfirmOpen]);
+  }, [user, setIsConfirmOpen, refetchWineDetail]);
 
   return (
     <>
       <Suspense fallback={<WineDetailCardSkeleton />}>
-        {wineDetail && <WineDetailCard wineDetail={wineDetail} />}
-        {!user && <WineDetailCardSkeleton />}
+        {/* {wineDetail && <WineDetailCard wineDetail={wineDetail} />}
+        {!user && <WineDetailCardSkeleton />} */}
+        {user && wineDetail ? (
+          <WineDetailCard wineDetail={wineDetail} />
+        ) : (
+          <WineDetailCardSkeleton />
+        )}
       </Suspense>
       <Suspense fallback={<WineReviewsSkeleton />}>
         {user ? (
