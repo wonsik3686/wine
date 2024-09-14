@@ -73,7 +73,8 @@ function AddWineModal({
       formValue.name !== '' &&
       formValue.price !== 0 &&
       formValue.region !== '' &&
-      formValue.image !== null
+      formValue.image !== null &&
+      formValue.image !== ''
     );
   };
 
