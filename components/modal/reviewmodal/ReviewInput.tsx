@@ -6,9 +6,15 @@ import StarRating from '@/components/common/StarRating';
 import TextArea from '@/components/common/TextArea';
 import { useReviewModalStore } from '@/store/useReviewModalStore';
 import Image from 'next/image';
+import { useState } from 'react';
 
 export default function ReviewInput({ wineName }: any) {
   const { content, rating, setContent, setRating } = useReviewModalStore();
+  const [contentTouched, setContentTouched] = useState(false);
+
+  const handleInputBlur = () => {
+    setContentTouched(true);
+  };
 
   return (
     <>
@@ -20,12 +26,18 @@ export default function ReviewInput({ wineName }: any) {
           <p className="break-words text-lg font-semibold mob:w-[150px] mob:text-md mob:leading-[20px]">
             {wineName}
           </p>
-
-          <StarRating
-            isInteractive
-            onRatingChange={(newRating) => setRating(newRating)}
-            rating={rating}
-          />
+          <div className="flex items-center gap-[20px]">
+            <StarRating
+              isInteractive
+              onRatingChange={(newRating) => setRating(newRating)}
+              rating={rating}
+            />
+            {!rating && (
+              <p className="font-sans text-lg font-regular text-purple-100">
+                별점을 입력해주세요.
+              </p>
+            )}
+          </div>
         </div>
       </section>
       <TextArea
@@ -33,12 +45,17 @@ export default function ReviewInput({ wineName }: any) {
         name="content"
         placeholder="후기를 작성해주세요"
         style={{
-          marginBottom: '32px',
           width: '100%',
           height: '200px',
         }}
         onChange={(e) => setContent(e.target.value)} // store에서 관리
         value={content}
+        onBlur={handleInputBlur}
+        errorMessage={
+          contentTouched && !content
+            ? '후기를 최소 1자 이상 입력해주세요.'
+            : undefined
+        }
       />
     </>
   );

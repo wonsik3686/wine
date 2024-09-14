@@ -160,7 +160,9 @@ export default function AddReviewModal({
           style={{ marginBottom: '32px', width: '100%' }}
           onSubmit={handleSubmit}
         >
-          <ReviewInput wineName={wineDetail.name} />
+          <div className="mb-[32px]">
+            <ReviewInput wineName={wineDetail.name} />
+          </div>
           <p className="mb-[24px] font-sans text-xl font-bold text-gray-800 mob:mb-[20px] mob:text-lg">
             와인의 맛은 어땠나요?
           </p>
