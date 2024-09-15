@@ -14,6 +14,7 @@ export default function NoReviewContent() {
             alt="작성 리뷰 없음 아이콘"
             fill
             className="object-contain"
+            priority
           />
         </div>
         <p className="font-sans text-2lg font-normal text-gray-500">
