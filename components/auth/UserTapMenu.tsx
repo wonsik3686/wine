@@ -1,8 +1,8 @@
 'use client';
 
-import { deleteReview } from '@/api/reviews.api';
-import { getUserReviews, getUserWines } from '@/api/users.api';
-import { deleteWine } from '@/api/wines.api';
+import { deleteReview } from '@/apis/reviews.api';
+import { getUserReviews, getUserWines } from '@/apis/users.api';
+import { deleteWine } from '@/apis/wines.api';
 import { PriceBox, RatingBox } from '@/components/common/Boxes';
 import Dropdown from '@/components/common/dropdown/Dropdown';
 import Kebab from '@/public/icons/kebab.svg';

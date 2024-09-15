@@ -1,4 +1,4 @@
-import { patchUser } from '@/api/users.api';
+import { patchUser } from '@/apis/users.api';
 import { useAuthStore } from '@/providers/auth';
 import { useMutation } from '@tanstack/react-query';
 

@@ -1,4 +1,4 @@
-import { getRecommendedWines, getWine, getWineDetail } from '@/api/wines.api';
+import { getRecommendedWines, getWine, getWineDetail } from '@/apis/wines.api';
 import {
   WineDetailRequest,
   WineListRequest,

@@ -3,7 +3,7 @@ import {
   getReview,
   postWineReview,
   updateReview,
-} from '@/api/reviews.api';
+} from '@/apis/reviews.api';
 import { GetReviewRequest } from '@/types/dto/request/review.request.types';
 import { GetReviewResponse } from '@/types/dto/response/review.response.types';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
