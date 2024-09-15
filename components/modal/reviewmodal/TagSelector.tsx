@@ -23,8 +23,6 @@ export default function TagSelector() {
     } else {
       setSelectedTags([...selectedTags, tag]);
     }
-
-    console.log(selectedTags);
   };
 
   return (
