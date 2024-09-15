@@ -2,8 +2,12 @@
 
 'use client';
 
-import { postWineReview, updateReview as update } from '@/api/reviews.api';
-import { useReview, useUpdateReview } from '@/queries/reviews.queries';
+import { updateReview as update } from '@/api/reviews.api';
+import {
+  useAddReview,
+  useReview,
+  useUpdateReview,
+} from '@/queries/reviews.queries';
 import { useReviewModalStore } from '@/store/useReviewModalStore';
 import { convertToAroma } from '@/utils/convert/convertToAroma';
 import { FormEvent, useEffect } from 'react';
@@ -43,6 +47,7 @@ export default function AddReviewModal({
     id: reviewId || 0,
   });
   const { mutate: updateReview } = useUpdateReview();
+  const { mutate: addReview } = useAddReview();
 
   const {
     rating,
@@ -122,7 +127,7 @@ export default function AddReviewModal({
       });
       onUpdate!(data);
     } else if (mode === 'add') {
-      await postWineReview({
+      await addReview({
         wineId: wineDetail.id,
         rating,
         content,

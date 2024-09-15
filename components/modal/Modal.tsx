@@ -99,8 +99,19 @@ function Modal({ isOpen, onClose, children, className }: ModalProps) {
 
   const isMobile = window.innerWidth <= 743;
 
+  let animationClass = '';
+  if (animating) {
+    animationClass = isMobile
+      ? styles.mobModalEnterActive
+      : styles.pcModalEnterActive;
+  } else {
+    animationClass = isMobile
+      ? styles.mobModalExitActive
+      : styles.pcModalExitActive;
+  }
+
   return (
-    <>
+    <div>
       {showModal && (
         <div className="fixed inset-0 z-50 flex max-h-screen items-center justify-center overflow-y-auto">
           <div
@@ -108,21 +119,13 @@ function Modal({ isOpen, onClose, children, className }: ModalProps) {
             onClick={onClose}
           />
           <div
-            className={`${className} ${styles.customScrollbar} fixed inset-x-0 bottom-0 top-20 z-20 w-full overflow-y-auto rounded-lg bg-white p-8 shadow-lg sm:relative sm:w-fit ${
-              isMobile
-                ? animating
-                  ? styles.mobModalEnterActive
-                  : styles.mobModalExitActive
-                : animating
-                  ? styles.pcModalEnterActive
-                  : styles.pcModalExitActive
-            }`}
+            className={`${className} ${styles.customScrollbar} fixed inset-x-0 bottom-0 top-20 z-20 w-full overflow-y-auto rounded-lg bg-white p-8 shadow-lg sm:relative sm:w-fit ${animationClass}`}
           >
             {children}
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 }
 
