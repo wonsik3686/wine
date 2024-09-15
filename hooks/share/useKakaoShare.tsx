@@ -32,7 +32,7 @@ export default function useKakaoShare({
     kakao.Share.sendDefault({
       objectType: 'feed',
       content: {
-        title: title,
+        title,
         description: desc,
         imageUrl: encodeURI(shareImage),
         link: {

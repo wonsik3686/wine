@@ -25,7 +25,7 @@ export default function ShareButtons({
 
   const { handleKaKaoShare } = useKakaoShare({
     sharedUrl: fullUrl,
-    shareImage: shareImage,
+    shareImage,
     title: shareTitle,
     desc: shareDesc,
   });
