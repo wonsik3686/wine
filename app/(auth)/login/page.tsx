@@ -4,9 +4,10 @@ import Button from '@/components/common/Button';
 import Input from '@/components/common/Input';
 import { useAuthStore } from '@/providers/auth';
 import { signIn } from 'next-auth/react';
+import { useQueryClient } from '@tanstack/react-query';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { ChangeEvent, FormEvent, useCallback, useState } from 'react';
 
 type FormValues = {
@@ -15,6 +16,7 @@ type FormValues = {
 };
 
 export default function SingInPage() {
+  const queryClient = useQueryClient();
   const login = useAuthStore((state) => state.login);
   const [values, setValues] = useState<FormValues>({
     email: '',
@@ -26,6 +28,7 @@ export default function SingInPage() {
     password: '',
   });
   const router = useRouter();
+  const searchParams = useSearchParams();
 
   const handleChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -73,7 +76,10 @@ export default function SingInPage() {
       }
       try {
         await login(email, password);
-        router.push('/');
+        // 로그인 성공 후 원래 페이지 혹은 메인 페이지로 리다이렉트
+        queryClient.invalidateQueries({ queryKey: ['wineDetail'] });
+        const redirectUrl = searchParams.get('redirect') || '/';
+        router.replace(redirectUrl);
       } catch (err) {
         setFormErrors({
           email: '이메일 혹은 비밀번호를 확인해주세요.',
@@ -82,7 +88,7 @@ export default function SingInPage() {
         throw err;
       }
     },
-    [login, router, validateForm, values]
+    [login, router, validateForm, values, searchParams, queryClient]
   );
 
   return (
@@ -174,7 +180,6 @@ export default function SingInPage() {
           </div>
         </form>
       </div>
-
       <div className="mt-4 flex flex-row items-center gap-3.5">
         <span className=" text-gray-500">계정이 없으신가요?</span>
         <Link
