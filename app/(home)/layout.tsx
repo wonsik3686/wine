@@ -1,10 +1,10 @@
-import Header from '@/components/common/Header';
 import KakaoScript from '@/utils/script/KakaoScript';
+import HeaderWrapper from './header-wrapper';
 
 function HomeLayout({ children }: { children: React.ReactNode | JSX.Element }) {
   return (
     <>
-      <Header />
+      <HeaderWrapper />
       {children}
       <KakaoScript />
     </>

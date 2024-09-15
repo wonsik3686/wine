@@ -3,6 +3,7 @@
 import Button from '@/components/common/Button';
 import Input from '@/components/common/Input';
 import { useAuthStore } from '@/providers/auth';
+import { signIn } from 'next-auth/react';
 import { useQueryClient } from '@tanstack/react-query';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -149,6 +150,9 @@ export default function SingInPage() {
               buttonWidth="fitToParent"
               buttonColor="white"
               textColor="black"
+              onClick={() => {
+                signIn('google', { callbackUrl: '/' });
+              }}
             >
               <Image
                 src="/icons/iconGoogle.svg"

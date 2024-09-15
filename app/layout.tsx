@@ -1,4 +1,4 @@
-import { AuthStoreProvider } from '@/providers/auth';
+import { AuthStoreProvider, SessionProviderWrapper } from '@/providers/auth';
 import { QueryProvider } from '@/providers/query';
 import { AnimatePresence } from 'framer-motion';
 import type { Metadata } from 'next';
@@ -59,11 +59,13 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body className="max-w-full overflow-x-hidden">
-        <QueryProvider>
-          <AuthStoreProvider>
-            <AnimatePresence mode="wait">{children}</AnimatePresence>
-          </AuthStoreProvider>
-        </QueryProvider>
+        <SessionProviderWrapper>
+          <QueryProvider>
+            <AuthStoreProvider>
+              <AnimatePresence mode="wait">{children}</AnimatePresence>
+            </AuthStoreProvider>
+          </QueryProvider>
+        </SessionProviderWrapper>
       </body>
     </html>
   );
