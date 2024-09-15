@@ -116,7 +116,7 @@ function Dropdown({
   onSelect,
   type,
   trigger,
-  initialLabel,
+  initialLabel = 'Red',
   width = '100%',
   dropdownClassName,
   optionClassName,
