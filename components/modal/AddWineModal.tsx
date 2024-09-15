@@ -73,7 +73,8 @@ function AddWineModal({
       formValue.name !== '' &&
       formValue.price !== 0 &&
       formValue.region !== '' &&
-      formValue.image !== null
+      formValue.image !== null &&
+      formValue.image !== ''
     );
   };
 
@@ -109,7 +110,15 @@ function AddWineModal({
         onUpdate!(data);
       }
 
-      setFormValue(initialFormValue); // 폼 값을 초기 상태로 되돌리기
+      setFormValue({
+        id: 0,
+        name: '',
+        price: 0,
+        region: '',
+        type: 'RED',
+        image: null,
+      });
+
       setPostError(''); // 에러 초기화
     } catch (error) {
       if (mode === 'add' && error) {
@@ -119,6 +128,17 @@ function AddWineModal({
       }
     }
     onClick();
+  };
+
+  const [touched, setTouched] = useState({
+    name: false,
+    price: false,
+    region: false,
+  });
+
+  const handleInputBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    const { name } = e.target;
+    setTouched((prev) => ({ ...prev, [name]: true }));
   };
 
   return (
@@ -148,7 +168,13 @@ function AddWineModal({
           placeholder="와인 이름 입력"
           style={{ width: '100%', height: '48px' }}
           onChange={handleInputChange}
+          onBlur={handleInputBlur}
           value={formValue.name}
+          errorMessage={
+            touched.name && !formValue.name
+              ? '와인 이름을 입력해주세요.'
+              : undefined
+          }
         />
         <Input
           label="가격"
@@ -158,7 +184,13 @@ function AddWineModal({
           placeholder="가격 입력"
           style={{ width: '100%', height: '48px' }}
           onChange={handleInputChange}
+          onBlur={handleInputBlur}
           value={formValue.price}
+          errorMessage={
+            touched.price && !formValue.price
+              ? '와인 가격을 입력해주세요.'
+              : undefined
+          }
         />
         <Input
           label="원산지"
@@ -167,7 +199,13 @@ function AddWineModal({
           placeholder="원산지 입력"
           style={{ width: '100%', height: '48px' }}
           onChange={handleInputChange}
+          onBlur={handleInputBlur}
           value={formValue.region}
+          errorMessage={
+            touched.region && !formValue.region
+              ? '원산지를 입력해주세요.'
+              : undefined
+          }
         />
         <div>
           <h2 className="mb-[10px] font-sans text-lg font-medium text-gray-800">
@@ -185,12 +223,16 @@ function AddWineModal({
           <h2 className="mb-[10px] font-sans text-lg font-medium text-gray-800">
             와인 사진
           </h2>
-
           <WineImageInput
             name="image"
             value={formValue.image}
             onChange={handleFormChange}
           />
+          {!formValue.image && (
+            <p className="mt-[10px] font-sans text-lg font-regular text-purple-100">
+              와인 사진을 첨부해주세요.
+            </p>
+          )}
         </div>
         <div className="mt-[32px] flex gap-[5px]">
           <Button

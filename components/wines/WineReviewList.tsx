@@ -7,6 +7,7 @@ import { useReviewModalStore } from '@/store/useReviewModalStore';
 import { WineDetailType } from '@/types/wine.types';
 import formatDistanceToNowKor from '@/utils/dateTimeUtils/FormatDistanceToNow';
 import translateAromaToKorean from '@/utils/translate/TranslateAromaToKorean';
+import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { RatingBox } from '../common/Boxes';
@@ -89,12 +90,15 @@ export default function WineReviewList({
             </div>
             <div className="flex items-start gap-7 mob:gap-[1.12rem]">
               <div>
-                <button
+                <motion.button
                   type="button"
-                  className="relative h-[2.375rem] w-[2.375rem] mob:h-8 mob:w-8"
+                  className="box relative h-[2.375rem] w-[2.375rem] mob:h-8 mob:w-8"
                   onClick={() => {
                     likeReview(review.id);
                   }}
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                  transition={{ type: 'spring', stiffness: 400, damping: 10 }}
                 >
                   <Image
                     src={
@@ -106,7 +110,7 @@ export default function WineReviewList({
                     fill
                     className="object-contain"
                   />
-                </button>
+                </motion.button>
               </div>
               {review.user.id === user?.id && (
                 <>

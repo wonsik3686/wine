@@ -9,6 +9,7 @@ type ConfirmModalProps = {
   onCancel: () => void;
   confirmMessage?: string;
   label?: string;
+  isOnlyConfirm?: boolean;
 };
 
 export default function ConfirmModal({
@@ -17,6 +18,7 @@ export default function ConfirmModal({
   onCancel,
   confirmMessage = '정말 삭제하시겠습니까?',
   label = '삭제',
+  isOnlyConfirm = false,
 }: ConfirmModalProps) {
   useEffect(() => {
     if (isOpen) {
@@ -46,16 +48,18 @@ export default function ConfirmModal({
           {confirmMessage}
         </h1>
         <div className="flex justify-between gap-[9px] mob:gap-[6px]">
-          <Button
-            buttonStyle="box"
-            buttonWidth="fitToChildren"
-            buttonColor="white"
-            textColor="gray"
-            onClick={onCancel}
-            style={{ flexGrow: '1' }}
-          >
-            취소
-          </Button>
+          {!isOnlyConfirm && (
+            <Button
+              buttonStyle="box"
+              buttonWidth="fitToChildren"
+              buttonColor="white"
+              textColor="gray"
+              onClick={onCancel}
+              style={{ flexGrow: '1' }}
+            >
+              취소
+            </Button>
+          )}
           <Button
             buttonStyle="box"
             buttonWidth="fitToChildren"

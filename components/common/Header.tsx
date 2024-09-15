@@ -3,13 +3,16 @@
 import Dropdown from '@/components/common/dropdown/Dropdown';
 import { useAuthStore } from '@/providers/auth';
 import profileIcon from '@/public/img/empty_profill.png';
+import { signOut } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import Profile from './Profile';
 
 function ProfileDropDown() {
   const logout = useAuthStore((state) => state.logout);
   const user = useAuthStore((state) => state.user);
+  const router = useRouter();
   if (!user)
     return (
       <div className="flex gap-[2.5rem]">
@@ -29,13 +32,14 @@ function ProfileDropDown() {
       label: '마이페이지',
       value: 'mypage',
       onClick: () => {
-        // TODO: 마이페이지 이동경로 설정
+        router.push('/myprofile');
       },
     },
     {
       label: '로그아웃',
       value: 'logout',
       onClick: () => {
+        signOut();
         logout();
       },
     },
@@ -46,7 +50,7 @@ function ProfileDropDown() {
         type="action"
         options={options}
         trigger={
-          <div className="h-[45px] w-[45px]">
+          <div className="h-9 w-9 cursor-pointer mob:h-8 mob:w-8">
             <Profile src={profileImage.toString()} />
           </div>
         }

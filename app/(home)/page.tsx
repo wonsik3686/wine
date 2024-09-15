@@ -19,7 +19,7 @@ export default function Home() {
       <section
         data-aos="fade-top"
         data-aos-duration="1000"
-        className="flex flex-col overflow-hidden rounded-2xl bg-[#171A21] tab:mx-5 tab:mt-6 mob:mx-4 mob:mt-6 mob:block pc:mx-5 pc:mt-20"
+        className="flex w-full flex-col overflow-hidden rounded-2xl bg-[#171A21] tab:mt-6 mob:mt-6 pc:mx-5 pc:mt-20"
       >
         <div
           data-aos="fade-down"
@@ -40,9 +40,9 @@ export default function Home() {
             나만의 와인창고
           </p>
         </div>
-        <div className="flex">
+        <div className="flex justify-center">
           <div
-            className={`${styles.popUp} ${styles.card} relative left-[100px] top-[40px] h-[185px] w-[232px]`}
+            className={`${styles.popUp} ${styles.card} relative left-[100px] top-[40px] h-[185px] w-[232px] shrink-0 mob:hidden`}
           >
             <Image
               fill
@@ -51,7 +51,7 @@ export default function Home() {
             />
           </div>
           <div
-            className={`${styles.popUp} ${styles.card} relative left-[50px] top-[30px] h-[185px] w-[232px]`}
+            className={`${styles.popUp} ${styles.card} relative left-[50px] top-[30px] h-[185px] w-[232px] shrink-0`}
           >
             <Image
               fill
@@ -61,7 +61,7 @@ export default function Home() {
           </div>
 
           <div
-            className={`${styles.popUp} ${styles.card} relative top-[20px] z-20 h-[185px] w-[232px]`}
+            className={`${styles.popUp} ${styles.card} relative top-[20px] z-20 h-[185px] w-[232px] shrink-0`}
           >
             <Image
               fill
@@ -71,7 +71,7 @@ export default function Home() {
           </div>
 
           <div
-            className={`${styles.popUp} ${styles.card} relative right-[50px] top-[30px] z-10 h-[185px] w-[232px]`}
+            className={`${styles.popUp} ${styles.card} relative right-[50px] top-[30px] z-10 h-[185px] w-[232px] shrink-0`}
           >
             <Image
               fill
@@ -80,7 +80,7 @@ export default function Home() {
             />
           </div>
           <div
-            className={`${styles.popUp} ${styles.card} relative right-[100px] top-[40px] z-0 h-[185px] w-[232px]`}
+            className={`${styles.popUp} ${styles.card} relative right-[100px] top-[40px] z-0 h-[185px] w-[232px] shrink-0 mob:hidden`}
           >
             <Image
               fill
