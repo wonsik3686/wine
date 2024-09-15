@@ -59,13 +59,13 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body className="max-w-full overflow-x-hidden">
-      <SessionProviderWrapper>
-        <QueryProvider>
-          <AuthStoreProvider>
-            <AnimatePresence mode="wait">{children}</AnimatePresence>
-          </AuthStoreProvider>
-        </QueryProvider>
-      </SessionProviderWrapper>
+        <SessionProviderWrapper>
+          <QueryProvider>
+            <AuthStoreProvider>
+              <AnimatePresence mode="wait">{children}</AnimatePresence>
+            </AuthStoreProvider>
+          </QueryProvider>
+        </SessionProviderWrapper>
       </body>
     </html>
   );
