@@ -1,9 +1,13 @@
+import { Suspense } from 'react';
 import HeaderWrapper from './header-wrapper';
 
 function HomeLayout({ children }: { children: React.ReactNode | JSX.Element }) {
   return (
     <>
-      <HeaderWrapper />
+      <Suspense>
+        <HeaderWrapper />
+      </Suspense>
+
       {children}
     </>
   );
