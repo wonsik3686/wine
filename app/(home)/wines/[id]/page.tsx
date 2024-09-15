@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import WineDetail from './components/WineDetail';
 
 type WineDetailPageParams = {
@@ -5,5 +6,9 @@ type WineDetailPageParams = {
 };
 
 export default function WineDetailPage({ params }: WineDetailPageParams) {
-  return <WineDetail wineId={params.id} />;
+  return (
+    <Suspense>
+      <WineDetail wineId={params.id} />
+    </Suspense>
+  );
 }

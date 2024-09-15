@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './Modal.module.css';
 
 type ModalProps = {
@@ -66,6 +66,20 @@ export default function TestPage() {
  */
 
 function Modal({ isOpen, onClose, children, className }: ModalProps) {
+  const [showModal, setShowModal] = useState(isOpen);
+  const [animating, setAnimating] = useState(false);
+
+  useEffect(() => {
+    if (isOpen) {
+      setShowModal(true);
+      setAnimating(true);
+    } else {
+      setAnimating(false);
+      const timer = setTimeout(() => setShowModal(false), 300); // 애니메이션 시간과 일치
+      return () => clearTimeout(timer);
+    }
+  }, [isOpen]);
+
   useEffect(() => {
     if (isOpen) {
       // 모달이 열렸을 때 스크롤 방지
@@ -83,14 +97,34 @@ function Modal({ isOpen, onClose, children, className }: ModalProps) {
 
   if (!isOpen) return null;
 
+  const isMobile = window.innerWidth <= 743;
+
+  let animationClass = '';
+  if (animating) {
+    animationClass = isMobile
+      ? styles.mobModalEnterActive
+      : styles.pcModalEnterActive;
+  } else {
+    animationClass = isMobile
+      ? styles.mobModalExitActive
+      : styles.pcModalExitActive;
+  }
+
   return (
-    <div className="fixed inset-0 z-50 flex max-h-screen items-center justify-center overflow-y-auto">
-      <div className="fixed inset-0 bg-black opacity-50 " onClick={onClose} />
-      <div
-        className={`${className} ${styles.customScrollbar} fixed inset-x-0 bottom-0 top-20 z-20 w-full overflow-y-auto rounded-lg bg-white p-8 shadow-lg sm:relative sm:w-fit`}
-      >
-        {children}
-      </div>
+    <div>
+      {showModal && (
+        <div className="fixed inset-0 z-50 flex max-h-screen items-center justify-center overflow-y-auto">
+          <div
+            className="fixed inset-0 bg-black opacity-50 "
+            onClick={onClose}
+          />
+          <div
+            className={`${className} ${styles.customScrollbar} fixed inset-x-0 bottom-0 top-20 z-20 w-full overflow-y-auto rounded-lg bg-white p-8 shadow-lg sm:relative sm:w-fit ${animationClass}`}
+          >
+            {children}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
