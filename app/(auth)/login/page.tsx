@@ -168,6 +168,9 @@ export default function SingInPage() {
               buttonWidth="fitToParent"
               buttonColor="white"
               textColor="black"
+              onClick={() => {
+                signIn('kakao', { callbackUrl: '/' });
+              }}
             >
               <Image
                 src="/icons/iconKakaotalk.svg"

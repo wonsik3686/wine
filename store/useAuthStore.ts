@@ -34,7 +34,7 @@ export type AuthActions = {
     data: {
       [key: string]: string;
     }
-  ) => void;
+  ) => Promise<void>;
 };
 
 export const initialAuthState: AuthState = {
