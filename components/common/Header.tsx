@@ -48,7 +48,7 @@ function ProfileDropDown() {
         type="action"
         options={options}
         trigger={
-          <div className="h-[45px] w-[45px] cursor-pointer">
+          <div className="h-9 w-9 cursor-pointer mob:h-8 mob:w-8">
             <Profile src={profileImage.toString()} />
           </div>
         }
