@@ -1,5 +1,6 @@
 'use client';
 
+import ShareButtons from '@/app/(home)/wines/[id]/components/ShareButtons';
 import { WineDetailType } from '@/types/wine.types';
 import Image from 'next/image';
 import { PriceBox } from '../common/Boxes';
@@ -27,6 +28,13 @@ export default function WineDetailCard({ wineDetail }: WineDetailProps) {
             {wineDetail.region}
           </p>
           <PriceBox price={wineDetail.price} />
+        </div>
+        <div className="absolute tab:bottom-5 tab:right-8 mob:bottom-1 mob:right-1 pc:bottom-6 pc:right-10">
+          <ShareButtons
+            shareImage={wineDetail.image}
+            shareTitle={`${wineDetail.name}`}
+            shareDesc={`원산지: ${wineDetail.region} | 평점: ${wineDetail.avgRating} | ${wineDetail.recentReview ? wineDetail.recentReview.content : ''}`}
+          />
         </div>
       </div>
     </article>
