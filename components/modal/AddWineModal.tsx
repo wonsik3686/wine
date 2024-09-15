@@ -4,7 +4,7 @@ import {
   postWineDetail,
   updateWineDetail,
   uploadWineImage,
-} from '@/api/wines.api';
+} from '@/apis/wines.api';
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import Button from '../common/Button';
 import Dropdown from '../common/dropdown/Dropdown';
