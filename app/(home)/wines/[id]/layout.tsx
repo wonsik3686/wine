@@ -16,7 +16,7 @@ export async function generateMetadata(
 ): Promise<Metadata> {
   const au: authParams = { email: 'main@email.com', password: '11111111' };
   const authRes = await fetch(
-    'https://winereview-api.vercel.app/8-4/auth/signIn',
+    'https://winereview-api.vercel.app/8-44/auth/signIn',
     {
       body: JSON.stringify(au),
       method: 'POST',
@@ -31,7 +31,7 @@ export async function generateMetadata(
   const token = authData.accessToken;
 
   const wineDetailRes = await fetch(
-    `https://winereview-api.vercel.app/8-4/wines/${params.id}`,
+    `https://winereview-api.vercel.app/8-44/wines/${params.id}`,
     {
       headers: {
         Authorization: `Bearer ${token}`,
