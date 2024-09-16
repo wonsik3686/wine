@@ -42,7 +42,7 @@ export default function WineCard({
       {/* 상단부 */}
       <div className="relative flex h-[210px] w-full gap-[80px] overflow-hidden mob:h-[220px] mob:gap-[36px]">
         <div
-          className="h-[220px] w-[100px] bg-contain bg-top bg-no-repeat mob:h-[230px]"
+          className="h-[210px] w-[100px] bg-cover bg-top bg-no-repeat mob:h-[220px]"
           style={{
             backgroundImage: `url(${wineImageUrl})`,
           }}
