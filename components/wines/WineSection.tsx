@@ -77,25 +77,37 @@ export default function WineSection() {
     [handleFilterChange]
   );
 
-  // 무한 스크롤 이벤트 처리
+  // 무한 스크롤을 위한 로딩 트리거 요소 참조
+  const loadMoreRef = useRef<HTMLDivElement | null>(null);
+
+  // IntersectionObserver를 사용하여 무한 스크롤 구현
   useEffect(() => {
-    const handleScroll = throttle(() => {
-      const scrollPosition = window.innerHeight + window.scrollY;
-      const threshold = document.documentElement.scrollHeight - 150;
+    if (!loadMoreRef.current) return;
 
-      if (scrollPosition >= threshold && hasNextPage && !isWineListFetching) {
-        fetchNextPage(); // 다음 페이지 데이터 가져오기
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        // 로딩 트리거 요소가 화면에 나타나고 다음 페이지가 있으며, 현재 페칭 중이 아닐 때
+        if (entry.isIntersecting && hasNextPage && !isWineListFetching) {
+          fetchNextPage(); // 다음 페이지 데이터 가져오기
+        }
+      },
+      {
+        root: null,
+        rootMargin: '0px',
+        threshold: 1.0,
       }
-    }, 500);
+    );
 
-    window.addEventListener('scroll', handleScroll);
-    window.addEventListener('resize', handleScroll);
+    observer.observe(loadMoreRef.current);
 
+    // 컴포넌트 언마운트 시 옵저버 해제
     return () => {
-      window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('resize', handleScroll);
+      if (loadMoreRef.current) {
+        observer.unobserve(loadMoreRef.current);
+      }
     };
-  }, [isWineListFetching, hasNextPage, fetchNextPage]);
+  }, [hasNextPage, isWineListFetching, fetchNextPage]);
 
   // 무한 스크롤 데이터를 결합하여 와인 목록을 렌더링
   const wineList = wineListPages?.pages.flatMap((page) => page.list) ?? [];
@@ -156,7 +168,12 @@ export default function WineSection() {
             </div>
           )}
           <WineCardGallery wineList={wineList} />
-          {isWineListLoading && <div>로딩 중...</div>}
+
+          {/* 로딩 상태 또는 로딩 트리거 요소 */}
+          {isWineListFetching && !isWineListLoading && (
+            <div>추가 로딩 중...</div>
+          )}
+          <div ref={loadMoreRef} style={{ height: '1px' }} />
         </div>
 
         {/* MOB: 등록 모달 팝업 버튼 */}
