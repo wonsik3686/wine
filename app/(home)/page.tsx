@@ -14,12 +14,12 @@ export default function Home() {
     AOS.init();
   }, []);
   return (
-    <main className="flex w-full flex-col items-center justify-center">
+    <main className="flex w-full flex-col items-center justify-center px-[20px]">
       <Script src="https://unpkg.com/aos@2.3.1/dist/aos.js" />
       <section
         data-aos="fade-top"
         data-aos-duration="1000"
-        className="flex w-full flex-col overflow-hidden rounded-2xl bg-[#171A21] tab:mt-6 mob:mt-6 pc:mx-5 pc:mt-20"
+        className="flex w-full max-w-[1140px] flex-col overflow-hidden rounded-2xl bg-[#171A21] tab:mt-6 mob:mt-6 pc:mt-20"
       >
         <div
           data-aos="fade-down"
