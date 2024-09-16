@@ -1,7 +1,21 @@
+import { useReviewModalStore } from '@/store/useReviewModalStore';
 import Image from 'next/image';
 import Button from '../common/Button';
 
-export default function NoReviewContent() {
+type NoReviewContentProps = { onOpenReviewModal?: () => void };
+
+export default function NoReviewContent({
+  onOpenReviewModal,
+}: NoReviewContentProps) {
+  const { setReviewModalMode } = useReviewModalStore();
+
+  const handleOpenReviewModal = () => {
+    if (onOpenReviewModal) {
+      setReviewModalMode('add');
+      onOpenReviewModal();
+    }
+  };
+
   return (
     <div className="flex flex-col pc:mt-[3.75rem] pc:w-[50rem]">
       <h3 className="font-sans text-xl font-bold text-gray-800 tab:mt-6 pc:mb-[1.38rem]">
@@ -26,6 +40,7 @@ export default function NoReviewContent() {
             buttonStyle="box"
             buttonWidth="fitToParent"
             textColor="white"
+            onClick={handleOpenReviewModal}
           >
             리뷰 남기기
           </Button>
