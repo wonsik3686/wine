@@ -5,7 +5,7 @@ export function RatingBox({ rating }: { rating: number }) {
 
   return (
     <div className="flex h-[2.625rem] w-20 items-center justify-center gap-[0.125rem] rounded-xl bg-purple-10 mob:h-9 mob:w-[3.75rem]">
-      <Star className="h-4 w-4 md:h-5 md:w-5" />
+      <Star width={24} height={24} className="h-4 w-4 md:h-5 md:w-5" />
       <span className="text-md font-bold text-purple-100 md:text-2lg">
         {isRating}
       </span>
