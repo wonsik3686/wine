@@ -2,7 +2,7 @@
 
 'use client';
 
-import { updateReview as update } from '@/api/reviews.api';
+import { updateReview as update } from '@/apis/reviews.api';
 import {
   useAddReview,
   useReview,

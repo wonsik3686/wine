@@ -1,6 +1,6 @@
 'use client';
 
-import postImageUpload from '@/api/imageUpload.api';
+import postImageUpload from '@/apis/imageUpload.api';
 import Photo from '@/public/icons/photo.svg';
 import { useUpdateUser } from '@/queries/users.queries';
 import { ChangeEvent, useRef, useState } from 'react';

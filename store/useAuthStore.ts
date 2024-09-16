@@ -1,5 +1,5 @@
 /* eslint-disable import/no-cycle */
-import { loginAPI, oAuthLoginAPI, registerAPI } from '@/api/auth.api';
+import { loginAPI, oAuthLoginAPI, registerAPI } from '@/apis/auth.api';
 import { User } from '@/types/user.types';
 import { createStore } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
