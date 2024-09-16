@@ -1,7 +1,6 @@
 'use client';
 
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
-import { Crop } from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
 
 // 모달을 띄우는 함수 (실제 사용 시, 이 부분은 모달 컴포넌트에서 호출될 부분입니다)
@@ -15,18 +14,27 @@ type FileProps = {
 
 function WineImageInput({ name, value, onChange }: FileProps) {
   const [preview, setPreview] = useState<string | null>(null);
-  const [crop, setCrop] = useState<Crop>({
-    unit: 'px',
-    width: 30,
-    height: 100,
-    x: 0,
-    y: 0,
-  });
-  const [completedCrop, setCompletedCrop] = useState<Crop | null>(null);
-  const [imageRef, setImageRef] = useState<HTMLImageElement | null>(null);
   const [showCropModal, setShowCropModal] = useState(false); // 모달 표시 상태
   const [croppedImage, setCroppedImage] = useState<File | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (!value) {
+      setPreview(null);
+      return;
+    }
+
+    if (typeof value === 'string') {
+      setPreview(value);
+    } else if (value instanceof File) {
+      const nextPreview: string = URL.createObjectURL(value);
+      setPreview(nextPreview);
+
+      return () => {
+        URL.revokeObjectURL(nextPreview); // 메모리 누수 방지
+      };
+    }
+  }, [value]);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const nextValue = e.target.files?.[0] || null;
@@ -47,11 +55,10 @@ function WineImageInput({ name, value, onChange }: FileProps) {
     inputNode.value = '';
     onChange(name, null);
     setPreview(null);
-    setCompletedCrop(null);
   };
 
-  const handleCropConfirm = (croppedImage: File) => {
-    setCroppedImage(croppedImage);
+  const handleCropConfirm = (croppedImg: File) => {
+    setCroppedImage(croppedImg);
     setShowCropModal(false);
   };
 
@@ -82,13 +89,7 @@ function WineImageInput({ name, value, onChange }: FileProps) {
       </div>
       <div className="relative w-[200px] shrink-0">
         <div className="relative overflow-hidden rounded-lg">
-          {preview && (
-            <img
-              src={preview}
-              alt="이미지 미리보기"
-              onLoad={(e) => setImageRef(e.currentTarget)}
-            />
-          )}
+          {preview && <img src={preview} alt="이미지 미리보기" />}
         </div>
         {croppedImage && (
           <button
