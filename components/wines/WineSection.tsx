@@ -3,9 +3,12 @@
 import Button from '@/components/common/Button';
 import SearchInput from '@/components/common/SearchInput';
 import AddWineModal from '@/components/modal/AddWineModal';
+import ConfirmModal from '@/components/modal/ConfirmModal';
 import FilteringModal from '@/components/wines/FilteringModal';
 import FilteringOpenButton from '@/components/wines/FilteringOpenButton';
 import WineCardGallery from '@/components/wines/WineCardGallery';
+import useLoginConfirmModal from '@/hooks/modal/useLoginConfirmModal';
+import { useAuthStore } from '@/providers/auth';
 import { useWineList } from '@/queries/wines.queries';
 import { debounce } from '@/utils/debounce';
 import { useCallback, useEffect, useRef, useState } from 'react';
@@ -112,6 +115,25 @@ export default function WineSection() {
   // 무한 스크롤 데이터를 결합하여 와인 목록을 렌더링
   const wineList = wineListPages?.pages.flatMap((page) => page.list) ?? [];
 
+  // 로그인 상태 및 ConfirmModal 훅 사용
+  const user = useAuthStore((state) => state.user);
+  const {
+    isConfirmOpen,
+    setIsConfirmOpen,
+    handleConfirmClick,
+    handleConfirmOpenClick,
+  } = useLoginConfirmModal();
+
+  // 와인 등록 버튼 클릭 핸들러
+  const handleAddWineClick = () => {
+    // 유저 로그인 검증
+    if (user) {
+      setIsAddWineModalOpen(true);
+    } else {
+      setIsConfirmOpen(true);
+    }
+  };
+
   return (
     <>
       <section className="flex w-full max-w-[1140px] gap-[60px]">
@@ -130,7 +152,7 @@ export default function WineSection() {
             buttonWidth="fitToParent"
             textColor="white"
             style={{ marginTop: '40px' }}
-            onClick={() => setIsAddWineModalOpen(true)}
+            onClick={handleAddWineClick}
           >
             와인 등록하기
           </Button>
@@ -154,7 +176,7 @@ export default function WineSection() {
               buttonWidth="fitToChildren"
               textColor="white"
               className="h-[48px] w-[220px] mob:hidden"
-              onClick={() => setIsAddWineModalOpen(true)}
+              onClick={handleAddWineClick}
             >
               와인 등록하기
             </Button>
@@ -184,7 +206,7 @@ export default function WineSection() {
             buttonWidth="fitToParent"
             textColor="white"
             className="h-[48px] w-[343px] shadow-xl"
-            onClick={() => setIsAddWineModalOpen(true)}
+            onClick={handleAddWineClick}
           >
             와인 등록하기
           </Button>
@@ -211,6 +233,16 @@ export default function WineSection() {
           filters={filters}
         />
       )}
+
+      {/* 로그인 확인 모달 */}
+      <ConfirmModal
+        isOpen={isConfirmOpen}
+        confirmMessage="로그인이 필요한 서비스입니다."
+        label="로그인"
+        onConfirm={handleConfirmClick}
+        onCancel={handleConfirmOpenClick}
+        isOnlyConfirm
+      />
     </>
   );
 }
