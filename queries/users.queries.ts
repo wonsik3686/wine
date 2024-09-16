@@ -8,8 +8,8 @@ export function useUpdateUser() {
   const { mutate, data, error, isError, isPending } = useMutation({
     mutationKey: ['updateUser'],
     mutationFn: patchUser,
-    onSuccess: () => {
-      setUser(data?.data);
+    onSuccess: (Data) => {
+      setUser(Data?.data);
     },
   });
 

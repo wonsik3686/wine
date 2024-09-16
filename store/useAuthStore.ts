@@ -100,10 +100,12 @@ export const createAuthStore = (initState: AuthState = initialAuthState) => {
             ),
           }));
         },
-        setUser: (user) => {
+        setUser: (data) => {
           set((state) => ({
-            ...state,
-            user,
+            user: {
+              email: state.user?.email,
+              ...data,
+            } as User,
           }));
         },
         oAuthLogin: async (provider, data) => {
