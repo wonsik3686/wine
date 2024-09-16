@@ -8,8 +8,7 @@ import FilteringOpenButton from '@/components/wines/FilteringOpenButton';
 import WineCardGallery from '@/components/wines/WineCardGallery';
 import { useWineList } from '@/queries/wines.queries';
 import { debounce } from '@/utils/debounce';
-import { throttle } from '@/utils/throttle';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 const initialFormValue = {
   id: 0,
@@ -17,7 +16,7 @@ const initialFormValue = {
   price: 0,
   origin: '',
   region: '',
-  type: 'RED',
+  type: '',
   imgFile: null,
   image: '',
 };
@@ -31,23 +30,24 @@ export default function WineSection() {
     type: 'RED' | 'WHITE' | 'SPARKLING' | undefined;
     priceRange: [number, number];
     rating: number | undefined;
-    searchTerm: string;
+    name: string;
     limit: number;
   }>({
     type: undefined,
     priceRange: [0, 200000], // 기본 가격 범위
     rating: undefined,
-    searchTerm: '',
-    limit: 10, // 기본 limit 값
+    name: '',
+    limit: 5, // 기본 limit 값
   });
 
+  // API 요청을 위한 필터 객체 정리
   const cleanFilters = {
-    type: filters.type,
+    ...(filters.type && { type: filters.type }),
     minPrice: filters.priceRange[0],
     maxPrice:
-      filters.priceRange[1] === 200000 ? 10000000 : filters.priceRange[1], // maxPrice가 200000일 경우 10000000으로 설정
-    rating: filters.rating,
-    ...(filters.searchTerm && { searchTerm: filters.searchTerm }),
+      filters.priceRange[1] === 200000 ? 10000000 : filters.priceRange[1], // maxPrice가 200000일 경우 모든 가격을 불러옴
+    ...(filters.rating && { rating: filters.rating }),
+    ...(filters.name.trim() && { name: filters.name.trim() }),
     limit: filters.limit,
   };
 
@@ -71,8 +71,8 @@ export default function WineSection() {
 
   // 검색어 변경 처리 (디바운싱 적용)
   const debouncedSearch = useCallback(
-    debounce((search: string) => {
-      handleFilterChange({ searchTerm: search });
+    debounce((searchTerm: string) => {
+      handleFilterChange({ name: searchTerm });
     }, 300),
     [handleFilterChange]
   );
