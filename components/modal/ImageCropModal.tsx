@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import React, { useState } from 'react';
 import ReactCrop, { Crop } from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
 
@@ -10,8 +10,12 @@ type ImageCropModalProps = {
   onConfirm: (croppedImage: File) => void;
 };
 
-function ImageCropModal({ image, onClose, onConfirm }: ImageCropModalProps) {
-  const [imgCrop, setImgCrop] = useState<Crop>({
+const ImageCropModal: React.FC<ImageCropModalProps> = ({
+  image,
+  onClose,
+  onConfirm,
+}) => {
+  const [crop, setCrop] = useState<Crop>({
     unit: 'px',
     width: 30,
     height: 100,
@@ -63,19 +67,31 @@ function ImageCropModal({ image, onClose, onConfirm }: ImageCropModalProps) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-      <div className="relative w-full max-w-md rounded-lg bg-white p-8 shadow-lg">
+      <div className="relative w-full max-w-md rounded-lg bg-white p-6 shadow-lg">
         <button
           onClick={onClose}
-          className="absolute right-2 top-1 p-2 text-xl text-gray-600"
-          type="button"
+          className="absolute right-2 top-2 text-gray-600 hover:text-gray-900"
         >
-          X
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth="2"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
         </button>
         {image && (
           <ReactCrop
-            crop={imgCrop}
-            onChange={(newCrop) => setImgCrop(newCrop)}
-            onComplete={(c) => setCompletedCrop(c)}
+            crop={crop}
+            onChange={(newCrop) => setCrop(newCrop)}
+            onComplete={(crop) => setCompletedCrop(crop)}
             aspect={1 / 3}
           >
             <img
@@ -90,14 +106,12 @@ function ImageCropModal({ image, onClose, onConfirm }: ImageCropModalProps) {
           <button
             onClick={onClose}
             className="rounded-xl bg-gray-100 px-4 py-2 text-gray-700 hover:bg-gray-400"
-            type="button"
           >
             취소
           </button>
           <button
             onClick={handleConfirmClick}
             className="rounded-xl bg-purple-600 px-4 py-2 text-white hover:bg-purple-500"
-            type="button"
           >
             확인
           </button>
@@ -105,6 +119,6 @@ function ImageCropModal({ image, onClose, onConfirm }: ImageCropModalProps) {
       </div>
     </div>
   );
-}
+};
 
 export default ImageCropModal;
