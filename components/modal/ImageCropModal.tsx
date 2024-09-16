@@ -31,6 +31,7 @@ function ImageCropModal({ image, onClose, onConfirm }: ImageCropModalProps) {
       canvas.height = crop.height;
       const ctx = canvas.getContext('2d');
       if (ctx && imageRef) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.drawImage(
           imageRef,
           crop.x * scaleX,
@@ -43,12 +44,13 @@ function ImageCropModal({ image, onClose, onConfirm }: ImageCropModalProps) {
           crop.height
         );
         const blob = await new Promise<Blob | null>((resolve) => {
-          canvas.toBlob((b) => resolve(b), 'image/jpeg');
+          canvas.toBlob((b) => resolve(b), 'image/png'); // 'image/png'로 설정
         });
+
         if (blob) {
           onConfirm(
-            new File([blob], 'cropped-image.jpg', { type: 'image/jpeg' })
-          );
+            new File([blob], 'cropped-image.png', { type: 'image/png' })
+          ); // 'image/png'로 설정
         }
       }
     }
