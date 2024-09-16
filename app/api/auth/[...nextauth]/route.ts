@@ -14,7 +14,7 @@ const handler = NextAuth({
       clientSecret: '',
       authorization: {
         params: {
-          redirect_uri: `${process.env.VERCEL_PROJECT_PRODUCTION_URL}/api/kakaoLogin`,
+          redirect_uri: `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}/api/kakaoLogin`,
         },
       },
     }),
