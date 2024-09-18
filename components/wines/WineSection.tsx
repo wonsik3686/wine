@@ -31,13 +31,13 @@ export default function WineSection() {
     type: 'RED' | 'WHITE' | 'SPARKLING' | undefined;
     priceRange: [number, number];
     rating: number | undefined;
-    searchTerm: string;
+    name: string;
     limit: number;
   }>({
     type: undefined,
     priceRange: [0, 200000], // 기본 가격 범위
     rating: undefined,
-    searchTerm: '',
+    name: '',
     limit: 10, // 기본 limit 값
   });
 
@@ -47,7 +47,7 @@ export default function WineSection() {
     maxPrice:
       filters.priceRange[1] === 200000 ? 10000000 : filters.priceRange[1], // maxPrice가 200000일 경우 10000000으로 설정
     rating: filters.rating,
-    ...(filters.searchTerm && { searchTerm: filters.searchTerm }),
+    ...(filters.name && { name: filters.name }),
     limit: filters.limit,
   };
 
@@ -72,7 +72,7 @@ export default function WineSection() {
   // 검색어 변경 처리 (디바운싱 적용)
   const debouncedSearch = useCallback(
     debounce((search: string) => {
-      handleFilterChange({ searchTerm: search });
+      handleFilterChange({ name: search });
     }, 300),
     [handleFilterChange]
   );
