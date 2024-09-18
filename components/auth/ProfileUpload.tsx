@@ -3,7 +3,7 @@
 import postImageUpload from '@/apis/imageUpload.api';
 import Photo from '@/public/icons/photo.svg';
 import { useUpdateUser } from '@/queries/users.queries';
-import { ChangeEvent, useRef, useState } from 'react';
+import { ChangeEvent, useEffect, useRef, useState } from 'react';
 
 function ProfileUpload({
   className,
@@ -12,15 +12,28 @@ function ProfileUpload({
   className?: string;
   children: JSX.Element;
 }) {
+  const [image, setImage] = useState<File | null>(null);
   const { mutate: updateUser } = useUpdateUser();
   const [isHover, setIsHover] = useState(false);
   const fileInput = useRef<HTMLInputElement>(null);
 
-  const handleChangeImage = async (e: ChangeEvent<HTMLInputElement>) => {
-    const target = e.target.files![0];
+  const getImageUrl = async (target: File) => {
     const { url } = await postImageUpload(target);
-
     updateUser({ image: url });
+  };
+
+  useEffect(() => {
+    if (image !== null) {
+      getImageUrl(image);
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [image]);
+
+  const handleChangeImage = (e: ChangeEvent<HTMLInputElement>) => {
+    const imageFile = e.target.files?.[0] || null;
+    setImage(imageFile);
+
     e.target.value = '';
   };
 
