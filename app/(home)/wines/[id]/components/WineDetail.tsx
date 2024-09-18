@@ -70,7 +70,7 @@ export default function WineDetail({ wineId }: WineDetailProps) {
                 />
               </>
             ) : (
-              <NoReviewContent />
+              <NoReviewContent onOpenReviewModal={handleOpenAddReview} />
             )}
           </section>
         ) : (
