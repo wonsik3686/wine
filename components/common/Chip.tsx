@@ -68,12 +68,12 @@ function Chip({
   return (
     <button
       className={clsx(
-        'rounded-full border border-gray-300 bg-white px-3 py-2 text-sm font-medium sm:px-4 sm:text-lg',
         {
           'bg-purple-610 text-white': selected,
           'cursor-pointer': !isDisabled,
           'cursor-default': isDisabled,
-        }
+        },
+        'rounded-full border border-gray-300 bg-white px-3 py-2 text-sm font-medium sm:px-4 sm:text-lg'
       )}
       onClick={!isDisabled ? onClick : undefined}
       type="button"
