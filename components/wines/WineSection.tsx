@@ -3,13 +3,15 @@
 import Button from '@/components/common/Button';
 import SearchInput from '@/components/common/SearchInput';
 import AddWineModal from '@/components/modal/AddWineModal';
+import ConfirmModal from '@/components/modal/ConfirmModal';
 import FilteringModal from '@/components/wines/FilteringModal';
 import FilteringOpenButton from '@/components/wines/FilteringOpenButton';
 import WineCardGallery from '@/components/wines/WineCardGallery';
+import useLoginConfirmModal from '@/hooks/modal/useLoginConfirmModal';
+import { useAuthStore } from '@/providers/auth';
 import { useWineList } from '@/queries/wines.queries';
 import { debounce } from '@/utils/debounce';
-import { throttle } from '@/utils/throttle';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 const initialFormValue = {
   id: 0,
@@ -17,7 +19,7 @@ const initialFormValue = {
   price: 0,
   origin: '',
   region: '',
-  type: 'RED',
+  type: '',
   imgFile: null,
   image: '',
 };
@@ -31,23 +33,24 @@ export default function WineSection() {
     type: 'RED' | 'WHITE' | 'SPARKLING' | undefined;
     priceRange: [number, number];
     rating: number | undefined;
-    searchTerm: string;
+    name: string;
     limit: number;
   }>({
     type: undefined,
     priceRange: [0, 200000], // 기본 가격 범위
     rating: undefined,
-    searchTerm: '',
-    limit: 10, // 기본 limit 값
+    name: '',
+    limit: 5, // 기본 limit 값
   });
 
+  // API 요청을 위한 필터 객체 정리
   const cleanFilters = {
-    type: filters.type,
+    ...(filters.type && { type: filters.type }),
     minPrice: filters.priceRange[0],
     maxPrice:
-      filters.priceRange[1] === 200000 ? 10000000 : filters.priceRange[1], // maxPrice가 200000일 경우 10000000으로 설정
-    rating: filters.rating,
-    ...(filters.searchTerm && { searchTerm: filters.searchTerm }),
+      filters.priceRange[1] === 200000 ? 10000000 : filters.priceRange[1], // maxPrice가 200000일 경우 모든 가격을 불러옴
+    ...(filters.rating && { rating: filters.rating }),
+    ...(filters.name.trim() && { name: filters.name.trim() }),
     limit: filters.limit,
   };
 
@@ -71,34 +74,65 @@ export default function WineSection() {
 
   // 검색어 변경 처리 (디바운싱 적용)
   const debouncedSearch = useCallback(
-    debounce((search: string) => {
-      handleFilterChange({ searchTerm: search });
+    debounce((searchTerm: string) => {
+      handleFilterChange({ name: searchTerm });
     }, 300),
     [handleFilterChange]
   );
 
-  // 무한 스크롤 이벤트 처리
+  // 무한 스크롤을 위한 로딩 트리거 요소 참조
+  const loadMoreRef = useRef<HTMLDivElement | null>(null);
+
+  // IntersectionObserver를 사용하여 무한 스크롤 구현
   useEffect(() => {
-    const handleScroll = throttle(() => {
-      const scrollPosition = window.innerHeight + window.scrollY;
-      const threshold = document.documentElement.scrollHeight - 150;
+    if (!loadMoreRef.current) return;
 
-      if (scrollPosition >= threshold && hasNextPage && !isWineListFetching) {
-        fetchNextPage(); // 다음 페이지 데이터 가져오기
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        // 로딩 트리거 요소가 화면에 나타나고 다음 페이지가 있으며, 현재 페칭 중이 아닐 때
+        if (entry.isIntersecting && hasNextPage && !isWineListFetching) {
+          fetchNextPage(); // 다음 페이지 데이터 가져오기
+        }
+      },
+      {
+        root: null,
+        rootMargin: '0px',
+        threshold: 1.0,
       }
-    }, 500);
+    );
 
-    window.addEventListener('scroll', handleScroll);
-    window.addEventListener('resize', handleScroll);
+    observer.observe(loadMoreRef.current);
 
+    // 컴포넌트 언마운트 시 옵저버 해제
     return () => {
-      window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('resize', handleScroll);
+      if (loadMoreRef.current) {
+        observer.unobserve(loadMoreRef.current);
+      }
     };
-  }, [isWineListFetching, hasNextPage, fetchNextPage]);
+  }, [hasNextPage, isWineListFetching, fetchNextPage]);
 
   // 무한 스크롤 데이터를 결합하여 와인 목록을 렌더링
   const wineList = wineListPages?.pages.flatMap((page) => page.list) ?? [];
+
+  // 로그인 상태 및 ConfirmModal 훅 사용
+  const user = useAuthStore((state) => state.user);
+  const {
+    isConfirmOpen,
+    setIsConfirmOpen,
+    handleConfirmClick,
+    handleConfirmOpenClick,
+  } = useLoginConfirmModal();
+
+  // 와인 등록 버튼 클릭 핸들러
+  const handleAddWineClick = () => {
+    // 유저 로그인 검증
+    if (user) {
+      setIsAddWineModalOpen(true);
+    } else {
+      setIsConfirmOpen(true);
+    }
+  };
 
   return (
     <>
@@ -118,7 +152,7 @@ export default function WineSection() {
             buttonWidth="fitToParent"
             textColor="white"
             style={{ marginTop: '40px' }}
-            onClick={() => setIsAddWineModalOpen(true)}
+            onClick={handleAddWineClick}
           >
             와인 등록하기
           </Button>
@@ -142,7 +176,7 @@ export default function WineSection() {
               buttonWidth="fitToChildren"
               textColor="white"
               className="h-[48px] w-[220px] mob:hidden"
-              onClick={() => setIsAddWineModalOpen(true)}
+              onClick={handleAddWineClick}
             >
               와인 등록하기
             </Button>
@@ -156,7 +190,12 @@ export default function WineSection() {
             </div>
           )}
           <WineCardGallery wineList={wineList} />
-          {isWineListLoading && <div>로딩 중...</div>}
+
+          {/* 로딩 상태 또는 로딩 트리거 요소 */}
+          {isWineListFetching && !isWineListLoading && (
+            <div>추가 로딩 중...</div>
+          )}
+          <div ref={loadMoreRef} style={{ height: '1px' }} />
         </div>
 
         {/* MOB: 등록 모달 팝업 버튼 */}
@@ -167,7 +206,7 @@ export default function WineSection() {
             buttonWidth="fitToParent"
             textColor="white"
             className="h-[48px] w-[343px] shadow-xl"
-            onClick={() => setIsAddWineModalOpen(true)}
+            onClick={handleAddWineClick}
           >
             와인 등록하기
           </Button>
@@ -194,6 +233,16 @@ export default function WineSection() {
           filters={filters}
         />
       )}
+
+      {/* 로그인 확인 모달 */}
+      <ConfirmModal
+        isOpen={isConfirmOpen}
+        confirmMessage="로그인이 필요한 서비스입니다."
+        label="로그인"
+        onConfirm={handleConfirmClick}
+        onCancel={handleConfirmOpenClick}
+        isOnlyConfirm
+      />
     </>
   );
 }

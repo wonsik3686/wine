@@ -4,7 +4,8 @@ import Chip from '@/components/common/Chip';
 import DoubleSlider from '@/components/common/DoubleSlider';
 import Modal from '@/components/modal/Modal';
 import RatingSelector from '@/components/wines/RatingSelector';
-import { useEffect, useState } from 'react';
+import { debounce } from '@/utils/debounce';
+import { useEffect, useRef, useState } from 'react';
 
 type FilterState = {
   type?: 'RED' | 'WHITE' | 'SPARKLING';
@@ -46,11 +47,18 @@ export default function FilteringModal({
     });
   }, [filters]);
 
+  // 디바운싱된 onChange 함수 생성
+  const debouncedOnChange = useRef(
+    debounce((updatedFilters: FilterState) => {
+      onChange?.(updatedFilters);
+    }, 300) // 300ms 디바운스 지연 시간
+  ).current;
+
   // 필터 상태를 변경하는 핸들러
   const updateFilterState = (updatedValues: Partial<typeof filterState>) => {
     const newFilterState = { ...filterState, ...updatedValues };
     setFilterState(newFilterState);
-    onChange?.(newFilterState); // 부모 컴포넌트에 업데이트된 필터 상태 전달
+    debouncedOnChange(newFilterState);
   };
 
   const handleChipClick = (chipValue: 'RED' | 'WHITE' | 'SPARKLING') => {
@@ -102,8 +110,8 @@ export default function FilteringModal({
             onChange={handleSliderChange}
             min={0}
             max={200000}
-            step={10000}
-            minDistance={50000}
+            step={1000}
+            minDistance={1000}
             width="full"
           />
         </div>
@@ -117,6 +125,16 @@ export default function FilteringModal({
       </div>
     </div>
   );
+
+  // 컴포넌트 언마운트 시 디바운스 타이머 정리
+  useEffect(() => {
+    // 컴포넌트 언마운트 시 딱 한 번 실행되는 cleanup 함수
+    return () => {
+      if (debouncedOnChange.cancel) {
+        debouncedOnChange.cancel();
+      }
+    };
+  }, []);
 
   if (isModal) {
     if (!isOpen) {
