@@ -31,26 +31,25 @@ function ProfileUpload({
       onMouseLeave={() => setIsHover(false)}
     >
       {children}
-      {isHover && (
-        <>
-          <input
-            className="hidden"
-            type="file"
-            name="image_URL"
-            accept="image/*"
-            ref={fileInput}
-            onChange={handleChangeImage}
-          />
 
-          <button
-            type="button"
-            aria-label="프로필 업로드"
-            className="absolute inset-0 flex items-center justify-center bg-purple-100/30"
-            onClick={() => fileInput.current!.click()}
-          >
-            <Photo fill="#FFF" />
-          </button>
-        </>
+      <input
+        className="hidden"
+        type="file"
+        name="image_URL"
+        accept="image/*"
+        ref={fileInput}
+        onChange={handleChangeImage}
+      />
+
+      {isHover && (
+        <button
+          type="button"
+          aria-label="프로필 업로드"
+          className="absolute inset-0 flex items-center justify-center bg-purple-100/30"
+          onClick={() => fileInput.current!.click()}
+        >
+          <Photo fill="#FFF" />
+        </button>
       )}
     </div>
   );

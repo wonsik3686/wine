@@ -15,7 +15,7 @@ export const oAuthLoginAPI = async ({
   data: Record<string, string>;
 }): Promise<LoginResponse> => {
   const response = await axiosInstance.post<LoginResponse>(
-    `/auth/signIn/${provider}`,
+    `https://winereview-api.vercel.app/8-4/auth/signIn/${provider}`,
     data
   );
   return response.data;
