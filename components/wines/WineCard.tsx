@@ -3,6 +3,7 @@
 import ArrowRight from '@/assets/icons/iconArrowRight.svg';
 import { PriceBox } from '@/components/common/Boxes';
 import StarRating from '@/components/common/StarRating';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
 export default function WineCard({
@@ -41,11 +42,12 @@ export default function WineCard({
     >
       {/* 상단부 */}
       <div className="relative flex h-[210px] w-full gap-[80px] overflow-hidden mob:h-[220px] mob:gap-[36px]">
-        <div
-          className="h-[110%] w-[100px] bg-cover bg-bottom bg-no-repeat"
-          style={{
-            backgroundImage: `url(${wineImageUrl})`,
-          }}
+        <Image
+          src={wineImageUrl}
+          alt={`${wineName} 이미지`}
+          width={200}
+          height={440}
+          className="h-[230px] w-[100px] object-cover object-top mob:h-[240px]"
         />
         {/* 와인명 + 국가 + 가격 */}
         <div className="flex w-full justify-between gap-[16px] mob:flex-col mob:justify-normal mob:gap-[22px]">

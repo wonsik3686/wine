@@ -39,7 +39,7 @@ export default function MonthlyWineCard({
         />
         <div className="inline-flex w-[100px] flex-col items-start justify-start gap-[6px] mob:w-[80px]">
           <div className="text-4xl font-extrabold mob:text-[28px]">
-            {wineRating}
+            {wineRating.toFixed(1)}
           </div>
           <div className="h-full w-[100px] mob:w-[80px]">
             <StarRating rating={wineRating} />

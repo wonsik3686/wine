@@ -165,7 +165,7 @@ function Dropdown({
         trigger
       ) : (
         <div
-          className={`flex cursor-pointer items-center rounded-[16px] border px-4 py-2 ${dropdownClassName} bg-white font-medium text-gray-700 ring-1 ring-gray-300`}
+          className={`flex h-[48px] cursor-pointer items-center rounded-[16px] border-[1px] border-gray-300 px-4 py-2 ${dropdownClassName} bg-white font-medium text-gray-700`}
           style={{ width }}
         >
           <span className={`flex-1 ${isOpen ? 'text-gray-300' : ''}`}>
