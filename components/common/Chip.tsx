@@ -73,7 +73,7 @@ function Chip({
           'cursor-pointer': !isDisabled,
           'cursor-default': isDisabled,
         },
-        'rounded-full border border-gray-300 bg-white px-3 py-2 text-sm font-medium sm:px-4 sm:text-lg'
+        'rounded-full border border-gray-300 px-3 py-2 text-sm font-medium sm:px-4 sm:text-lg'
       )}
       onClick={!isDisabled ? onClick : undefined}
       type="button"
