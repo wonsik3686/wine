@@ -14,8 +14,6 @@
 ## 미리보기
 ![2024-09-19_142724](https://github.com/user-attachments/assets/c56676c9-4f5e-4f22-946e-ffb9adf28d79)
 
-![wineProject](https://github.com/user-attachments/assets/6759e1a5-3988-4dbf-a250-981f07dd7976)
-
 
 ## 기술스택
 ![image](https://github.com/user-attachments/assets/1672842f-ca36-4a1a-a945-bdf8e4bbf33a)
