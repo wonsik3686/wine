@@ -1,5 +1,6 @@
 import { AuthStoreProvider, SessionProviderWrapper } from '@/providers/auth';
 import { QueryProvider } from '@/providers/query';
+import GoogleAdsense from '@/utils/script/GoogleAdsense';
 import { AnimatePresence } from 'framer-motion';
 import type { Metadata } from 'next';
 import './globals.css';
@@ -67,6 +68,7 @@ export default function RootLayout({
           </QueryProvider>
         </SessionProviderWrapper>
       </body>
+      <GoogleAdsense />
     </html>
   );
 }
